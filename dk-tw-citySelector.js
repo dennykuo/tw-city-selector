@@ -17,7 +17,7 @@ $.dk_tw_citySelector = {
 |--------------------------------------------------------------------------
 | Use
 |--------------------------------------------------------------------------
-|   $('form').dk_tw_citySelector('#county', '#district', '#zip');
+|   $('.wrapper').dk_tw_citySelector('.county', '.district', '.zip');
 */
 
 ;(function($) {
@@ -212,9 +212,10 @@ $.dk_tw_citySelector = {
         // Settings
         // ----------------------------------------
 
-        var $selectFirst = $(selectFirst),
-            $selectSecond = $(selectSecond),
-            $selectThird = $(selectThird),
+        var $wrapper = this,
+            $selectFirst = $(selectFirst, $wrapper),
+            $selectSecond = $(selectSecond, $wrapper),
+            $selectThird = $(selectThird, $wrapper),
             selectFirstPrepend = '<option value="">選擇縣市</option>',
             selectSecondPrepend = '<option value="">---</option>',
             selectCustom = $selectFirst.data('custom');
@@ -238,7 +239,6 @@ $.dk_tw_citySelector = {
         // ----------------------------------------
         
         Selector.prototype.init = function() {
-
             // 縣市選項內容
             // ==========
             var firstSelectOption = selectFirstPrepend,
@@ -251,8 +251,8 @@ $.dk_tw_citySelector = {
             }
 
             for (var i = 0, length = country.length; i < length; i++) {
-                if (custom !== false) {
-                    if (custom.indexOf(country[i]) === -1) { continue; }
+                if (typeof custom === 'object' && custom.indexOf(country[i]) === -1) {
+                    continue;
                 }
 
                 // <option value="台北市" data-order="0">台北市</option>
@@ -264,7 +264,6 @@ $.dk_tw_citySelector = {
             // 區域選項內容
             // ==========
             $selectSecond.prepend(selectSecondPrepend);
-
         };
 
 
@@ -273,7 +272,6 @@ $.dk_tw_citySelector = {
         // ----------------------------------------
         
         Selector.prototype.countryChange = function() {
-
             var self = this;
 
             // 縣市選單動作
@@ -283,12 +281,10 @@ $.dk_tw_citySelector = {
 
                 if (order !== undefined) { // 選擇有值的選項
                     $selectSecond.prepend('<option value="">選擇區域</option>');
-
-                    // 迴圈開始新增出Option，district[order - 1][0].length 取得第3維資料中的長度
                     $selectSecond.find('option:gt(0)').remove();
                     
+                    // 產生第二選單的選項內容
                     for(var i = 0; i <=  district[order][0].length - 1; i++) {
-                        // 產生第二選單的選項內容
                         // <option value="中正區" data-zip="100">中正區</option>
                         $selectSecond.append('<option value="'+ district[order][0][i] +'" data-zip="'+ district[order][1][i] +'">'+ district[order][0][i] +'</option>');
                     }
@@ -300,7 +296,6 @@ $.dk_tw_citySelector = {
 
                 $selectThird.val('');
             });
-
         };
 
 
@@ -309,13 +304,11 @@ $.dk_tw_citySelector = {
         // ----------------------------------------
         
         Selector.prototype.districtChange = function() {
-
             // 區域選單動作 
             $selectSecond.on('change', function() {
                 var zip = $('option:selected', this).data('zip');
                 $selectThird.val(zip);
             });
-
         };
 
 
@@ -324,7 +317,6 @@ $.dk_tw_citySelector = {
         // ----------------------------------------
         
         Selector.prototype.selected = function($ele) {
-
             // 選單選定
             // ==========
             var selected = $ele.data('selected');
@@ -333,7 +325,6 @@ $.dk_tw_citySelector = {
                 $ele.val(selected).trigger('change');
                 return;
             }
-
         };
 
 

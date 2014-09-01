@@ -10,38 +10,38 @@
 	
 	<p>顯示全部縣市</p>
 
-    <form id="form-1">
-        <select id="county-1" name="county"></select>
-        <select id="district-1" name="district"></select>
-        <input id="zip-1" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+    <form class="form-1">
+        <select class="county" name="county"></select>
+        <select class="district" name="district"></select>
+        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
     </form>
 
     <hr>
 
     <p>預設選定值</p>
 
-    <form id="form-2">
-        <select id="county-2" name="county" data-selected="台北市"></select>
-        <select id="district-2" name="district" data-selected="中山區"></select>
-        <input id="zip-2" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+    <form class="form-2">
+        <select class="county" name="county" data-selected="台北市"></select>
+        <select class="district" name="district" data-selected="中山區"></select>
+        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
     </form>
 
-	<p>顯示部分自定縣市</p>
+	<p>顯示部分自訂縣市</p>
 
-    <form id="form-3">
-        <select id="county-3" name="county" data-custom="台北市,台中市,高雄市"></select>
-        <select id="district-3" name="district"></select>
-        <input id="zip-3" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+    <form class="form-3">
+        <select class="county" name="county" data-custom="台北市,台中市,高雄市"></select>
+        <select class="district" name="district"></select>
+        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
     </form>
 
     <hr>
 
-    <p>顯示部分自定縣市，並預設選定值</p>
+    <p>顯示部分自訂縣市，並預設縣市的選定值</p>
 
-    <form id="form-4">
-        <select id="county-4" name="county" data-custom="台北市,台中市,高雄市" data-selected="台中市"></select>
-        <select id="district-4" name="district"></select>
-        <input id="zip-4" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+    <form class="form-4">
+        <select class="county" name="county" data-custom="台北市,台中市,高雄市" data-selected="台中市"></select>
+        <select class="district" name="district"></select>
+        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
     </form>
 
     <hr>
@@ -50,10 +50,10 @@
 	<script src="dk-tw-citySelector.js"></script>
 	<script>
 	$(function() {
-		$('#form-1').dk_tw_citySelector('#county-1', '#district-1', '#zip-1');
-		$('#form-2').dk_tw_citySelector('#county-2', '#district-2', '#zip-2');
-		$('#form-3').dk_tw_citySelector('#county-3', '#district-3', '#zip-3');
-		$('#form-4').dk_tw_citySelector('#county-4', '#district-4', '#zip-4');
+		$('.form-1').dk_tw_citySelector('.county', '.district', '.zip');
+		$('.form-2').dk_tw_citySelector('.county', '.district', '.zip');
+		$('.form-3').dk_tw_citySelector('.county', '.district', '.zip');
+		$('.form-4').dk_tw_citySelector('.county', '.district', '.zip');
 	});
 	</script>
 
