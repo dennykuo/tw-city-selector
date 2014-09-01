@@ -18,7 +18,7 @@ bower install dk-tw-cityselector --save
 
 <h2>使用方式</h2>
 
-<p>套件依賴jQuery，在網頁中引入js檔案如下</p>
+<h3>套件依賴jQuery，在網頁中引入js檔案如下</h3>
 
 <p>```</p>
 
@@ -30,7 +30,7 @@ bower install dk-tw-cityselector --save
 
 <p>```</p>
 
-<p>網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」</p>
+<h3>網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」</h3>
 
 <p><code>
 &lt;form id="myForm"&gt;
@@ -42,21 +42,16 @@ bower install dk-tw-cityselector --save
 &lt;/form&gt;
 </code></p>
 
-<p>呼叫套件</p>
+<h3>呼叫應用</h3>
 
-<p>參數設定如下</p>
+<p>參數設定如下：
+$(&lsquo;父元素&rsquo;).dk_tw_citySelector(&lsquo;縣市選單&rsquo;, &lsquo;區域選單&rsquo;, &lsquo;郵遞區號input&rsquo;);</p>
 
-<p>$(&lsquo;父元素&rsquo;).dk_tw_citySelector(&lsquo;縣市選單&rsquo;, &lsquo;區域選單&rsquo;, &lsquo;郵遞區號input&rsquo;);</p>
-
-<p>```</p>
-
-<!-- 範例 -->
-
-
-<p>$(function() {
-    $(&lsquo;#myForm&rsquo;).dk_tw_citySelector(&lsquo;#county&rsquo;, &lsquo;#district&rsquo;, &lsquo;#zip&rsquo;);
+<p><code>
+$(function() {
+    $('#myForm').dk_tw_citySelector('#county', '#district', '#zip');
 });
-```</p>
+</code></p>
 
 <h2>進階使用</h2>
 
@@ -64,7 +59,8 @@ bower install dk-tw-cityselector --save
 
 <p>(目前只限縣市，無法設定其下區域)</p>
 
-<p>縣市選單加上 data-custom 屬性，並輸入要顯示的縣市名稱在其值中</p>
+<p>縣市選單加上 data-custom 屬性，並輸入要顯示的縣市名稱在其值中
+＊正確縣市名稱請依參照dk-tw-citySelector.js檔案</p>
 
 <p>```</p>
 
@@ -76,7 +72,8 @@ bower install dk-tw-cityselector --save
 
 <h3>選單預設選定值</h3>
 
-<p>選單加上 data-selected 屬性，並輸入要選定的縣市名稱在其值中</p>
+<p>選單加上 data-selected 屬性，並輸入要選定的縣市名稱在其值中
+＊正確縣市名稱請依參照dk-tw-citySelector.js檔案</p>
 
 <p>```</p>
 
