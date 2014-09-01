@@ -20,14 +20,18 @@ or
 
 ## 使用方式
 
-### 套件依賴jQuery，在網頁中引入js檔案如下
+### 置入javascript
+
+套件依賴jQuery，在網頁中引入js檔案如下
 
 ```
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="dk-tw-citySelector.min.js"></script>
 ```
 
-### 網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」
+### 置入表單元件
+
+網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」
 
 ```
 <form id="myForm">
