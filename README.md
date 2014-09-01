@@ -14,7 +14,7 @@
 bower install dk-tw-cityselector --save
 ```
 
-or
+##### or
 
 #### [下載檔案](https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip)
 
@@ -47,10 +47,16 @@ or
 
 參數設定如下：
 $('父元素').dk_tw_citySelector('縣市選單', '區域選單', '郵遞區號input');
+父元素可以設選單外包裹的dom，如form、div、section...等等
+可同時設定多組作用dom
 
 ```
 $(function() {
-    $('#myForm').dk_tw_citySelector('#county', '#district', '#zip');
+    <!-- 這樣可以 -->
+    $('.wrapper').dk_tw_citySelector('.county', '.district', '.zip');
+
+    <!-- 這樣也可以 -->
+    $('form').dk_tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zip"]');
 });
 ```
 
@@ -65,7 +71,7 @@ $(function() {
 
 ```
 <!-- 縣市選單只出現「台北市,台中市,高雄市」 -->
-<select id="county" name="county" data-custom="台北市,台中市,高雄市"></select>
+<select class="county" name="county" data-custom="台北市,台中市,高雄市"></select>
 ```
 
 
@@ -76,10 +82,10 @@ $(function() {
 
 ```
 <!-- 縣市選單選定值為「台北市」 -->
-<select id="county" name="county" data-selected="台北市"></select>
+<select class="county" name="county" data-selected="台北市"></select>
 
 <!-- 區域選單選定值為「中山區」 -->
-<select id="district" name="district" data-selected="中山區"></select>
+<select class="district" name="district" data-selected="中山區"></select>
 
 ```
 

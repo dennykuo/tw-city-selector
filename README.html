@@ -14,7 +14,7 @@
 bower install dk-tw-cityselector --save
 </code></p>
 
-<p>or</p>
+<h5>or</h5>
 
 <h4><a href="https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip">下載檔案</a></h4>
 
@@ -51,13 +51,21 @@ bower install dk-tw-cityselector --save
 <h3>呼叫應用</h3>
 
 <p>參數設定如下：
-$(&lsquo;父元素&rsquo;).dk_tw_citySelector(&lsquo;縣市選單&rsquo;, &lsquo;區域選單&rsquo;, &lsquo;郵遞區號input&rsquo;);</p>
+$(&lsquo;父元素&rsquo;).dk_tw_citySelector(&lsquo;縣市選單&rsquo;, &lsquo;區域選單&rsquo;, &lsquo;郵遞區號input&rsquo;);
+父元素可以設選單外包裹的dom，如form、div、section&hellip;等等
+可同時設定多組作用dom</p>
 
-<p><code>
+<p>```
 $(function() {
-    $('#myForm').dk_tw_citySelector('#county', '#district', '#zip');
-});
-</code></p>
+    <!-- 這樣可以 -->
+    $(&lsquo;.wrapper&rsquo;).dk_tw_citySelector(&lsquo;.county&rsquo;, &lsquo;.district&rsquo;, &lsquo;.zip&rsquo;);</p>
+
+<pre><code>&lt;!-- 這樣也可以 --&gt;
+$('form').dk_tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zip"]');
+</code></pre>
+
+<p>});
+```</p>
 
 <h2>進階使用</h2>
 
@@ -73,7 +81,7 @@ $(function() {
 <!-- 縣市選單只出現「台北市,台中市,高雄市」 -->
 
 
-<p><select id="county" name="county" data-custom="台北市,台中市,高雄市"></select>
+<p><select class="county" name="county" data-custom="台北市,台中市,高雄市"></select>
 ```</p>
 
 <h3>選單預設選定值</h3>
@@ -86,12 +94,12 @@ $(function() {
 <!-- 縣市選單選定值為「台北市」 -->
 
 
-<p><select id="county" name="county" data-selected="台北市"></select></p>
+<p><select class="county" name="county" data-selected="台北市"></select></p>
 
 <!-- 區域選單選定值為「中山區」 -->
 
 
-<p><select id="district" name="district" data-selected="中山區"></select></p>
+<p><select class="district" name="district" data-selected="中山區"></select></p>
 
 <p>```</p>
 
