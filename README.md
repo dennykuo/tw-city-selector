@@ -25,13 +25,14 @@ or
 <script src="dk-tw-citySelector.min.js"></script>
 ```
 
-網頁中置入元件
+網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」
 
 ```
 <form id="myForm">
     <select id="county" name="county"></select>
     <select id="district" name="district"></select>
-    <!-- 若不需使用郵遞區號欄位可刪除或設type="hidden"，若需允許修改則刪去readonly 屬性-->
+    <!-- 若不需使用郵遞區號欄位可刪除下列input或設type="hidden" -->
+    <!-- 若需允許修改則刪去readonly 屬性 -->
     <input id="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
 </form>
 ```

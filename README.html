@@ -30,13 +30,14 @@ bower install dk-tw-cityselector --save
 
 <p>```</p>
 
-<p>網頁中置入元件</p>
+<p>網頁中置入「縣市選單」、「區域選單」、「郵遞區號輸入框(選擇性)」</p>
 
 <p><code>
 &lt;form id="myForm"&gt;
     &lt;select id="county" name="county"&gt;&lt;/select&gt;
     &lt;select id="district" name="district"&gt;&lt;/select&gt;
-    &lt;!-- 若不需使用郵遞區號欄位可刪除或設type="hidden"，若需允許修改則刪去readonly 屬性--&gt;
+    &lt;!-- 若不需使用郵遞區號欄位可刪除下列input或設type="hidden" --&gt;
+    &lt;!-- 若需允許修改則刪去readonly 屬性 --&gt;
     &lt;input id="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly&gt;
 &lt;/form&gt;
 </code></p>
