@@ -1,3 +1,96 @@
 <h1>dk-tw-citySelector.js</h1>
 
 <p>台灣縣市地區選單，不需資料庫。</p>
+
+<h2>安裝</h2>
+
+<p>擇一使用下列方式</p>
+
+<p>使用 Bower</p>
+
+<p><code>
+bower install dk-tw-cityselector --save
+</code></p>
+
+<p>下載檔案</p>
+
+<p><a href="https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip">下載</a></p>
+
+<h2>使用方式</h2>
+
+<p>套件依賴jQuery，在網頁中引入js檔案如下</p>
+
+<p>```</p>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+<script src="dk-tw-citySelector.min.js"></script>
+
+
+<p>```</p>
+
+<p>網頁中置入元件</p>
+
+<p><code>
+&lt;form id="myForm"&gt;
+    &lt;select id="county" name="county"&gt;&lt;/select&gt;
+    &lt;select id="district" name="district"&gt;&lt;/select&gt;
+    &lt;!-- 若不需使用郵遞區號欄位可刪除或設type="hidden"，若需允許修改則刪去readonly 屬性--&gt;
+    &lt;input id="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly&gt;
+&lt;/form&gt;
+</code></p>
+
+<p>呼叫套件</p>
+
+<p>參數設定如下</p>
+
+<p>$(&lsquo;父元素&rsquo;).dk_tw_citySelector(&lsquo;縣市選單&rsquo;, &lsquo;區域選單&rsquo;, &lsquo;郵遞區號input&rsquo;);</p>
+
+<p>```</p>
+
+<!-- 範例 -->
+
+
+<p>$(function() {
+    $(&lsquo;#myForm&rsquo;).dk_tw_citySelector(&lsquo;#county&rsquo;, &lsquo;#district&rsquo;, &lsquo;#zip&rsquo;);
+});
+```</p>
+
+<h2>進階使用</h2>
+
+<h3>只顯示部分縣市選單</h3>
+
+<p>(目前只限縣市，無法設定其下區域)</p>
+
+<p>縣市選單加上 data-custom 屬性，並輸入要顯示的縣市名稱在其值中</p>
+
+<p>```</p>
+
+<!-- 縣市選單只出現「台北市,台中市,高雄市」 -->
+
+
+<p><select id="county" name="county" data-custom="台北市,台中市,高雄市"></select>
+```</p>
+
+<h3>選單預設選定值</h3>
+
+<p>選單加上 data-selected 屬性，並輸入要選定的縣市名稱在其值中</p>
+
+<p>```</p>
+
+<!-- 縣市選單選定值為「台北市」 -->
+
+
+<p><select id="county" name="county" data-selected="台北市"></select></p>
+
+<!-- 區域選單選定值為「中山區」 -->
+
+
+<p><select id="district" name="district" data-selected="中山區"></select></p>
+
+<p>```</p>
+
+<h3>備註</h3>
+
+<p>上面兩種進階用法可同時設定。</p>
