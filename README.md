@@ -4,18 +4,17 @@
 
 ## 安裝
 
-擇一使用下列方式
+### 擇一使用下列方式
 
-使用 Bower
+#### 使用 Bower
 
 ```
 bower install dk-tw-cityselector --save
 ```
 
-下載檔案
+or
 
-[下載](https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip)
-
+#### [下載檔案](https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip)
 
 ## 使用方式
 
@@ -71,6 +70,7 @@ $(function() {
 ```
 <!-- 縣市選單選定值為「台北市」 -->
 <select id="county" name="county" data-selected="台北市"></select>
+
 <!-- 區域選單選定值為「中山區」 -->
 <select id="district" name="district" data-selected="中山區"></select>
 
