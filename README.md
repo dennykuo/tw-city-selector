@@ -2,7 +2,7 @@
 
 台灣縣市地區選單，不需資料庫。
 
-(Demo)[http://dennykuo.github.io/dk-tw-citySelector/]
+[Demo](http://dennykuo.github.io/dk-tw-citySelector/)
 
 ## 安裝
 
