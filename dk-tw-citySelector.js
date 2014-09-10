@@ -9,7 +9,7 @@ $.dk_tw_citySelector = {
     version : '0.0.1',
     debug : true,
     log : function() {
-        // $.dk_tw_citySelector.debug && window.console && console.log.apply(console, arguments);
+        // this.debug && window.console && console.log.apply(console, arguments);
     }
 };
 
