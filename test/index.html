@@ -13,7 +13,7 @@
     <form class="form-1">
         <select class="county" name="county"></select>
         <select class="district" name="district"></select>
-        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+        <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
     </form>
 
     <hr>
@@ -23,7 +23,7 @@
     <form class="form-2">
         <select name="county" data-selected="台北市"></select>
         <select name="district" data-selected="中山區"></select>
-        <input name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+        <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
     </form>
 
 	<p>顯示部分自訂縣市</p>
@@ -31,7 +31,7 @@
     <form class="form-3">
         <select class="county" name="county" data-custom="台北市,台中市,高雄市"></select>
         <select class="district" name="district"></select>
-        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+        <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
     </form>
 
     <hr>
@@ -41,7 +41,7 @@
     <form class="form-4">
         <select class="county" name="county" data-custom="台北市,台中市,高雄市" data-selected="台中市"></select>
         <select class="district" name="district"></select>
-        <input class="zip" name="zip" value="" type="text" placeholder="郵遞區號" readonly>
+        <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
     </form>
 
     <hr>
@@ -50,10 +50,10 @@
 	<script src="../dk-tw-citySelector.js"></script>
 	<script>
 	$(function() {
-		$('.form-1').dk_tw_citySelector('.county', '.district', '.zip');
-		$('.form-2').dk_tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zip"]');
-		$('.form-3').dk_tw_citySelector('.county', '.district', '.zip');
-		$('.form-4').dk_tw_citySelector('.county', '.district', '.zip');
+		$('.form-1').dk_tw_citySelector('.county', '.district', '.zipcode');
+		$('.form-2').dk_tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zipcode"]');
+		$('.form-3').dk_tw_citySelector('.county', '.district', '.zipcode');
+		$('.form-4').dk_tw_citySelector('.county', '.district', '.zipcode');
 	});
 	</script>
 
