@@ -250,7 +250,9 @@ $.dk_tw_citySelector = {
             }
 
             for (var i = 0, j = country.length; i < j; i++) {
-                if (typeof custom === 'object' && custom.indexOf(country[i]) === -1) {
+
+                if ( typeof custom === 'object' && $.inArray( country[i], custom ) === -1 ) {
+                    // 因為ie8不支援 Array indexOf() Method，使用 $.inArray 替代處理
                     continue;
                 }
 
