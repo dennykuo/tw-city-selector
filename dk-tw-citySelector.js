@@ -250,7 +250,7 @@ $.dk_tw_citySelector = {
                 custom = custom.split(','); // 轉陣列                
             }
 
-            for (var i = 0, length = country.length; i < length; i++) {
+            for (var i = 0, j = country.length; i < j; i++) {
                 if (typeof custom === 'object' && custom.indexOf(country[i]) === -1) {
                     continue;
                 }
