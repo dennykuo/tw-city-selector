@@ -17,13 +17,12 @@ $.dk_tw_citySelector = {
 |--------------------------------------------------------------------------
 | Use
 |--------------------------------------------------------------------------
-|   $('.wrapper').dk_tw_citySelector('.county', '.district', '.zip');
+|   $('.wrapper').dk_tw_citySelector('.county', '.district', '.zipcode');
 */
 
 ;(function($) {
     'use strict';
-
-    // 縣市下拉選單
+    
     $.fn.dk_tw_citySelector = function(selectFirst, selectSecond, selectThird) {
 
         // ----------------------------------------
@@ -284,7 +283,7 @@ $.dk_tw_citySelector = {
                     $selectSecond.find('option:gt(0)').remove();
                     
                     // 產生第二選單的選項內容
-                    for(var i = 0; i <=  district[order][0].length - 1; i++) {
+                    for(var i = 0, j = district[order][0].length - 1; i <= j; i++) {
                         // <option value="中正區" data-zip="100">中正區</option>
                         $selectSecond.append('<option value="'+ district[order][0][i] +'" data-zip="'+ district[order][1][i] +'">'+ district[order][0][i] +'</option>');
                     }
