@@ -2,7 +2,7 @@
 
 台灣縣市地區選單，不需資料庫。
 
-[Demo](http://dennykuo.github.io/dk-tw-citySelector/)
+[Demo](http://dennykuo.github.io/tw-city-selector/)
 
 ## 安裝
 
@@ -11,22 +11,22 @@
 #### 使用 Bower
 
 ```
-bower install dk-tw-cityselector --save
+bower install tw-city-selector --save
 ```
 
 ##### or
 
-#### [下載檔案](https://github.com/dennykuo/dk-tw-citySelector/archive/master.zip)
+#### [下載檔案](https://github.com/dennykuo/tw-city-selector/archive/master.zip)
 
 ## 使用方式
 
 ### 置入javascript
 
-套件依賴jQuery，在網頁中引入js檔案如下
+套件依賴 jQuery，在網頁中引入js檔案如下 (jquery 請更換適合的加載路徑)
 
 ```
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="dk-tw-citySelector.min.js"></script>
+<script src="tw-citySelector.min.js"></script>
 ```
 
 ### 置入表單元件
@@ -46,17 +46,17 @@ bower install dk-tw-cityselector --save
 ### 呼叫應用
 
 參數設定如下：
-$('父元素').dk_tw_citySelector('縣市選單', '區域選單', '郵遞區號input');
+$('父元素').tw_citySelector('縣市選單', '區域選單', '郵遞區號input');
 父元素可以設選單外包裹的dom，如form、div、section...等等
 可同時設定多組作用dom
 
 ```
 $(function() {
     <!-- 這樣可以 -->
-    $('.wrapper').dk_tw_citySelector('.county', '.district', '.zip');
+    $('.wrapper').tw_citySelector('.county', '.district', '.zip');
 
     <!-- 這樣也可以 -->
-    $('form').dk_tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zip"]');
+    $('form').tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zip"]');
 });
 ```
 
@@ -67,7 +67,7 @@ $(function() {
 (目前只限縣市，無法設定其下區域)
 
 縣市選單加上 data-custom 屬性，並輸入要顯示的縣市名稱在其值中
-＊正確縣市名稱請依參照dk-tw-citySelector.js檔案
+＊正確縣市名稱請參照 tw-citySelector.js 檔案
 
 ```
 <!-- 縣市選單只出現「台北市,台中市,高雄市」 -->
@@ -86,7 +86,6 @@ $(function() {
 
 <!-- 區域選單選定值為「中山區」 -->
 <select class="district" name="district" data-selected="中山區"></select>
-
 ```
 
 ### 備註
