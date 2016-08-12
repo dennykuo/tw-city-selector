@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="6">
+
+  <testsuite name="test"
+    errors="0" failures="0" hostname="" id="" package="test" skipped="0"
+    tests="6" time="3.537" timestamp="Fri, 12 Aug 2016 06:13:19 GMT">
+  
+    <testcase name="選擇台北的中正區" time="2.728" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="選擇釣魚台列嶼的釣魚台列嶼" time="0.2750" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="選擇澎湖縣的馬公市" time="0.1490" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="選擇沒有值的縣市選項，區域及郵遞區號應該重置" time="0.1090" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="重新選擇縣市，區域及郵遞區號應該重置" time="0.2070" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="限制縣市" time="0.06900" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

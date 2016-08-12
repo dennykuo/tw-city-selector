@@ -7,46 +7,33 @@
 </head>
 
 <body>
+
   <p>顯示全部縣市</p>
-  <form class="form-1">
-    <select class="county" name="county"></select>
-    <select class="district" name="district"></select>
-    <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
+
+  <form>
+    <h4>全部縣市</h4>
+    <div class="selector-all"></div>
+
+    <h4>限制台北市、台中市、高雄市</h4>
+    <div class="selector-only"></div>
+
+    <h4>預設選定新北市及其板橋區</h4>
+    <div class="selector-only"></div>
   </form>
-  <hr>
-  <p>預設選定值</p>
-  <form class="form-2">
-    <select name="county" data-selected="台北市"></select>
-    <select name="district" data-selected="中山區"></select>
-    <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
-  </form>
-  <p>顯示部分自訂縣市</p>
-  <form class="form-3">
-    <select class="county" name="county" data-custom="台北市,台中市,高雄市"></select>
-    <select class="district" name="district"></select>
-    <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
-  </form>
-  <hr>
-  <p>顯示部分自訂縣市，並預設縣市的選定值</p>
-  <form class="form-4">
-    <select class="county" name="county" data-custom="台北市,台中市,高雄市" data-selected="台中市"></select>
-    <select class="district" name="district"></select>
-    <input class="zipcode" name="zipcode" value="" type="text" placeholder="郵遞區號" autocomplete="off" readonly>
-  </form>
-  <hr>
-  <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="jquery.tw-city-selector.js"></script>
+
+  <script src="tw-city-selector.js"></script>
+
   <script>
-  // var module = new App({
-  //   el: '.el'
-  // });
-  
-  $(function() {
-    $('.form-1').tw_citySelector('.county', '.district', '.zipcode');
-    $('.form-2').tw_citySelector('select[name="county"]', 'select[name="district"]', 'input[name="zipcode"]');
-    $('.form-3').tw_citySelector('.county', '.district', '.zipcode');
-    $('.form-4').tw_citySelector('.county', '.district', '.zipcode');
-  });
+    var selectorAll = new TwCitySelector({
+      el: '.selector-all',
+      showZipcode: true,
+    });
+
+    var selectorOnly = new TwCitySelector({
+      el: '.selector-only',
+      only: ['台北市', '台中市', '高雄市'],
+      showZipcode: true,
+    });
   </script>
 </body>
 

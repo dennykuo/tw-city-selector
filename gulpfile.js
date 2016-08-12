@@ -46,6 +46,10 @@ var buffer = require('vinyl-buffer');
 // var rollupNodeResolve = require('rollup-plugin-node-resolve');
 // var rollupCommonjs = require('rollup-plugin-commonjs');
 
+// Test
+// -------------
+var nightwatch = require('gulp-nightwatch');
+
 
 // *************************
 // Run Gulp
@@ -60,8 +64,8 @@ gulp.task('default', function () {
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsSrc, './src/app.js'], ['bf']);
-    gulp.start('webServer');
+    gulp.watch([jsSrc, './tests/*.js'], ['bf', 'test']);
+    gulp.start(['webServer']);
 });
 
 
@@ -98,7 +102,7 @@ gulp.task('js', function () {
 gulp.task('bf', function () {
     var b = browserify({
         entries: [jsSrc],
-        standalone: 'App',
+        standalone: 'TwCitySelector',
         debug: true
     })
     .transform(babelify);
@@ -132,7 +136,7 @@ gulp.task('ru', function () {
             })
         ],
         format: 'umd',
-        moduleName: 'App', // umd 或 iife 格式時，若入口文件含 export，必須加上
+        moduleName: 'TwCitySelector', // umd 或 iife 格式時，若入口文件含 export，必須加上
         sourceMap: true
     })
     .pipe(source(JsName))
@@ -146,32 +150,7 @@ gulp.task('ru', function () {
     .pipe(notify({ message: 'RU task complete' }))
 });
 
-// jq
-gulp.task('jq', function () {
-  return rollup({
-        entry: './src/babel-test.js',
-        rollup: require('rollup'), // 使用原生 rollup
-        plugins: [
-            babelRollup({
-                babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
-                presets: ['es2015-rollup']
-            })
-        ],
-        format: 'umd',
-        // moduleName: 'App', // umd 或 iife 格式時，若入口文件含 export，必須加上
-        // sourceMap: true
-    })
-    .pipe(source('jquery.tw-city-selector.js'))
-    .pipe(gulp.dest(jsDest))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true })) // 讀取原始文件中 sourcemap
-    .pipe(uglify())
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(jsDest))
-    .pipe(notify({ message: 'JQ task complete' }))
-});
-
+// jQuery
 gulp.task('jq', function () {
     var b = browserify({
         entries: ['./src/jquery.tw-city-selector.js'],
@@ -190,4 +169,12 @@ gulp.task('jq', function () {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(jsDest))
         .pipe(notify({ message: 'jq task complete' }))
+});
+
+// Test
+gulp.task('test', ['bf'], function () {
+    return gulp.src(jsSrc)
+        .pipe(nightwatch({
+            configFile: 'nightwatch.json'
+        }));
 });
