@@ -64,7 +64,7 @@ gulp.task('default', function () {
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsSrc, './tests/*.js'], ['bf', 'test']);
+    gulp.watch([jsSrc, './tests/*.js'], ['bf']);
     gulp.start(['webServer']);
 });
 

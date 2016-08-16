@@ -14,15 +14,6 @@ module.exports = {
       .assert.value('.selector-all .zipcode', '100')
   },
 
-  '選擇釣魚台列嶼的釣魚台列嶼': function(browser) {
-    browser
-      .setValue('.selector-all .country', '釣魚台列嶼')
-      .waitForElementVisible('.selector-all .district', 200)
-      .setValue('.selector-all .district', '釣魚台列嶼')
-      .assert.value('.selector-all .district', '釣魚台列嶼')
-      .assert.value('.selector-all .zipcode', '290')
-  },
-
   '選擇澎湖縣的馬公市': function(browser) {
     browser
       .setValue('.selector-all .country', '澎湖縣')

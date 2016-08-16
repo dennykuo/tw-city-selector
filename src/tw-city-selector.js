@@ -28,16 +28,18 @@ function TwCitySelector() {
     districtFieldName: 'district',
     zipcodeClassName: 'zipcode',
     zipcodeFiledName: 'zipcode',
-    only: null, // array 只顯示哪些縣市
-    showZipcode: false
+    selectedCountry: null, // {boolean} 預設選擇的顯示
+    selectedDistrict: null, //{boolean} 預設選擇的區域
+    only: null, // {array} 只顯示哪些縣市
+    showZipcode: false // {boolean} 是否顯示郵遞區號欄位
   };
-
+  
   this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
   this.el = document.querySelector(this.options.el);
-  this.country = null;
-  this.district = null;
+  this.elCountry = null;
+  this.elDistrict = null;
   this.zipcode = null;
-
+  
   init.call(this);
 };
 
@@ -56,9 +58,12 @@ TwCitySelector.prototype.reset = function() {
 // --------------------
 function init() {
   setElements.call(this);
-  getElements.call(this);
   setCountryChanged.call(this);
   setDistrictChanged.call(this);
+
+  if (this.options.selectedCountry) {
+    setSelectedItem.call(this);
+  }
 }
 
 function setElements() {
@@ -67,6 +72,7 @@ function setElements() {
   country.className = this.options.countryClassName;
   country.name = this.options.countryFiledName;
   country.innerHTML = getCountryOptions(this.options.only);
+  this.elCountry = country;
   this.el.appendChild(country);
 
   // 區域選單
@@ -74,6 +80,7 @@ function setElements() {
   district.className = this.options.districtClassName;
   district.name = this.options.districtFieldName;
   district.innerHTML = getDistrictOptions();
+  this.elDistrict = district;
   this.el.appendChild(district);
 
   // 郵遞區號
@@ -85,28 +92,20 @@ function setElements() {
   zipcode.placeholder = "郵遞區號";
   zipcode.autocomplete = "off"
   zipcode.readOnly = true;
+  if ( ! this.options.showZipcode) zipcode.style.display = 'none';
+  this.zipcode = zipcode;
   this.el.appendChild(zipcode);
-
-  if ( ! this.options.showZipcode) { zipcode.style.display = 'none'; }
-}
-
-function getElements() {
-  // 縣市選單
-  this.country = this.el.querySelector('.' + this.options.countryClassName);
-  // 區域選單
-  this.district = this.el.querySelector('.' + this.options.districtClassName);
-  // 郵遞區號
-  this.zipcode = this.el.querySelector('.' + this.options.zipcodeClassName);
 }
 
 function getCountryOptions(only) {
   var options = '<option value="">選擇縣市</option>';
 
   for (var i = 0, j = data.country.length; i < j; i++) {
-    // 若有自訂顯示縣市，且不再自訂範圍中
+    // 若有設定自訂顯示的縣市，且該項目不在自訂縣市中
     if (only && Array.isArray(only) && only.indexOf(data.country[i]) === -1) {
       continue;
     }
+
     // format: <option value="台北市" data-index="0">台北市</option>
     options += `<option value="${data.country[i]}" data-index="${i}">${data.country[i]}</option>`;
   }
@@ -135,25 +134,40 @@ function getDistrictOptions(index) {
 
 function setCountryChanged() {
   var handler = function() {
-    var index = this.country.querySelector('option:checked').dataset.index; // 取 dada-index
-    this.district.innerHTML = getDistrictOptions(index);
+    var index = this.elCountry.querySelector('option:checked')
+      .getAttribute('data-index'); // 取 dada-index
+    this.elDistrict.innerHTML = getDistrictOptions(index);
     this.zipcode.value = '';
   }.bind(this);
 
-  this.country.addEventListener('change', handler);
+  this.elCountry.addEventListener('change', handler);
 }
 
 function setDistrictChanged() {
   var handler = function() {
-    var zipcode = this.district.querySelector('option:checked').dataset.zipcode; // 取 dada-zipcode
+    var zipcode = this.elDistrict.querySelector('option:checked')
+      .getAttribute('data-zipcode'); // 取 dada-zipcode
     this.zipcode.value = zipcode;
   }.bind(this);
 
-  this.district.addEventListener('change', handler);
+  this.elDistrict.addEventListener('change', handler);
+}
+
+function setSelectedItem() {
+  var event = document.createEvent('Event');
+  event.initEvent('change', true, true);
+
+  this.elCountry.value = this.options.selectedCountry;
+  this.elCountry.dispatchEvent(event);
+
+  if (this.options.selectedDistrict) {
+    this.elDistrict.value = this.options.selectedDistrict;
+    this.elDistrict.dispatchEvent(event);
+  }
 }
 
 function resetSelectors() {
-  this.country.selectedIndex = 0;
-  this.district.innerHTML = getDistrictOptions();
+  this.elCountry.selectedIndex = 0;
+  this.elDistrict.innerHTML = getDistrictOptions();
   this.zipcode.value = '';
 }

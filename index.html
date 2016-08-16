@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -8,31 +8,47 @@
 
 <body>
 
-  <p>顯示全部縣市</p>
-
   <form>
     <h4>全部縣市</h4>
     <div class="selector-all"></div>
-
-    <h4>限制台北市、台中市、高雄市</h4>
-    <div class="selector-only"></div>
-
+    
+    <h4>顯示部分縣市 (例：台北市、台中市、高雄市)</h4>
+    <div class="selector-customCountry"></div>
+    
     <h4>預設選定新北市及其板橋區</h4>
-    <div class="selector-only"></div>
+    <div class="selector-itemSelected"></div>
+    
+    <h4>顯示部分縣市 & 預設選定新北市及其板橋區</h4>
+    <div class="selector-customCountry-itemSelected"></div>
   </form>
 
   <script src="tw-city-selector.js"></script>
-
+  
   <script>
     var selectorAll = new TwCitySelector({
       el: '.selector-all',
-      showZipcode: true,
+      showZipcode: true
     });
 
     var selectorOnly = new TwCitySelector({
-      el: '.selector-only',
+      el: '.selector-customCountry',
       only: ['台北市', '台中市', '高雄市'],
-      showZipcode: true,
+      showZipcode: true
+    });
+
+    var selectorSelected = new TwCitySelector({
+      el: '.selector-itemSelected',
+      selectedCountry: '新北市',
+      selectedDistrict: '板橋區',
+      showZipcode: true
+    });
+
+    var selectorSelected = new TwCitySelector({
+      el: '.selector-customCountry-itemSelected',
+      only: ['台北市', '台中市', '高雄市'],
+      selectedCountry: '台中市',
+      selectedDistrict: '北區',
+      showZipcode: true
     });
   </script>
 </body>
