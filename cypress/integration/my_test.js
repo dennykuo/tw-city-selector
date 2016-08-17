@@ -30,12 +30,30 @@ describe('台灣縣市選單測試', function() {
     cy.get('.selector-all .zipcode').should('have.value', '');
   });
 
-  it('顯示部分縣市', function() {
-    cy.get('.selector-only .country')
+  it('顯示部分縣市-台北市、台中市、高雄市', function() {
+    cy.get('.selector-customCountry .country')
       .should('contain', '台北市')
       .and('contain', '台中市')
       .and('contain', '高雄市')
       .and('not.contain', '屏東縣');
+  });
+
+  it('選定新北市及其板橋區', function() {
+    cy.get('.selector-itemSelected .country').should('have.value', '新北市');
+    cy.get('.selector-itemSelected .district').should('have.value', '板橋區');
+    cy.get('.selector-itemSelected .zipcode').should('have.value', '220');
+  });
+
+  it('顯示部分縣市-台北市、台中市、高雄市&選定台中市及其北區', function() {
+    cy.get('.selector-customCountry-itemSelected .country')
+      .should('contain', '台北市')
+      .and('contain', '台中市')
+      .and('contain', '高雄市')
+      .and('not.contain', '屏東縣');
+
+    cy.get('.selector-customCountry-itemSelected .country').should('have.value', '台中市');
+    cy.get('.selector-customCountry-itemSelected .district').should('have.value', '北區');
+    cy.get('.selector-customCountry-itemSelected .zipcode').should('have.value', '404');
   });
  
 });

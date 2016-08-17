@@ -22,6 +22,9 @@ function TwCitySelector() {
   var optionsCustom = arguments[0];
   var optionsRequired = ['el'];
   var optionsDefault = {
+    elCountry: null,
+    elDistrict: null,
+    elZipcode: null,
     countryClassName: 'country',
     countryFiledName: 'country',
     districtClassName: 'district',
@@ -36,9 +39,9 @@ function TwCitySelector() {
   
   this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
   this.el = document.querySelector(this.options.el);
-  this.elCountry = null;
-  this.elDistrict = null;
-  this.zipcode = null;
+  this.elCountry = this.options.elCountry ? this.el.querySelector(this.options.elCountry) : null;
+  this.elDistrict = this.options.elDistrict ? this.el.querySelector(this.options.elDistrict) : null;
+  this.elZipcode = this.options.elZipcode ? this.el.querySelector(this.options.elZipcode) : null;
   
   init.call(this);
 };
@@ -68,33 +71,42 @@ function init() {
 
 function setElements() {
   // 縣市選單
-  var country = document.createElement('select');
-  country.className = this.options.countryClassName;
-  country.name = this.options.countryFiledName;
-  country.innerHTML = getCountryOptions(this.options.only);
-  this.elCountry = country;
-  this.el.appendChild(country);
+  if ( ! this.elCountry) {
+    var country = document.createElement('select');
+    this.elCountry = country;
+    this.el.appendChild(country);
+  }
+
+  this.elCountry.innerHTML = getCountryOptions(this.options.only);
+  this.elCountry.setAttribute('class', this.options.countryClassName);
+  this.elCountry.name = this.options.countryFiledName;
 
   // 區域選單
-  var district = document.createElement('select');
-  district.className = this.options.districtClassName;
-  district.name = this.options.districtFieldName;
-  district.innerHTML = getDistrictOptions();
-  this.elDistrict = district;
-  this.el.appendChild(district);
+  if ( ! this.elDistrict) {
+    var district = document.createElement('select');
+    this.elDistrict = district;
+    this.el.appendChild(district);
+  }
+
+  this.elDistrict.innerHTML = getDistrictOptions();
+  this.elDistrict.setAttribute('class', this.options.districtClassName);
+  this.elDistrict.name = this.options.districtFieldName;
 
   // 郵遞區號
-  var zipcode = document.createElement('input');
-  zipcode.className = this.options.zipcodeClassName;
-  zipcode.name = this.options.zipcodeFieldName;
-  zipcode.type = 'text';
-  zipcode.style.width = '5em';
-  zipcode.placeholder = "郵遞區號";
-  zipcode.autocomplete = "off"
-  zipcode.readOnly = true;
+  if ( ! this.elZipcode) {
+    var zipcode = document.createElement('input');
+    this.elZipcode = zipcode;
+    this.el.appendChild(zipcode);
+  }
+
+  this.elZipcode.setAttribute('class', this.options.zipcodeClassName);
+  this.elZipcode.name = this.options.zipcodeFieldName;
+  this.elZipcode.type = 'text';
+  this.elZipcode.style.width = '6em';
+  this.elZipcode.placeholder = "郵遞區號";
+  this.elZipcode.autocomplete = "off";
+  this.elZipcode.readOnly = true;
   if ( ! this.options.showZipcode) zipcode.style.display = 'none';
-  this.zipcode = zipcode;
-  this.el.appendChild(zipcode);
 }
 
 function getCountryOptions(only) {
@@ -137,7 +149,7 @@ function setCountryChanged() {
     var index = this.elCountry.querySelector('option:checked')
       .getAttribute('data-index'); // 取 dada-index
     this.elDistrict.innerHTML = getDistrictOptions(index);
-    this.zipcode.value = '';
+    this.elZipcode.value = '';
   }.bind(this);
 
   this.elCountry.addEventListener('change', handler);
@@ -147,7 +159,7 @@ function setDistrictChanged() {
   var handler = function() {
     var zipcode = this.elDistrict.querySelector('option:checked')
       .getAttribute('data-zipcode'); // 取 dada-zipcode
-    this.zipcode.value = zipcode;
+    this.elZipcode.value = zipcode;
   }.bind(this);
 
   this.elDistrict.addEventListener('change', handler);
@@ -169,5 +181,5 @@ function setSelectedItem() {
 function resetSelectors() {
   this.elCountry.selectedIndex = 0;
   this.elDistrict.innerHTML = getDistrictOptions();
-  this.zipcode.value = '';
+  this.elZipcode.value = '';
 }
