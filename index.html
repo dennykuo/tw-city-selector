@@ -12,33 +12,49 @@
     <div class="row">
       <div class="col-xs-12">
         
+        <!-- 未寫測試 -->
+        <h4>使用 data-attribute 做元件實例</h4>
+        <div data-role="tw-city-selector"></div>
+        <hr>
+        
+        <!-- 未寫測試 -->
+        <h4>使用 data-attribute 做元件實例，並設定顯示部分縣市-台北市、台中市、高雄市</h4>
+        <div data-role="tw-city-selector" data-only="台北市,台中市,高雄市"></div>
+        <hr>
+        
         <h4>全部縣市</h4>
         <div class="selector-all"></div>
+        <hr>
         
-        <h4>顯示部分縣市-台北市、台中市、高雄市</h4>
+        <h4>設定顯示部分縣市-台北市、台中市、高雄市</h4>
         <div class="selector-customCountry"></div>
+        <hr>
         
         <h4>選定新北市及其板橋區</h4>
         <div class="selector-itemSelected"></div>
+        <hr>
         
-        <h4>顯示部分縣市 & 選定台中市及其北區</h4>
+        <h4>設定顯示部分縣市 & 選定台中市及其北區</h4>
         <div class="selector-customCountry-itemSelected"></div>
+        <hr>
 
-        <h4>使用已存在的 dom (例：bootstrap 樣式)</h4>
+        <!-- 未寫測試 -->
+        <h4>使用已存在的 dom (例：Bootstrap 樣式)</h4>
         <div class="selector-bootstrap row">
-          <div class="form-group col-sm-7">
+          <div class="form-group col-sm-2">
             <label class="control-label">縣市</label>
             <select class="el-country"></select>
           </div>
-          <div class="form-group col-sm-7">
+          <div class="form-group col-sm-2">
             <label class="control-label">區域</label>
             <select class="el-district"></select>
           </div>
-          <div class="form-group col-sm-7">
+          <div class="form-group col-sm-2">
             <label class="control-label">郵遞區號</label>
             <input class="el-zipcode" type="text">
           </div>
         </div>
+        <hr>
         
       </div>
     </div>
@@ -47,7 +63,9 @@
   <script src="tw-city-selector.js"></script>
   
   <script>
-    new TwCitySelector({
+    new TwCitySelector();
+
+    var a = new TwCitySelector({
       el: '.selector-all',
       showZipcode: true
     });

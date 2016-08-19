@@ -1,6 +1,9 @@
 export default function handleOptions() {
   // Check options required
-  getOptionsRequired(arguments[0], arguments[1]);
+  if (arguments[1]) {
+    getOptionsRequired(arguments[0], arguments[1]);
+  }
+  
   // Extend options
   return getOptionsExtend(arguments[0], arguments[2]);
 }
