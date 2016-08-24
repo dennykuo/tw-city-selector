@@ -58,13 +58,13 @@ var nightwatch = require('gulp-nightwatch');
 // Default
 // -------------
 gulp.task('default', function () {
-    gulp.start('bf');
+    gulp.start('ru');
 });
 
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsSrc, './tests/*.js'], ['bf']);
+    gulp.watch([jsSrc, './tests/*.js'], ['ru']);
     gulp.start(['webServer']);
 });
 
@@ -106,10 +106,6 @@ gulp.task('bf', function () {
         debug: true
     })
     .transform(babelify);
-    // .transform(stringify({
-    //     extensions: ['.html', '.css'], minify: true
-    // }))
-    // .transform(vueify);
 
     return b.bundle()
         .pipe(source(JsName))

@@ -3,15 +3,15 @@
 // --------------------
 // Module import
 // --------------------
-import data from './data';
+import { data } from './data';
 import handleOptions from './handleOptions';
 
 
 // --------------------
 // Module export
 // --------------------
-// module.exports = TwCitySelector; /* use browserify to build */
-export default TwCitySelector; /* use rollup to build */
+module.exports = TwCitySelector; /* use browserify to build */
+// export default TwCitySelector; /* use rollup to build */
 
 
 // --------------------
