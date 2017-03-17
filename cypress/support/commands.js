@@ -17,7 +17,7 @@
 //   var log = Cypress.Log.command({
 //     name: "login",
 //     message: [email, password],
-//     consoleProps: function(){
+//     onConsole: function(){
 //       return {
 //         email: email,
 //         password: password
