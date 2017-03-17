@@ -37,10 +37,10 @@ function TwCitySelector() {
     zipcodeClassName: 'zipcode',
     zipcodeFieldName: 'zipcode'
   };
-  
+
   // --- Setting properties ---
   this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
-  
+
   // 有指定 el 的初始化
   if (this.options.el) {
     this.el = getElements(this.options.el);
@@ -51,7 +51,7 @@ function TwCitySelector() {
     return this;
   }
 
-  // 無指定 el，使用符合的 data-role DOM 作為 el 
+  // 無指定 el，使用符合的 data-role DOM 作為 el
   var els = document.querySelectorAll('[role="tw-city-selector"]');
   els.forEach(function(el) {
     var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
@@ -66,13 +66,13 @@ function TwCitySelector() {
     self.options.only = el.getAttribute('data-only')
       ? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
       : null;
-    
+
     // 預設選擇的縣市
     self.options.selectedCountry = el.getAttribute('data-selected-country');
-    
+
     // 預設選擇的區域
     self.options.selectedDistrict = el.getAttribute('data-selected-district');
-    
+
     // 是否顯示郵遞區號
     self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
 
