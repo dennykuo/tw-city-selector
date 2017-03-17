@@ -11,6 +11,8 @@
   ],
   "ignore": [
     ".git",
-    ".gitignore"
+    ".gitignore",
+    "tests",
+    "cypress"
   ]
 }

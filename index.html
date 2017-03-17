@@ -1,62 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 
 <head>
-  <meta charset="UTF-8">
-  <title>tw-city-selector</title>
-  <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>tw-city-selector.js</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="robots" content="Index, Follow">
+  
+  <link href="assets/css/theme/lumen/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
+
 </head>
 
 <body>
+
+<!-- nav -->
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        
-        <!-- 未寫測試 -->
-        <h4>使用 data-attribute 做元件實例</h4>
-        <div data-role="tw-city-selector"></div>
-        <hr>
-        
-        <!-- 未寫測試 -->
-        <h4>使用 data-attribute 做元件實例，設定顯示部分縣市-台北市、台中市、高雄市</h4>
-        <div data-role="tw-city-selector" data-only="台北市,台中市,高雄市"></div>
-        <hr>
+    
+    <!-- navbar-header -->
+    <div class="navbar-header">
+      <a href="javascript:void(0)" class="navbar-brand">tw-city-selector.js</a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
-        <!-- 未寫測試 -->
-        <h4>使用 data-attribute 做元件實例，選定新北市及其板橋區</h4>
-        <div data-role="tw-city-selector"
-             data-selected-country="新北市"
-             data-selected-district="板橋區">
-        </div>
-        <hr>
+    <!-- navbar-collapse -->
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <!-- <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Themes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Default</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Cerulean</a></li>
+            <li><a href="#">Cosmo</a></li>
+            <li><a href="#">Cyborg</a></li>
+          </ul>
+        </li>
+      </ul> -->
 
-        <!-- 未寫測試 -->
-        <h4>使用 data-attribute 做元件實例，設定顯示部分縣市-台北市、台中市、高雄市，選定台中市及其北區</h4>
-        <div data-role="tw-city-selector"
-             data-only="台北市,台中市,高雄市"
-             data-selected-country="台中市"
-             data-selected-district="北區">
-        </div>
-        <hr>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/dennykuo/tw-city-selector">Github</a></li>
+      </ul>
+    </div>
+    
+  </div>
+</nav>
+<!-- /nav -->
+
+<!-- .main -->
+<main class="main container">
+  
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+      <div class="jumbotron">
+        <h1>tw-city-selector.js</h1>
+        <p>台灣縣市選單，真是 nice</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- .content -->
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+      <div class="content">
         
-        <h4>全部縣市</h4>
+        <div class="page-header">
+          <h1>安裝</h1>
+        </div>
+
+        <p class="lead">擇一使用下列方式</p>
+        
+        <h4>透過 Bower</h4>
+<pre class="prettyprint">
+bower install tw-city-selector
+</pre>
+
+        <h4>下載檔案</h4>
+        <p>至 <a href="https://github.com/dennykuo/tw-city-selector" target="_blank">Github</a> 下載</p>
+        
+        <div class="page-header">
+          <h1>引入 js</h1>
+        </div>
+        
+        <p class="lead">無其他依賴，將下列路徑改為套件位置</p>
+<pre class="prettyprint">
+&lt;script src=&quot;tw-city-selector.min.js&quot;&gt;&lt;/script&gt;
+</pre> 
+
+        <div class="page-header">
+          <h1>使用方式</h1>
+        </div>
+
+        <p class="lead">可使用兩種方式做元件加載：</p>
+        <ul>
+            <li>tag 加上 role-attribute</li>
+            <li>javascript 呼叫實例</li>
+        </ul>
+        
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>tag 加上 role-attribute</h4></div>
+          <div class="panel-body">
+            
+            <!-- 未寫測試 -->
+            <h5>預設用法 (附有隱藏的郵遞區號欄位)</h5>
+<pre class="prettyprint">
+&lt;div role=&quot;tw-city-selector&quot;&gt;&lt;/div&gt;
+</pre> 
+            <div role="tw-city-selector"></div>
+            <hr>
+
+            <h5>顯示郵遞區號欄位</h5>
+<pre class="prettyprint">
+&lt;div role=&quot;tw-city-selector&quot; data-show-zipcode&gt;&lt;/div&gt;
+</pre> 
+            <div role="tw-city-selector" data-show-zipcode></div>
+            <hr>
+            
+            <!-- 未寫測試 -->
+            <h5>限制可選擇縣市 (例：台北市、台中市、高雄市)</h5>
+<pre class="prettyprint">
+&lt;div role=&quot;tw-city-selector&quot; data-only=&quot;台北市,台中市,高雄市&quot;&gt;&lt;/div&gt;
+</pre>
+            <div role="tw-city-selector" data-only="台北市,台中市,高雄市"></div>
+            <hr>
+            
+            <!-- 未寫測試 -->
+            <h5>選定縣市 (例：新北市及其板橋區)</h5>
+<pre class="prettyprint">
+&lt;div role=&quot;tw-city-selector&quot;
+     data-selected-country=&quot;新北市&quot;
+     data-selected-district=&quot;板橋區&quot;&gt;
+&lt;/div&gt;
+</pre>
+            <div role="tw-city-selector"
+                 data-selected-country="新北市"
+                 data-selected-district="板橋區">
+            </div>
+            <hr>
+
+            <!-- 未寫測試 -->
+            <h5>限制可選擇縣市 & 選定縣市</h5>
+<pre class="prettyprint">
+&lt;div role=&quot;tw-city-selector&quot;
+     data-only=&quot;台北市,台中市,高雄市&quot;
+     data-selected-country=&quot;台中市&quot;
+     data-selected-district=&quot;北區&quot;&gt;
+&lt;/div&gt;
+</pre>
+            <div role="tw-city-selector"
+                 data-only="台北市,台中市,高雄市"
+                 data-selected-country="台中市"
+                 data-selected-district="北區">
+            </div>
+
+          </div>
+        </div>
+
+
+        
+        <h5>全部縣市</h5>
         <div class="selector-all"></div>
-        <hr>
         
-        <h4>設定顯示部分縣市-台北市、台中市、高雄市</h4>
+        <h5>設定顯示部分縣市-台北市、台中市、高雄市</h5>
         <div class="selector-customCountry"></div>
-        <hr>
         
-        <h4>選定新北市及其板橋區</h4>
+        <h5>選定新北市及其板橋區</h5>
         <div class="selector-itemSelected"></div>
-        <hr>
         
-        <h4>設定顯示部分縣市 & 選定台中市及其北區</h4>
+        <h5>設定顯示部分縣市 & 選定台中市及其北區</h5>
         <div class="selector-customCountry-itemSelected"></div>
-        <hr>
 
         <!-- 未寫測試 -->
-        <h4>使用已存在的 dom (例：Bootstrap 樣式)</h4>
+        <h5>使用已存在的 dom (例：Bootstrap 樣式)</h5>
         <div class="selector-bootstrap row">
           <div class="form-group col-sm-2">
             <label class="control-label">縣市</label>
@@ -71,54 +194,75 @@
             <input class="el-zipcode" type="text">
           </div>
         </div>
-        <hr>
-        
+
       </div>
     </div>
   </div>
+  <!-- /.content -->
 
-  <script src="tw-city-selector.js"></script>
-  
-  <script>
-    new TwCitySelector();
+</main>
+<!-- /.main -->
 
-    var a = new TwCitySelector({
-      el: '.selector-all',
-      showZipcode: true
-    });
+<!-- footer -->
+<footer class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      
+    </div>
+  </div>
+</footer>
+<!-- /footer -->
 
-    new TwCitySelector({
-      el: '.selector-customCountry',
-      only: ['台北市', '台中市', '高雄市'],
-      showZipcode: true
-    });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 
-    new TwCitySelector({
-      el: '.selector-itemSelected',
-      selectedCountry: '新北市',
-      selectedDistrict: '板橋區',
-      showZipcode: true
-    });
+<script src="tw-city-selector.min.js"></script>
 
-    new TwCitySelector({
-      el: '.selector-customCountry-itemSelected',
-      only: ['台北市', '台中市', '高雄市'],
-      selectedCountry: '台中市',
-      selectedDistrict: '北區',
-      showZipcode: true
-    });
+<script>
+  // code snippet
+  prettyPrint();
 
-    new TwCitySelector({
-      el: '.selector-bootstrap',
-      elCountry: '.el-country',
-      countryClassName: 'country form-control',
-      elDistrict: '.el-district',
-      districtClassName: 'district form-control',
-      elZipcode: '.el-zipcode',
-      zipcodeClassName: 'zipcode form-control',
-      showZipcode: true
-    });
-  </script>
+
+  new TwCitySelector();
+
+  var a = new TwCitySelector({
+    el: '.selector-all',
+    showZipcode: true
+  });
+
+  new TwCitySelector({
+    el: '.selector-customCountry',
+    only: ['台北市', '台中市', '高雄市'],
+    showZipcode: true
+  });
+
+  new TwCitySelector({
+    el: '.selector-itemSelected',
+    selectedCountry: '新北市',
+    selectedDistrict: '板橋區',
+    showZipcode: true
+  });
+
+  new TwCitySelector({
+    el: '.selector-customCountry-itemSelected',
+    only: ['台北市', '台中市', '高雄市'],
+    selectedCountry: '台中市',
+    selectedDistrict: '北區',
+    showZipcode: true
+  });
+
+  new TwCitySelector({
+    el: '.selector-bootstrap',
+    elCountry: '.el-country',
+    countryClassName: 'country form-control',
+    elDistrict: '.el-district',
+    districtClassName: 'district form-control',
+    elZipcode: '.el-zipcode',
+    zipcodeClassName: 'zipcode form-control',
+    showZipcode: true
+  });
+</script>
+
 </body>
-
 </html>

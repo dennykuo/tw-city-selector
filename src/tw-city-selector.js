@@ -26,16 +26,16 @@ function TwCitySelector() {
     elCountry: null,
     elDistrict: null,
     elZipcode: null,
+    selectedCountry: null, // {boolean} 預設選擇的縣市
+    selectedDistrict: null, //{boolean} 預設選擇的區域
+    only: null, // {array} 限制顯示哪些縣市
+    showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
     countryClassName: 'country',
     countryFiledName: 'country',
     districtClassName: 'district',
     districtFieldName: 'district',
     zipcodeClassName: 'zipcode',
-    zipcodeFieldName: 'zipcode',
-    selectedCountry: null, // {boolean} 預設選擇的縣市
-    selectedDistrict: null, //{boolean} 預設選擇的區域
-    only: null, // {array} 限制顯示哪些縣市
-    showZipcode: false // {boolean} 是否顯示郵遞區號欄位
+    zipcodeFieldName: 'zipcode'
   };
   
   // --- Setting properties ---
@@ -48,11 +48,11 @@ function TwCitySelector() {
     this.elDistrict = getElements(this.options.elDistrict);
     this.elZipcode = getElements(this.options.elZipcode);
     init.call(this);
-    return true;
+    return this;
   }
 
   // 無指定 el，使用符合的 data-role DOM 作為 el 
-  var els = document.querySelectorAll('[data-role="tw-city-selector"]');
+  var els = document.querySelectorAll('[role="tw-city-selector"]');
   els.forEach(function(el) {
     var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 
@@ -66,15 +66,20 @@ function TwCitySelector() {
     self.options.only = el.getAttribute('data-only')
       ? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
       : null;
+    
     // 預設選擇的縣市
     self.options.selectedCountry = el.getAttribute('data-selected-country');
+    
     // 預設選擇的區域
     self.options.selectedDistrict = el.getAttribute('data-selected-district');
+    
+    // 是否顯示郵遞區號
+    self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
 
     init.call(self);
   }, this);
 
-  return true;
+  return this;
 };
 
 
@@ -217,5 +222,5 @@ function resetSelectors() {
   this.elCountry.selectedIndex = 0;
   this.elDistrict.innerHTML = getDistrictOptions();
   this.elZipcode.value = '';
-  return true;
+  return this;
 }

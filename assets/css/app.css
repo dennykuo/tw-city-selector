@@ -1,0 +1,43 @@
+@import 'https://fonts.googleapis.com/css?family=Source Sans Pro';
+@import url('http://fonts.googleapis.com/earlyaccess/notosanstc.css');
+
+body {
+    font-family: 'Source Sans Pro', 'Noto Sans TC', sans-serif;
+    line-height: 1.6em;
+    letter-spacing: .1em;
+}
+pre.prettyprint {
+    font-family: 'Source Sans Pro', 'Noto Sans TC', sans-serif;
+    font-size: 1em;
+    line-height: 1.8em;
+}
+h1, h2, h3, h4, h5, h6, p, li, pre {
+    color: #646b71;
+}
+h1, h2, h3, h4, h5, h6, p, pre {
+    margin: .75em 0;
+}
+.navbar-default .navbar-brand {
+    color: #8c8c8c;
+    font-size: 1.7em;
+}
+.main {
+    margin-top: 120px;
+    margin-bottom: 80px;
+}
+.panel {
+    margin: 30px 0;
+}
+.page-header {
+    margin-top: 80px;
+}
+.page-header h1 {
+    margin: .4em 0;
+}
+.prettyprint {
+    white-space: pre-wrap;
+    padding: 13px 20px;
+}
+
+/*! Color themes for Google Code Prettify | MIT License | github.com/jmblog/color-themes-for-google-code-prettify */
+.prettyprint{background:#f7f3f7;font-family:Menlo,Bitstream Vera Sans Mono,DejaVu Sans Mono,Monaco,Consolas,monospace;border:0!important}.pln{color:#1b181b}ol.linenums{margin-top:0;margin-bottom:0;color:#5a7b8c}li.L0,li.L1,li.L2,li.L3,li.L4,li.L5,li.L6,li.L7,li.L8,li.L9{padding-left:1em;background-color:#f7f3f7;list-style-type:decimal}@media screen{.str{color:#918b3b}.kwd{color:#7b59c0}.com{color:#5a7b8c}.typ{color:#516aec}.lit{color:#a65926}.pun{color:#1b181b}.opn{color:#1b181b}.clo{color:#1b181b}.tag{color:#ca402b}.atn{color:#a65926}.atv{color:#159393}.dec{color:#a65926}.var{color:#ca402b}.fun{color:#516aec}}
