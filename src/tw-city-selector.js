@@ -143,8 +143,8 @@ function setElements() {
   this.elZipcode.name = this.options.zipcodeFieldName;
   this.elZipcode.type = 'text';
   this.elZipcode.readOnly = true;
-  this.elZipcode.autocomplete = "off";
-  this.elZipcode.placeholder = "郵遞區號";
+  this.elZipcode.autocomplete = 'off';
+  this.elZipcode.placeholder = '郵遞區號';
   this.elZipcode.style.width = '6em';
   this.elZipcode.style.display = this.options.showZipcode || 'none';
 }
@@ -199,6 +199,7 @@ function setDistrictChanged() {
   var handler = function() {
     var zipcode = this.elDistrict.querySelector('option:checked')
       .getAttribute('data-zipcode'); // 取 dada-zipcode
+      
     this.elZipcode.value = zipcode;
   }.bind(this);
 
