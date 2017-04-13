@@ -1,6 +1,6 @@
 {
   "name": "tw-city-selector",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "homepage": "http://dennykuo.github.io/tw-city-selector",
   "keywords": [
     "dk",
@@ -11,9 +11,8 @@
   ],
   "ignore": [
     ".git",
-    ".gitignore"
-  ],
-  "dependencies": {
-    "jquery": "~1"
-  }
+    ".gitignore",
+    "tests",
+    "cypress"
+  ]
 }
