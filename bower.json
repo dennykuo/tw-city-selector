@@ -10,9 +10,14 @@
     "jquery.tw-city-selector.js"
   ],
   "ignore": [
+	"src/",
     ".git",
     ".gitignore",
-    "tests",
-    "cypress"
+	"tests",
+	"nightwatch.json",
+	"cypress",
+	"cypress.js",
+	"gulpfile.js",
+	".babelrc"
   ]
 }
