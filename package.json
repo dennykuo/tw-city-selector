@@ -4,12 +4,11 @@
   "homepage": "https://dennykuo.github.io/tw-city-selector",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/dennykuo/tw-city-selector",
+    "url": "https://github.com/dennykuo/tw-city-selector.git",
     "type": "git"
   },
   "bugs": "https://github.com/dennykuo/tw-city-selector/issues",
   "files": [
-	"package.json",
 	"tw-city-selector.js",
     "tw-city-selector.min.js",
 	"tw-city-selector.min.js.map",
