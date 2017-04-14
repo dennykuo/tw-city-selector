@@ -1,0 +1,17 @@
+{
+  "name": "tw-city-selector",
+  "version": "1.0.1",
+  "homepage": "https://dennykuo.github.io/tw-city-selector",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/dennykuo/tw-city-selector",
+    "type": "git"
+  },
+  "bugs": "https://github.com/dennykuo/tw-city-selector/issues",
+  "files": [
+	"tw-city-selector.js",
+    "tw-city-selector.min.js",
+	"tw-city-selector.map.js",
+    "docs/"
+  ]
+}

@@ -16,7 +16,7 @@
 	"tests",
 	"nightwatch.json",
 	"cypress",
-	"cypress.js",
+	"cypress.json",
 	"gulpfile.js",
 	".babelrc"
   ]
