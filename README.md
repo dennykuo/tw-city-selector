@@ -2,7 +2,7 @@
 
 ### [Demo & 文件](http://dennykuo.github.io/tw-city-selector/)
 
-資料參考：[中華郵政] (http://www.post.gov.tw/)
+資料參考：[中華郵政](http://www.post.gov.tw/)
 
 縣市資料最後更新：2017-04-14
 
