@@ -1,6 +1,6 @@
 {
   "name": "tw-city-selector",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "homepage": "http://dennykuo.github.io/tw-city-selector",
   "keywords": [
     "dk",
@@ -10,9 +10,14 @@
     "jquery.tw-city-selector.js"
   ],
   "ignore": [
+	"src/",
     ".git",
     ".gitignore",
-    "tests",
-    "cypress"
+	"tests",
+	"nightwatch.json",
+	"cypress",
+	"cypress.json",
+	"gulpfile.js",
+	".babelrc"
   ]
 }

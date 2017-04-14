@@ -5,7 +5,8 @@
 // Dir
 var jsSrc = './src/tw-city-selector.js';
 var jsDest = './';
-var JsName = 'tw-city-selector.js';
+var docsJs = './docs/js/';
+var fileName = 'tw-city-selector.js';
 
 
 // *************************
@@ -76,7 +77,7 @@ gulp.task('watch', function () {
 // Web server
 // -------------
 gulp.task('webServer', function() {
-  return gulp.src('./')
+  return gulp.src('./docs')
     .pipe(webServer({
         host: 'denny.local',
         fallback: 'index.html',
@@ -94,6 +95,7 @@ gulp.task('js', function () {
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(jsDest))
+		.pipe(gulp.dest(docsJs))
         .pipe(notify({ message: 'JS task complete' }))
 });
 
@@ -108,7 +110,7 @@ gulp.task('bf', function () {
     .transform(babelify);
 
     return b.bundle()
-        .pipe(source(JsName))
+        .pipe(source(fileName))
         .pipe(gulp.dest(jsDest))
         .pipe(buffer())
         .pipe(sourcemaps.init())
@@ -116,6 +118,7 @@ gulp.task('bf', function () {
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(jsDest))
+		.pipe(gulp.dest(docsJs))
         .pipe(notify({ message: 'BF task complete' }))
 });
 
@@ -135,7 +138,7 @@ gulp.task('ru', function () {
         moduleName: 'TwCitySelector', // umd 或 iife 格式時，若入口文件含 export，必須加上
         sourceMap: true
     })
-    .pipe(source(JsName))
+    .pipe(source(fileName))
     .pipe(gulp.dest(jsDest))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true })) // 讀取原始文件中 sourcemap
@@ -143,29 +146,30 @@ gulp.task('ru', function () {
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(jsDest))
+	.pipe(gulp.dest(docsJs))
     .pipe(notify({ message: 'RU task complete' }))
 });
 
 // jQuery
-gulp.task('jq', function () {
-    var b = browserify({
-        entries: ['./src/jquery.tw-city-selector.js'],
-        // standalone: 'App',
-        debug: true
-    })
-    .transform(babelify);
-
-    return b.bundle()
-        .pipe(source('jquery.tw-city-selector.js'))
-        .pipe(gulp.dest(jsDest))
-        .pipe(buffer())
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(jsDest))
-        .pipe(notify({ message: 'jq task complete' }))
-});
+// gulp.task('jq', function () {
+//     var b = browserify({
+//         entries: ['./src/jquery.tw-city-selector.js'],
+//         // standalone: 'App',
+//         debug: true
+//     })
+//     .transform(babelify);
+//
+//     return b.bundle()
+//         .pipe(source('jquery.tw-city-selector.js'))
+//         .pipe(gulp.dest(jsDest))
+//         .pipe(buffer())
+//         .pipe(sourcemaps.init())
+//         .pipe(uglify())
+//         .pipe(rename({ suffix: '.min' }))
+//         .pipe(sourcemaps.write('./'))
+//         .pipe(gulp.dest(jsDest))
+//         .pipe(notify({ message: 'jq task complete' }))
+// });
 
 // Test
 gulp.task('test', ['bf'], function () {

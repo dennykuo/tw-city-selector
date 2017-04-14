@@ -9,8 +9,8 @@
   <meta name="description" content="台灣縣市選單，無依賴又好用...">
   <meta name="robots" content="Index, Follow">
 
-  <link href="assets/css/theme/lumen/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/app.css" rel="stylesheet">
+  <link href="css/theme/lumen/bootstrap.min.css" rel="stylesheet">
+  <link href="css/app.css" rel="stylesheet">
 </head>
 
 <body>
@@ -81,7 +81,12 @@
 bower install tw-city-selector --save
 </pre>
 
-        <h4>(B) 下載檔案</h4>
+				<h4>(B) 透過 NPM</h4>
+<pre class="prettyprint">
+npm install tw-city-selector
+</pre>
+
+        <h4>(C) 下載檔案</h4>
         <p><a href="https://github.com/dennykuo/tw-city-selector" target="_blank">Github</a></p>
 
         <div class="page-header">
@@ -116,7 +121,10 @@ bower install tw-city-selector --save
 </pre>
             <div role="tw-city-selector"></div>
 
-						<h6>* 預設含有隱藏的郵遞區號欄位</h6>
+						<p>* 產生的選單組合當中，預設包含一個隱藏的郵遞區號欄位</p>
+<pre class="prettyprint">
+&lt;input class=&quot;zipcode&quot; name=&quot;zipcode&quot; type=&quot;text&quot; readonly=&quot;&quot; autocomplete=&quot;off&quot; placeholder=&quot;&#37109;&#36958;&#21312;&#34399;&quot; style=&quot;width: 6em; display: none;&quot;&gt;
+</pre>
             <hr>
 
             <h4>顯示郵遞區號欄位</h4>
@@ -275,7 +283,7 @@ bower install tw-city-selector --save
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 
-<script src="tw-city-selector.min.js"></script>
+<script src="js/tw-city-selector.min.js"></script>
 
 <script>
   // code snippet
