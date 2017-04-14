@@ -18,6 +18,9 @@ export default TwCitySelector; /* use rollup to build */
 // Constructor
 // --------------------
 function TwCitySelector() {
+
+  var tagRoleName = 'tw-city-selector';
+
   // --- Setting options ---
   var optionsCustom = arguments[0];
   var optionsRequired = arguments.length ? ['el'] : null; // 若無參數則不設必要參數
@@ -30,6 +33,7 @@ function TwCitySelector() {
     selectedDistrict: null, //{boolean} 預設選擇的區域
     only: null, // {array} 限制顯示哪些縣市
     showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
+	bootstrapStyle: false,
     countryClassName: 'country',
     countryFiledName: 'country',
     districtClassName: 'district',
@@ -51,8 +55,8 @@ function TwCitySelector() {
     return this;
   }
 
-  // 無指定 el，使用符合的 data-role DOM 作為 el
-  var els = document.querySelectorAll('[role="tw-city-selector"]');
+  // 無指定 el 的初始化，使用符合的 data-role DOM 作為 el
+  var els = document.querySelectorAll('[role='+ tagRoleName +']');
   els.forEach(function(el) {
     var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 
@@ -72,6 +76,9 @@ function TwCitySelector() {
 
     // 預設選擇的區域
     self.options.selectedDistrict = el.getAttribute('data-selected-district');
+
+	// 是否使用 bootstrap 樣式
+	self.options.bootstrapStyle = (el.getAttribute('data-bootstrap-style') != null);
 
     // 是否顯示郵遞區號
     self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
@@ -117,9 +124,9 @@ function setElements() {
     this.el.appendChild(country);
   }
 
+  // 縣市選單屬性
   this.elCountry.innerHTML = getCountryOptions(this.options.only);
   this.elCountry.setAttribute('class', this.options.countryClassName);
-  this.elCountry.name = this.options.countryFiledName;
 
   // 區域選單
   if ( ! this.elDistrict) {
@@ -128,6 +135,7 @@ function setElements() {
     this.el.appendChild(district);
   }
 
+  // 區域選單屬性
   this.elDistrict.innerHTML = getDistrictOptions();
   this.elDistrict.setAttribute('class', this.options.districtClassName);
   this.elDistrict.name = this.options.districtFieldName;
@@ -139,6 +147,7 @@ function setElements() {
     this.el.appendChild(zipcode);
   }
 
+  // 郵遞區號屬性設定
   this.elZipcode.setAttribute('class', this.options.zipcodeClassName);
   this.elZipcode.name = this.options.zipcodeFieldName;
   this.elZipcode.type = 'text';
@@ -147,6 +156,11 @@ function setElements() {
   this.elZipcode.placeholder = '郵遞區號';
   this.elZipcode.style.width = '6em';
   this.elZipcode.style.display = this.options.showZipcode || 'none';
+
+  // bootstrap 樣式套入
+  if (this.options.bootstrapStyle) {
+    setBootstrapStyle.call(this);
+  }
 }
 
 function getCountryOptions(only) {
@@ -158,7 +172,7 @@ function getCountryOptions(only) {
       continue;
     }
 
-    // format: <option value="台北市" data-index="0">台北市</option>
+    // format: <option value="臺北市" data-index="0">臺北市</option>
     options += `<option value="${data.country[i]}" data-index="${i}">${data.country[i]}</option>`;
   }
 
@@ -199,7 +213,7 @@ function setDistrictChanged() {
   var handler = function() {
     var zipcode = this.elDistrict.querySelector('option:checked')
       .getAttribute('data-zipcode'); // 取 dada-zipcode
-      
+
     this.elZipcode.value = zipcode;
   }.bind(this);
 
@@ -224,4 +238,27 @@ function resetSelectors() {
   this.elDistrict.innerHTML = getDistrictOptions();
   this.elZipcode.value = '';
   return this;
+}
+
+function setBootstrapStyle() {
+	var _className = 'form-control';
+    var _wrapperClassName = 'form-group';
+
+	this.elCountry.setAttribute('class', _className);
+    var countryWrapper = document.createElement('div');
+    countryWrapper.setAttribute('class', _wrapperClassName);
+	this.el.insertBefore(countryWrapper, this.el.childNodes[0]);
+	countryWrapper.appendChild(this.elCountry);
+
+	this.elDistrict.setAttribute('class', _className);
+    var countryWrapper = document.createElement('div');
+    countryWrapper.setAttribute('class', _wrapperClassName);
+	this.el.insertBefore(countryWrapper, this.el.childNodes[1]);
+	countryWrapper.appendChild(this.elDistrict);
+
+	this.elZipcode.setAttribute('class', _className);
+    var countryWrapper = document.createElement('div');
+    countryWrapper.setAttribute('class', _wrapperClassName);
+	this.el.insertBefore(countryWrapper, this.el.childNodes[2]);
+	countryWrapper.appendChild(this.elZipcode);
 }

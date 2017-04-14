@@ -3,6 +3,7 @@
 // *************************
 
 // Dir
+var jsDir = './src/*.js';
 var jsSrc = './src/tw-city-selector.js';
 var jsDest = './';
 var docsJs = './docs/js/';
@@ -65,7 +66,7 @@ gulp.task('default', function () {
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsSrc, './tests/*.js'], ['ru']);
+    gulp.watch([jsDir, './tests/*.js'], ['ru']);
     gulp.start(['webServer']);
 });
 
