@@ -11,7 +11,7 @@
   "files": [
 	"tw-city-selector.js",
     "tw-city-selector.min.js",
-	"tw-city-selector.map.js",
+	"tw-city-selector.js.map",
     "docs/"
   ]
 }
