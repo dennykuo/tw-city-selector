@@ -12,7 +12,7 @@
 	"package.json",
 	"tw-city-selector.js",
     "tw-city-selector.min.js",
-	"tw-city-selector.js.map",
+	"tw-city-selector.min.js.map",
     "docs/"
   ]
 }
