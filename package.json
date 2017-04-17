@@ -9,9 +9,9 @@
   },
   "bugs": "https://github.com/dennykuo/tw-city-selector/issues",
   "files": [
-	"tw-city-selector.js",
+    "tw-city-selector.js",
     "tw-city-selector.min.js",
-	"tw-city-selector.min.js.map",
+    "tw-city-selector.min.js.map",
     "docs/"
   ]
 }
