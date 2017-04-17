@@ -1,7 +1,7 @@
 describe('台灣縣市選單測試', function() {
 
   before(function() {
-    cy.visit('http://denny.local:8000/');
+    cy.visit('http://127.0.0.1:8000/');
   });
 
   it('選擇台北的中正區', function() {
@@ -55,5 +55,5 @@ describe('台灣縣市選單測試', function() {
     cy.get('.selector-customCountry-itemSelected .district').should('have.value', '北區');
     cy.get('.selector-customCountry-itemSelected .zipcode').should('have.value', '404');
   });
- 
+
 });

@@ -84,17 +84,22 @@
 
         <p class="lead">擇一使用下列方式</p>
 
-        <h4>(A) 透過 Bower</h4>
+        <h4>- 透過 Bower</h4>
 <pre class="prettyprint">
 bower install tw-city-selector --save
 </pre>
 
-				<h4>(B) 透過 NPM</h4>
+				<h4>- 透過 Yarn</h4>
+<pre class="prettyprint">
+yarn add tw-city-selector
+</pre>
+
+				<h4>- 透過 NPM</h4>
 <pre class="prettyprint">
 npm install tw-city-selector --save
 </pre>
 
-        <h4>(C) 下載檔案</h4>
+        <h4>- 下載檔案</h4>
         <p><a href="https://github.com/dennykuo/tw-city-selector" target="_blank">Github</a></p>
 
         <div class="page-header">
@@ -112,18 +117,18 @@ npm install tw-city-selector --save
 
         <p class="lead">可使用下列兩種方式加載選單元件：</p>
         <ul>
-            <li>tag 加上 role-attribute (預設用法，自訂性低)</li>
+            <li>element 加上 role-attribute (預設用法，自訂性低)</li>
             <li>js 實例 (自訂性高)</li>
         </ul>
 
 				<h3>以下分別說明</h3>
 
         <div class="panel panel-default">
-          <div class="panel-heading"><h3>tag 加上 role-attribute</h3></div>
+          <div class="panel-heading"><h3>element  加上 role-attribute</h3></div>
           <div class="panel-body">
 
             <!-- 未寫測試 -->
-            <h4>設置一個空 tag，加入 attribute</h4>
+            <h4>設置一個空 element，加入 role-attribute</h4>
 <pre class="prettyprint">
 &lt;div role=&quot;tw-city-selector&quot;&gt;&lt;/div&gt;
 </pre>
@@ -254,10 +259,11 @@ npm install tw-city-selector --save
 
 <!-- 以下為實例方式，帶修改 -->
 
-        <!-- <h4>全部縣市</h4>
+        <h4>全部縣市</h4>
         <div class="selector-all"></div>
 
-        <h4>設定顯示部分縣市-臺北市、臺中市、高雄市</h4>
+        <!--
+				<h4>設定顯示部分縣市-臺北市、臺中市、高雄市</h4>
         <div class="selector-customCountry"></div>
 
         <h4>選定新北市及其板橋區</h4>
@@ -315,10 +321,10 @@ npm install tw-city-selector --save
 	// Sample
   new TwCitySelector();
 
-  // var a = new TwCitySelector({
-  //   el: '.selector-all',
-  //   showZipcode: true
-  // });
+  var a = new TwCitySelector({
+    el: '.selector-all',
+    showZipcode: true
+  });
 	//
   // new TwCitySelector({
   //   el: '.selector-customCountry',
