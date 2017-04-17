@@ -20,7 +20,7 @@
 
   "test_settings" : {
     "default" : {
-      "launch_url" : "http://denny.local:8000/",
+      "launch_url" : "http://127.0.0.1:8000/",
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
       "silent": true,
