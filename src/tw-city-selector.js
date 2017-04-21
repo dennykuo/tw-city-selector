@@ -141,6 +141,7 @@ function setElements() {
 	// 縣市選單屬性
 	this.elCountry.innerHTML = getCountryOptions(this.options.only);
 	this.elCountry.setAttribute('class', this.options.countryClassName);
+	this.elCountry.name = this.options.countryFiledName;
 
 	// 區域選單
 	if ( ! this.elDistrict) {
