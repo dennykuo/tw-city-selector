@@ -82,7 +82,7 @@ gulp.task('watch', function () {
 gulp.task('webServer', function() {
   return gulp.src('./docs')
     .pipe(webServer({
-        host: 'denny.local',
+        host: '127.0.0.1',
         fallback: 'index.html',
         livereload: true
     }));
