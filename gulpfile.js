@@ -6,6 +6,8 @@
 var jsDir = './src/*.js';
 var jsSrc = './src/tw-city-selector.js';
 var jsDest = './';
+var dataSrc = './src/data.js';
+var dataDest = './docs/js/';
 var docsJs = './docs/js/';
 var fileName = 'tw-city-selector.js';
 
@@ -66,7 +68,7 @@ gulp.task('default', function () {
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsDir, './tests/*.js'], ['ru']);
+    gulp.watch([jsDir, './tests/*.js'], ['ru', 'data']);
     gulp.start(['webServer']);
 });
 
@@ -149,6 +151,32 @@ gulp.task('ru', function () {
     .pipe(gulp.dest(jsDest))
 	.pipe(gulp.dest(docsJs))
     .pipe(notify({ message: 'RU task complete' }))
+});
+
+gulp.task('data', function () {
+	return rollup({
+        entry: dataSrc,
+        rollup: require('rollup'), // 使用原生 rollup
+        plugins: [
+            babelRollup({
+                babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
+                presets: ['es2015-rollup']
+            })
+        ],
+        format: 'umd',
+        moduleName: 'data', // umd 或 iife 格式時，若入口文件含 export，必須加上
+        // sourceMap: true
+    })
+    .pipe(source('data.js'))
+    .pipe(gulp.dest(dataDest))
+    // .pipe(buffer())
+    // .pipe(sourcemaps.init({ loadMaps: true })) // 讀取原始文件中 sourcemap
+    // .pipe(uglify())
+    // .pipe(rename({ suffix: '.min' }))
+    // .pipe(sourcemaps.write('./'))
+    // .pipe(gulp.dest(jsDest))
+	// .pipe(gulp.dest(docsJs))
+    .pipe(notify({ message: 'Data task complete' }))
 });
 
 // jQuery

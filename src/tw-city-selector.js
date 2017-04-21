@@ -178,14 +178,14 @@ function setElements() {
 function getCountryOptions(only) {
 	var options = '<option value="">選擇縣市</option>';
 
-	for (var i = 0, j = data.country.length; i < j; i++) {
+	for (var i = 0, j = data.countries.length; i < j; i++) {
 		// 若有設定限制顯示的縣市，且該項目不在自訂縣市中
-		if (only && Array.isArray(only) && only.indexOf(data.country[i]) === -1) {
+		if (only && Array.isArray(only) && only.indexOf(data.countries[i]) === -1) {
 			continue;
 		}
 
 		// format: <option value="臺北市" data-index="0">臺北市</option>
-		options += `<option value="${data.country[i]}" data-index="${i}">${data.country[i]}</option>`;
+		options += `<option value="${data.countries[i]}" data-index="${i}">${data.countries[i]}</option>`;
 	}
 
 	return options;
@@ -198,11 +198,11 @@ function getDistrictOptions(index) {
 
 	var options = '<option value="" selected>選擇區域</option>';
 
-	for(var i = 0, j = data.district[index][0].length - 1; i <= j; i++) {
+	for(var i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
 		// format: <option value="中正區" data-zipcode="100">中正區</option>
 		options += `
-		<option value="${data.district[index][0][i]}" data-zipcode="${data.district[index][1][i]}">
-		${data.district[index][0][i]}
+		<option value="${data.districts[index][0][i]}" data-zipcode="${data.districts[index][1][i]}">
+		${data.districts[index][0][i]}
 		</option>
 		`;
 	}
