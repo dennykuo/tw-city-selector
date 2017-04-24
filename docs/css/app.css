@@ -80,7 +80,10 @@ select {
 	background-size: 16px;
 	background-position: 95% 50%;
 }
-
+/* IE remove arraw */
+select::-ms-expand {
+    display: none;
+}
 
 
 /*! Color themes for Google Code Prettify | MIT License | github.com/jmblog/color-themes-for-google-code-prettify */
