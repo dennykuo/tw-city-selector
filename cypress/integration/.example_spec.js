@@ -15,11 +15,9 @@
 // https://on.cypress.io/guides/bundled-tools#section-mocha
 //
 
-describe('Kitchen Sink', function(){
+describe('Kitchen Sink', function() {
 
-  beforeEach(function(){
-
-
+  beforeEach(function() {
 
     // **** Resetting State Before Each Test ****
     //

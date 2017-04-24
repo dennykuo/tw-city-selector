@@ -58,6 +58,7 @@ function TwCitySelector() {
 
 	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
 	var els = document.querySelectorAll('[role='+ elRoleName +']');
+	els = Array.prototype.slice.call(els);
 	els.forEach(function(el) {
 		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 

@@ -18,7 +18,22 @@
   <div class="row">
     <div class="col-sm-12 col-md-8 col-md-offset-2">
 
-      <div role="tw-city-selector"></div>
+      <div role="tw-city-selector" class="js-normal"></div>
+
+			<div role="tw-city-selector" class="js-limit-countries" data-only="臺北市,臺中市,高雄市"></div>
+
+			<div role="tw-city-selector" class="js-is-selected"
+				data-selected-country="新北市"
+				data-selected-district="板橋區">
+			</div>
+
+			<div role="tw-city-selector" class="js-limit-and-selected"
+				data-only="臺北市,臺中市,高雄市"
+				data-selected-country="臺中市"
+				data-selected-district="北區">
+			</div>
+
+			<!-- <div class="selector-customCountry"></div> -->
 
       <div class="selector-all"></div>
 
@@ -31,6 +46,13 @@
 <script>
 	// Sample
   new TwCitySelector();
+
+
+	// new TwCitySelector({
+  //   el: '.selector-customCountry',
+  //   only: ['臺北市', '臺中市', '高雄市'],
+  //   showZipcode: true
+  // });
 
 	// Custom
   // var a = new TwCitySelector({
