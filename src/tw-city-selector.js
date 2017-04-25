@@ -58,8 +58,7 @@ function TwCitySelector() {
 
 	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
 	var els = document.querySelectorAll('[role='+ elRoleName +']');
-	els = Array.prototype.slice.call(els);
-	els.forEach(function(el) {
+	Array.prototype.forEach.call(els, function(el) {
 		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 
 		// 重置設定
@@ -202,11 +201,10 @@ function getDistrictOptions(index) {
 
 	for(var i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
 		// format: <option value="中正區" data-zipcode="100">中正區</option>
-		options += `
-		<option value="${data.districts[index][0][i]}" data-zipcode="${data.districts[index][1][i]}">
-		${data.districts[index][0][i]}
-		</option>
-		`;
+		options += `<option value="${data.districts[index][0][i]}"
+                            data-zipcode="${data.districts[index][1][i]}">
+		                ${data.districts[index][0][i]}
+		            </option>`;
 	}
 
 	return options;
