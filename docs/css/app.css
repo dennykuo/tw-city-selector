@@ -16,13 +16,16 @@ h1, h2, h3, h4, h5, h6, p, li, pre {
     font-weight: 300;
 }
 h1, h2, h3, h4, h5, h6, pre {
-    margin: 1.2em 0;
+    margin: 1.22em 0;
+}
+h4, .h4 {
+    font-size: 1.15rem;
 }
 h5, .h5 {
     font-size: 1.05rem;
 }
 p {
-    margin: .25em 0;
+    margin: .28em 0;
 }
 hr {
 	margin: 34px 0;
@@ -43,21 +46,24 @@ hr {
     padding-top: 38px;
     padding-bottom: 38px;
 }
-.panel {
-    margin: 30px 0;
-}
 .page-header {
-    margin-top: 50px;
+    margin-top: 74px;
+    margin-bottom: 48px;
+    padding: 10px 0;
+    border-top: 2px solid #e9e9e9;
+    border-bottom: 2px solid #e9e9e9;
+    text-align: center;
 }
 .page-header h1 {
     margin: .4em 0;
+    color: rgb(148, 158, 166);
 }
 pre.prettyprint {
-    font-family: 'Source Sans Pro', 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8rem;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .82rem;
+    line-height: 1.5rem;
     white-space: pre-wrap;
-    padding: 13px 20px;
+    padding: 10px 16px !important;
 }
 select, input {
 	-webkit-appearance: none;
@@ -89,4 +95,24 @@ select::-ms-expand {
 
 
 /*! Color themes for Google Code Prettify | MIT License | github.com/jmblog/color-themes-for-google-code-prettify */
-.prettyprint{background:#f7f3f7;font-family:Menlo,Bitstream Vera Sans Mono,DejaVu Sans Mono,Monaco,Consolas,monospace;border:0!important}.pln{color:#1b181b}ol.linenums{margin-top:0;margin-bottom:0;color:#5a7b8c}li.L0,li.L1,li.L2,li.L3,li.L4,li.L5,li.L6,li.L7,li.L8,li.L9{padding-left:1em;background-color:#f7f3f7;list-style-type:decimal}@media screen{.str{color:#918b3b}.kwd{color:#7b59c0}.com{color:#5a7b8c}.typ{color:#516aec}.lit{color:#a65926}.pun{color:#1b181b}.opn{color:#1b181b}.clo{color:#1b181b}.tag{color:#ca402b}.atn{color:#a65926}.atv{color:#159393}.dec{color:#a65926}.var{color:#ca402b}.fun{color:#516aec}}
+pre.prettyprint {
+    background: #fbf8fb;
+    font-family: Menlo,Bitstream Vera Sans Mono,DejaVu Sans Mono,Monaco,Consolas,monospace;
+    border: 0!important;
+}
+.pln {
+    color:#1b181b;
+}
+ol.linenums {
+    margin-top: 0;
+    margin-bottom :0;
+    color: #5a7b8c;
+}
+li.L0,li.L1,li.L2,li.L3,li.L4,li.L5,li.L6,li.L7,li.L8,li.L9 {
+    padding-left :1em;
+    background-color: #f7f3f7;
+    list-style-type: decimal;
+}
+@media screen {
+    .str {color: #918b3b}.kwd {color: #7b59c0}.com {color: #5a7b8c}.typ {color: #516aec}.lit {color: #a65926}.pun {color: #1b181b}.opn {color: #1b181b}.clo {color: #1b181b}.tag {color: #ca402b}.atn {color: #a65926}.atv {color: #159393}.dec {color: #a65926}.var {color: #ca402b}.fun {color: #516aec}
+}

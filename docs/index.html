@@ -11,6 +11,9 @@
 
   <link href="css/theme/lumen/bootstrap.min.css" rel="stylesheet">
   <link href="css/app.css" rel="stylesheet">
+
+  <!-- Tw-city-selector -->
+  <script src="js/tw-city-selector.min.js"></script>
 </head>
 
 <body>
@@ -68,6 +71,7 @@
 
   <div class="row">
     <div class="col-sm-12 col-md-8 col-md-offset-2">
+
       <!-- .content -->
       <div class="content">
 
@@ -84,185 +88,211 @@
           <h1>安裝</h1>
         </div>
 
-        <p class="lead">擇一使用下列方式</p>
+        <h3>擇一使用下列方式</h3>
 
         <h4>- 透過 Bower</h4>
-<pre class="prettyprint">
-bower install tw-city-selector --save
-</pre>
+        <code-tag content="bower install tw-city-selector --save"></code-tag>
 
 				<h4>- 透過 Yarn</h4>
-<pre class="prettyprint">
-yarn add tw-city-selector
-</pre>
+        <code-tag content="yarn add tw-city-selector"></code-tag>
 
 				<h4>- 透過 NPM</h4>
-<pre class="prettyprint">
-npm install tw-city-selector --save
-</pre>
+        <code-tag content="npm install tw-city-selector --save"></code-tag>
 
         <h4>- 下載檔案</h4>
-        <p><a href="https://github.com/dennykuo/tw-city-selector" target="_blank">Github</a></p>
+        <code-tag>
+          <a href="https://github.com/dennykuo/tw-city-selector" target="_blank">Github</a>
+        </code-tag>
 
         <div class="page-header">
           <h1>引入</h1>
         </div>
 
-        <p class="lead">無依賴，直接引入至頁面中 (記得將路徑改為實際檔案路徑)</p>
-<pre class="prettyprint">
-&lt;script src=&quot;your/path/tw-city-selector.min.js&quot;&gt;&lt;/script&gt;
-</pre>
+        <h5>無依賴，直接引入至頁面中 (記得將路徑改為實際檔案路徑)</h5>
+        <code-tag content='
+          <script src="your/path/tw-city-selector.min.js"></script>
+        '></code-tag>
 
         <div class="page-header">
-          <h1>使用方式</h1>
+          <h1>選擇適合的選單元件加載方式</h1>
         </div>
 
-        <p class="lead">可使用下列兩種方式加載選單元件：</p>
-        <ul>
-            <li>element 加上 role-attribute (預設用法，自訂性低)</li>
-            <li>js 實例 (自訂性高)</li>
-        </ul>
+        <h3>可使用下列兩種方式加載選單元件：</h3>
 
-				<h3>以下分別說明</h3>
+        <h4 style="padding: .6em; background: rgb(232, 250, 250)">element 加上 role-attribute (預設用法，自訂性低)</h4>
+        <h4 style="padding: .6em; background: rgb(234, 255, 228)">js 實例 (自訂性高)</h4>
 
-        <div class="panel panel-default">
-          <div class="panel-heading"><h3>element  加上 role-attribute</h3></div>
-          <div class="panel-body">
 
-            <!-- 未寫測試 -->
-            <h4>設置一個空 element，加入 role-attribute</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot;&gt;&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector"></div>
 
-						<p>* 產生的選單組合當中，預設包含一個隱藏的郵遞區號欄位</p>
-<pre class="prettyprint">
-&lt;input class=&quot;zipcode&quot; name=&quot;zipcode&quot; type=&quot;text&quot; readonly=&quot;&quot; autocomplete=&quot;off&quot; placeholder=&quot;&#37109;&#36958;&#21312;&#34399;&quot; style=&quot;width: 6em; display: none;&quot;&gt;
-</pre>
-            <hr>
 
-            <h4>顯示郵遞區號欄位</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot; data-show-zipcode&gt;&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector" data-show-zipcode></div>
-            <hr>
+        <div class="page-header">
+          <h1>element 加上 role-attribute 方式</h1>
+        </div>
 
-            <!-- 未寫測試 -->
-            <h4>限制部分縣市 (例：臺北市、臺中市、高雄市)</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot; data-only=&quot;臺北市,臺中市,高雄市&quot;&gt;&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector" data-only="臺北市,臺中市,高雄市"></div>
-            <hr>
+        <h4>設置一個空 element，加入 role-attribute</h4>
+        <code-tag content='
+          <div role="tw-city-selector"></div>
+        '></code-tag>
+        <div role="tw-city-selector"></div>
+				<h6>* 產生的選單組合當中，預設含有一個「隱藏」的郵遞區號欄位</h6>
+        <hr>
 
-            <!-- 未寫測試 -->
-            <h4>預設選定 (例：新北市及其板橋區)</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot;
-     data-selected-country=&quot;新北市&quot;
-     data-selected-district=&quot;板橋區&quot;&gt;
-&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector"
-                 data-selected-country="新北市"
-                 data-selected-district="板橋區">
-            </div>
-            <hr>
+        <h4>顯示郵遞區號欄位</h4>
+        <code-tag content='
+          <div role="tw-city-selector" data-show-zipcode></div>
+        '></code-tag>
+        <div role="tw-city-selector" data-show-zipcode></div>
+        <hr>
 
-            <!-- 未寫測試 -->
-            <h4>限制部分縣市 & 預設選定</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot;
-     data-only=&quot;臺北市,臺中市,高雄市&quot;
-     data-selected-country=&quot;臺中市&quot;
-     data-selected-district=&quot;北區&quot;&gt;
-&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector"
-                 data-only="臺北市,臺中市,高雄市"
-                 data-selected-country="臺中市"
-                 data-selected-district="北區">
-            </div>
-						<hr>
+        <h4>限制可選擇的縣市 (例：臺北市、臺中市、高雄市)</h4>
+        <code-tag content='
+<div role="tw-city-selector"
+     data-only="臺北市,臺中市,高雄市">
+</div>
+        '></code-tag>
+        <div role="tw-city-selector" data-only="臺北市,臺中市,高雄市"></div>
+        <hr>
 
-						<h4>調整樣式</h4>
-						<p>在 tag 加上你想要的 class name，好讓他吃到 stylesheet 的設定</p>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot;&nbsp;class=&quot;my-selector&quot;&gt;&lt;/div&gt;
-</pre>
+        <h4>預設選擇 (例：新北市及板橋區)</h4>
+        <code-tag content='
+<div role="tw-city-selector"
+     data-selected-country="新北市"
+     data-selected-district="板橋區">
+</div>
+        '></code-tag>
+        <div role="tw-city-selector"
+             data-selected-country="新北市"
+             data-selected-district="板橋區">
+        </div>
+        <hr>
 
-<pre class="prettyprint">
-&lt;style&gt;
-.my-selector select {
- -webkit-appearance: none;
- -moz-appearance: none;
- appearance: none;
- outline: none;
- border-color: #ffe76f;
- border-width: 3px;
- color: #ff8e52;
-}
-&lt;/style&gt;
-</pre>
+
+        <h4>限制部分縣市 & 預設選定</h4>
+        <code-tag content='
+<div role="tw-city-selector"
+     data-only="臺北市,臺中市,高雄市"
+     data-selected-country="臺中市"
+     data-selected-district="北區">
+</div>
+        '></code-tag>
+        <div role="tw-city-selector"
+             data-only="臺北市,臺中市,高雄市"
+             data-selected-country="臺中市"
+             data-selected-district="北區">
+        </div>
+				<hr>
+
+				<h4>自訂樣式</h4>
+				<p>在 element 加上適合的 class name，即可利用 stylesheet 控制樣式</p>
+        <code-tag content='
+<div role="tw-city-selector" class="my-selector-a"></div>
 
 <style>
-.my-selector select {
- border-color: #ffe76f;
- border-width: 3px;
- color: #ff8e52;
-}
+  .my-selector-a select \{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border-color: #ffe76f;
+    border-width: 3px;
+    color: #ff8e52;
+  \}
 </style>
+        '></code-tag>
+        <style>
+          .my-selector-a select {
+            border-color: #ffe76f;
+            border-width: 3px;
+            color: #ff8e52;
+          }
+        </style>
+        <div role="tw-city-selector" class="my-selector-a"></div>
+				<h6>* 上述樣式設定僅為示意</h6>
+				<hr>
 
-            <div role="tw-city-selector" class="my-selector"></div>
+        <h4>套用 Bootstrap 的選單 class name</h4>
+        <code-tag content='
+          <div role="tw-city-selector" data-bootstrap-style></div>
+        '></code-tag>
+				<div role="tw-city-selector" data-bootstrap-style></div>
 
-						<h6>* 上述樣式調整僅為示意，非本頁面選單樣式設定</h6>
-						<hr>
 
-						<!-- 未寫測試 -->
-            <h4>套用 Bootstrap 的選單 class name</h4>
 
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot; data-bootstrap-style&gt;&lt;/div&gt;
-</pre>
 
-						<div role="tw-city-selector" data-bootstrap-style></div>
-            <!-- <hr> -->
 
-          </div>
+        <div class="page-header">
+          <h1>js 實例方式</h1>
         </div>
 
+        <h4>指定 parent element</h4>
+        <code-tag content='
+<div class="my-selector-b"></div>
 
+<script>
+  new TwCitySelector(\{
+    el: ".my-selector-b" // 同 DOM querySelector()
+  \});
+</script>
+        '></code-tag>
+        <div class="my-selector-b"></div>
+        <script>
+          new TwCitySelector({
+            el: ".my-selector-b"
+          });
+        </script>
+        <hr>
 
-				<div style="margin-bottom: 100px;"></div>
+        <h4>指定 select 選單</h4>
+        <p>指定既有的「縣市選單」、「區域選單」及「郵遞區號」做為容器代入，可同時設定或取其一</p>
+        <p>注意上述元件需在同一個 parent element 中</p>
+        <code-tag content='
+<div class="my-selector-c">
+  <div>
+    <select class="country"></select>
+  </div>
+  <div>
+    <select class="district"></select>
+  </div>
+  <div>
+    <input type="text" class="zipcode">
+  </div>
+</div>
 
-
-
-				<div class="panel panel-default">
-          <div class="panel-heading"><h3>js 實例</h3></div>
-          <div class="panel-body">
-
-						<h4>文件製作中..</h4>
-
-
-            <!-- <h4>設置一個空 tag，加入 attribute</h4>
-<pre class="prettyprint">
-&lt;div role=&quot;tw-city-selector&quot;&gt;&lt;/div&gt;
-</pre>
-            <div role="tw-city-selector"></div>
-
-						<h6>* 預設含有隱藏的郵遞區號欄位</h6>
-            <hr> -->
-
+<script>
+  new TwCitySelector(\{
+    el: ".my-selector-c",
+    elCountry: ".country", // 在 el 裡查找 dom
+    elDistrict: ".district", // 在 el 裡查找 dom
+    elZipcode: ".zipcode" // 在 el 裡查找 dom
+  \});
+</script>
+        '></code-tag>
+        <div class="my-selector-c">
+          <div>
+            <select class="country"></select>
+          </div>
+          <div>
+            <select class="district"></select>
+          </div>
+          <div>
+            <input name="my-zipcode" type="text" class="zipcode">
           </div>
         </div>
+        <script>
+          new TwCitySelector({
+            el: ".my-selector-c",
+            elCountry: ".country",
+            elDistrict: ".district",
+            elZipcode: ".zipcode"
+          });
+        </script>
+        <style>
+          .my-selector-c > div { margin: 0 0 5px; }
+        </style>
+        <hr>
 
 
-<!-- 以下為實例方式，帶修改 -->
-
-        <h4>全部縣市</h4>
-        <div class="selector-all"></div>
+<!-- 以下為實例方式，待修改 -->
 
         <!--
 				<h4>設定顯示部分縣市-臺北市、臺中市、高雄市</h4>
@@ -300,34 +330,24 @@ npm install tw-city-selector --save
 <!-- /.main -->
 
 <!-- footer -->
-<footer class="container">
+<!-- <footer class="container">
   <div class="row">
     <div class="col-lg-12">
 
     </div>
   </div>
-</footer>
+</footer> -->
 <!-- /footer -->
 
 <!-- Theme -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 
-<script src="js/tw-city-selector.min.js"></script>
 
 <script>
-  // code snippet
-  prettyPrint();
-
-	// Sample
+	// sample - role-attribute
   new TwCitySelector();
 
-  var a = new TwCitySelector({
-    el: '.selector-all',
-    showZipcode: true
-  });
-	//
   // new TwCitySelector({
   //   el: '.selector-customCountry',
   //   only: ['臺北市', '臺中市', '高雄市'],
@@ -359,6 +379,31 @@ npm install tw-city-selector --save
   //   zipcodeClassName: 'zipcode form-control',
   //   showZipcode: true
   // });
+</script>
+
+<!-- Vendor -->
+<script src="vendor/riot+compiler.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+
+<!--
+  Riot Tag
+  use: <code-tag content="var a = 1;"></code-tag> 適時可改換單引號
+-->
+<script type="riot/tag">
+  <code-tag>
+    <pre class="prettyprint">{ content }<yield /></pre>
+
+    this.content = opts.content;
+    if (this.content) this.content = this.content.trim();
+  </code-tag>
+</script>
+
+<script>
+  // Riot mount
+  riot.mount('code-tag');
+
+  // Code snippet pretty
+  prettyPrint();
 </script>
 
 </body>

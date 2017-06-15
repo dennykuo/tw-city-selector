@@ -12,6 +12,7 @@
     "tw-city-selector.js",
     "tw-city-selector.min.js",
     "tw-city-selector.min.js.map",
-    "docs/"
+    "docs/",
+    "README.md"
   ]
 }
