@@ -10,6 +10,12 @@
   <meta name="robots" content="Index, Follow">
 
   <link href="css/app.css" rel="stylesheet">
+
+  <style>
+    .margin-y-20 {
+      margin: 20px 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,16 +24,16 @@
   <div class="row">
     <div class="col-sm-12 col-md-8 col-md-offset-2">
 
-      <div role="tw-city-selector" class="js-normal"></div>
+      <div role="tw-city-selector" class="js-normal margin-y-20"></div>
 
-			<div role="tw-city-selector" class="js-limit-countries" data-only="臺北市,臺中市,高雄市"></div>
+			<div role="tw-city-selector" class="js-limit-countries margin-y-20" data-only="臺北市,臺中市,高雄市"></div>
 
-			<div role="tw-city-selector" class="js-is-selected"
+			<div role="tw-city-selector" class="js-is-selected margin-y-20"
 				data-selected-country="新北市"
 				data-selected-district="板橋區">
 			</div>
 
-			<div role="tw-city-selector" class="js-limit-and-selected"
+			<div role="tw-city-selector" class="js-limit-and-selected margin-y-20"
 				data-only="臺北市,臺中市,高雄市"
 				data-selected-country="臺中市"
 				data-selected-district="北區">
@@ -35,7 +41,22 @@
 
 			<!-- <div class="selector-customCountry"></div> -->
 
-      <div class="selector-all"></div>
+      <div class="selector-all margin-y-20"></div>
+
+      <div class="selector-bootstrap row margin-y-20">
+        <div class="form-group">
+          <label class="control-label">縣市</label>
+          <select class="el-country"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">區域</label>
+          <select class="el-district"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">郵遞區號</label>
+          <input class="el-zipcode" type="text">
+        </div>
+      </div>
 
     </div>
   </div>
@@ -81,17 +102,17 @@
   //   selectedDistrict: '北區',
   //   showZipcode: true
   // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-bootstrap',
-  //   elCountry: '.el-country',
-  //   countryClassName: 'country form-control',
-  //   elDistrict: '.el-district',
-  //   districtClassName: 'district form-control',
-  //   elZipcode: '.el-zipcode',
-  //   zipcodeClassName: 'zipcode form-control',
-  //   showZipcode: true
-  // });
+
+  new TwCitySelector({
+    el: '.selector-bootstrap',
+    elCountry: '.el-country',
+    countryClassName: 'country form-control',
+    elDistrict: '.el-district',
+    districtClassName: 'district form-control',
+    elZipcode: '.el-zipcode',
+    zipcodeClassName: 'zipcode form-control',
+    showZipcode: true
+  });
 </script>
 
 </body>

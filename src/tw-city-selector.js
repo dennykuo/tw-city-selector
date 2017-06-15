@@ -4,7 +4,7 @@
 // Module import
 // --------------------
 import data from './data';
-import handleOptions from './handleOptions';
+import handleOptions from './handle-options';
 
 
 // --------------------
@@ -19,19 +19,18 @@ export default TwCitySelector; /* use rollup to build */
 // --------------------
 function TwCitySelector() {
 
-	var elRoleName = 'tw-city-selector';
+	this.elRoleName = 'tw-city-selector';
 
-	// --- Setting options ---
-	var optionsCustom = arguments[0];
-	var optionsRequired = arguments.length ? ['el'] : null; // 設置必要參數，若無帶入任何參數則設不設置
+	// Setting options
 	var optionsDefault = {
 		el: null,
 		elCountry: null,
 		elDistrict: null,
 		elZipcode: null,
 		selectedCountry: null, // {boolean} 預設選擇的縣市
-		selectedDistrict: null, //{boolean} 預設選擇的區域
-		only: null, // {array} 限制顯示哪些縣市
+		selectedDistrict: null, // {boolean} 預設選擇的區域
+		only: null, // {array} 限制顯示哪些縣市 (下個版本棄用)
+        onlyCity: null, // {array} 限制顯示哪些縣市
 		showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
 		bootstrapStyle: false,
 		countryClassName: 'country',
@@ -42,50 +41,12 @@ function TwCitySelector() {
 		zipcodeFieldName: 'zipcode'
 	};
 
+    var optionsCustom = arguments[0];
+	var optionsRequired = arguments.length ? ['el'] : null; // 設置必要參數，若無帶入任何參數則設不設置
 	this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
 
-	// 有指定 element 的初始化
-	if (this.options.el) {
-		this.el = getElement(this.options.el);
-		this.elCountry = getElement(this.options.elCountry);
-		this.elDistrict = getElement(this.options.elDistrict);
-		this.elZipcode = getElement(this.options.elZipcode);
-
-		init.call(this);
-
-		return this;
-	}
-
-	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
-	var els = document.querySelectorAll('[role='+ elRoleName +']');
-	Array.prototype.forEach.call(els, function(el) {
-		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
-
-		// 重置設定
-		self.el = el;
-		self.elCountry = null;
-		self.elDistrict = null;
-		self.elZipcode = null;
-
-		// 限制顯示哪些縣市
-		self.options.only = el.getAttribute('data-only')
-			? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
-			: null;
-
-		// 預設選擇的縣市
-		self.options.selectedCountry = el.getAttribute('data-selected-country');
-
-		// 預設選擇的區域
-		self.options.selectedDistrict = el.getAttribute('data-selected-district');
-
-		// 是否使用 bootstrap 樣式
-		self.options.bootstrapStyle = (el.getAttribute('data-bootstrap-style') != null);
-
-		// 是否顯示郵遞區號
-		self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
-
-		init.call(self);
-	}, this);
+    // Setup
+	elSetup.call(this);
 
 	// return this;
 };
@@ -106,15 +67,65 @@ TwCitySelector.prototype.reset = function() {
 // --------------------
 // Private Methods
 // --------------------
+function elSetup() {
+    // 有指定 element 的初始化
+	if (this.options.el) {
+		this.el = getElement(this.options.el);
+		this.elCountry = getElement(this.options.elCountry, this.el);
+		this.elDistrict = getElement(this.options.elDistrict, this.el);
+		this.elZipcode = getElement(this.options.elZipcode, this.el);
+
+		return init.call(this);
+	}
+
+	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
+	var els = document.querySelectorAll('[role='+ this.elRoleName +']');
+	Array.prototype.forEach.call(els, function(el) {
+		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
+
+		// 重置設定
+		self.el = el;
+		self.elCountry = null;
+		self.elDistrict = null;
+		self.elZipcode = null;
+
+		// 限制顯示哪些縣市 (下個版本棄用)
+		self.options.only = el.getAttribute('data-only')
+			? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
+			: null;
+
+        // 限制顯示哪些縣市
+    	self.options.onlyCity = el.getAttribute('data-only-city')
+			? el.getAttribute('data-only-city').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
+			: null;
+
+		// 預設選擇的縣市
+		self.options.selectedCountry = el.getAttribute('data-selected-country');
+
+		// 預設選擇的區域
+		self.options.selectedDistrict = el.getAttribute('data-selected-district');
+
+        // 是否使用 bootstrap 樣式
+		self.options.bootstrapStyle = (el.getAttribute('data-bootstrap-style') != null);
+
+        // 是否顯示郵遞區號
+		self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
+
+		return init.call(self);
+	}, this);
+
+    return els;
+}
+
 function init() {
 	setElements.call(this);
+
+    // 監聽選單動作
 	listenCountryChanged.call(this);
 	listenDistrictChanged.call(this);
 
-	// 有設定預設選定的縣市
-	if (this.options.selectedCountry) {
-		setSelectedItem.call(this);
-	}
+	// 設定預設選定的縣市
+	setSelectedItem.call(this);
 
 	// bootstrap 樣式套入
 	if (this.options.bootstrapStyle) {
@@ -124,8 +135,12 @@ function init() {
 	return this;
 }
 
-function getElement(el) {
-	return el ? document.querySelector(el) : null;
+function getElement(el, parent) {
+    if ( ! el)
+        return null;
+    if (parent)
+        return parent.querySelector(el);
+	return document.querySelector(el);
 }
 
 function setElements() {
@@ -139,7 +154,7 @@ function setElements() {
 	}
 
 	// 縣市選單屬性
-	this.elCountry.innerHTML = getCountryOptions(this.options.only);
+	this.elCountry.innerHTML = getCountryOptions.call(this);
 	this.elCountry.setAttribute('class', this.options.countryClassName);
 	this.elCountry.name = this.options.countryFiledName;
 
@@ -160,36 +175,51 @@ function setElements() {
 		var zipcode = document.createElement('input');
 		this.elZipcode = zipcode;
 		fragment.appendChild(zipcode);
-	}
 
-	// 郵遞區號屬性設定
-	this.elZipcode.setAttribute('class', this.options.zipcodeClassName);
-	this.elZipcode.name = this.options.zipcodeFieldName;
-	this.elZipcode.type = 'text';
-	this.elZipcode.readOnly = true;
-	this.elZipcode.autocomplete = 'off';
-	this.elZipcode.placeholder = '郵遞區號';
-	this.elZipcode.style.width = '6em';
-	this.elZipcode.style.display = this.options.showZipcode || 'none';
+        // 郵遞區號屬性設定
+        this.elZipcode.style.display = this.options.showZipcode || 'none';
+        this.elZipcode.style.width = '6em';
+        this.elZipcode.readOnly = true;
+        this.elZipcode.type = 'text';
+        this.elZipcode.placeholder = '郵遞區號';
+        this.elZipcode.name = this.options.zipcodeFieldName;
+        this.elZipcode.setAttribute('class', this.options.zipcodeClassName);
+        this.elZipcode.autocomplete = 'off';
+	}
 
 	// element 片段塞入 el
 	this.el.appendChild(fragment);
 }
 
-function getCountryOptions(only) {
-	var options = '<option value="">選擇縣市</option>';
+function setCountryElement() {
+    // 縣市選單
+	if ( ! this.elCountry) {
+		var country = document.createElement('select');
+		this.elCountry = country;
+		fragment.appendChild(country);
+	}
+
+	// 縣市選單屬性
+	this.elCountry.innerHTML = getCountryOptions.call(this);
+	this.elCountry.setAttribute('class', this.options.countryClassName);
+	this.elCountry.name = this.options.countryFiledName;
+}
+
+function getCountryOptions() {
+	var elOptions = '<option value="">選擇縣市</option>';
+    var onlyCity = this.options.only || this.options.onlyCity; // this.options.only 下個版本棄用
 
 	for (var i = 0, j = data.countries.length; i < j; i++) {
 		// 若有設定限制顯示的縣市，且該項目不在自訂縣市中
-		if (only && Array.isArray(only) && only.indexOf(data.countries[i]) === -1) {
+		if (onlyCity && Array.isArray(onlyCity) && onlyCity.indexOf(data.countries[i]) === -1) {
 			continue;
 		}
 
 		// format: <option value="臺北市" data-index="0">臺北市</option>
-		options += `<option value="${data.countries[i]}" data-index="${i}">${data.countries[i]}</option>`;
+		elOptions += `<option value="${data.countries[i]}" data-index="${i}">${data.countries[i]}</option>`;
 	}
 
-	return options;
+	return elOptions;
 }
 
 function getDistrictOptions(index) {
@@ -197,17 +227,17 @@ function getDistrictOptions(index) {
 		return '<option value="" selected>---</option>';
 	}
 
-	var options = '<option value="" selected>選擇區域</option>';
+	var elOptions = '<option value="" selected>選擇區域</option>';
 
 	for(var i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
 		// format: <option value="中正區" data-zipcode="100">中正區</option>
-		options += `<option value="${data.districts[index][0][i]}"
+		elOptions += `<option value="${data.districts[index][0][i]}"
                             data-zipcode="${data.districts[index][1][i]}">
 		                ${data.districts[index][0][i]}
 		            </option>`;
 	}
 
-	return options;
+	return elOptions;
 }
 
 function listenCountryChanged() {
@@ -230,11 +260,13 @@ function listenDistrictChanged() {
 }
 
 function setSelectedItem() {
-	var event = document.createEvent('Event');
-	event.initEvent('change', true, true);
+    if (this.options.selectedCountry) {
+        var event = document.createEvent('Event');
+    	event.initEvent('change', true, true);
 
-	this.elCountry.value = this.options.selectedCountry;
-	this.elCountry.dispatchEvent(event);
+    	this.elCountry.value = this.options.selectedCountry;
+    	this.elCountry.dispatchEvent(event);
+    }
 
 	if (this.options.selectedDistrict) {
 		this.elDistrict.value = this.options.selectedDistrict;
