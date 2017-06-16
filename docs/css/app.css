@@ -10,10 +10,11 @@ body {
     line-height: 1.6em;
     letter-spacing: .1em;
     font-weight: 300;
-    color: #232323;
+    color: #636363;
 }
 h1, h2, h3, h4, h5, h6, p, li, pre {
     font-weight: 300;
+    color: #636363;
 }
 h1, h2, h3, h4, h5, h6, pre {
     margin: 1.22em 0;
@@ -53,10 +54,11 @@ hr {
     border-top: 2px solid #e9e9e9;
     border-bottom: 2px solid #e9e9e9;
     text-align: center;
+    color: rgb(144, 170, 191);
 }
 .page-header h1 {
     margin: .4em 0;
-    color: rgb(148, 158, 166);
+    color: rgb(91, 91, 91);
 }
 pre.prettyprint {
     font-family: 'Noto Sans TC', sans-serif;
