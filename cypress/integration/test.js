@@ -1,7 +1,10 @@
-describe('使用role-attribute方式加載選單', function() {
+var url = 'http://127.0.0.1:8000/test.html';
+
+
+describe('role-attribute方式加載', function() {
 
 	before(function() {
-		cy.visit('http://127.0.0.1:8000/test.html');
+		cy.visit(url);
 	});
 
 	it('一般加載', function() {
@@ -112,5 +115,15 @@ describe('使用role-attribute方式加載選單', function() {
 		});
 	});
 
+});
+
+
+describe('js實例方式加載', function() {
+
+	before(function() {
+		cy.visit(url);
+	});
+
+    // 
 
 });
