@@ -252,7 +252,7 @@ function listenCountryChanged() {
 
 function listenDistrictChanged() {
 	var handler = function() {
-		var zipcode = this.elDistrict.querySelector('option:checked').dataset.zipcode;
+		var zipcode = this.elDistrict.querySelector('option:checked').dataset.zipcode || '';
 		this.elZipcode.value = zipcode;
 	}.bind(this);
 
