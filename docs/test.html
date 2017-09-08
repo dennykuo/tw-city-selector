@@ -26,24 +26,44 @@
 
       <div role="tw-city-selector" class="js-normal margin-y-20"></div>
 
-			<div role="tw-city-selector" class="js-limit-countries margin-y-20" data-only="臺北市,臺中市,高雄市"></div>
+			<div role="tw-city-selector" class="js-limit-counties margin-y-20" data-only="臺北市,臺中市,高雄市"></div>
 
 			<div role="tw-city-selector" class="js-is-selected margin-y-20"
+				data-selected-county="新北市"
+				data-selected-district="板橋區">
+			</div>
+
+      <!-- country 錯別字 -->
+      <div role="tw-city-selector" class="js-is-selected margin-y-20"
 				data-selected-country="新北市"
 				data-selected-district="板橋區">
 			</div>
 
 			<div role="tw-city-selector" class="js-limit-and-selected margin-y-20"
 				data-only="臺北市,臺中市,高雄市"
-				data-selected-country="臺中市"
+				data-selected-county="臺中市"
 				data-selected-district="北區">
 			</div>
-
-			<!-- <div class="selector-customCountry"></div> -->
 
       <div class="selector-all margin-y-20"></div>
 
       <div class="selector-bootstrap row margin-y-20">
+        <div class="form-group">
+          <label class="control-label">縣市</label>
+          <select class="el-county"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">區域</label>
+          <select class="el-district"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">郵遞區號</label>
+          <input class="el-zipcode" type="text">
+        </div>
+      </div>
+
+      <!-- country 錯別字 -->
+      <div class="selector-bootstrap-2 row margin-y-20">
         <div class="form-group">
           <label class="control-label">縣市</label>
           <select class="el-country"></select>
@@ -68,43 +88,20 @@
 	// Sample
   new TwCitySelector();
 
-
-	// new TwCitySelector({
-  //   el: '.selector-customCountry',
-  //   only: ['臺北市', '臺中市', '高雄市'],
-  //   showZipcode: true
-  // });
-
-	// Custom
-  // var a = new TwCitySelector({
-  //   el: '.selector-all',
-  //   showZipcode: true
-  // });
-
-
-  // new TwCitySelector({
-  //   el: '.selector-customCountry',
-  //   only: ['臺北市', '臺中市', '高雄市'],
-  //   showZipcode: true
-  // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-itemSelected',
-  //   selectedCountry: '新北市',
-  //   selectedDistrict: '板橋區',
-  //   showZipcode: true
-  // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-customCountry-itemSelected',
-  //   only: ['臺北市', '臺中市', '高雄市'],
-  //   selectedCountry: '臺中市',
-  //   selectedDistrict: '北區',
-  //   showZipcode: true
-  // });
-
   new TwCitySelector({
     el: '.selector-bootstrap',
+    elCounty: '.el-county',
+    countyClassName: 'county form-control',
+    elDistrict: '.el-district',
+    districtClassName: 'district form-control',
+    elZipcode: '.el-zipcode',
+    zipcodeClassName: 'zipcode form-control',
+    showZipcode: true
+  });
+
+  // country 錯別字
+  new TwCitySelector({
+    el: '.selector-bootstrap-2',
     elCountry: '.el-country',
     countryClassName: 'country form-control',
     elDistrict: '.el-district',

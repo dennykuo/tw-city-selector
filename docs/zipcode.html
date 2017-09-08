@@ -125,8 +125,8 @@
 <script type="riot/tag">
   <zipcode-list>
 		<dl class="zipcode-list dl-horizontal">
-			<virtual each="{ country, i in data.countries }">
-				<dt>{ country }</dt>
+			<virtual each="{ County, i in data.counties }">
+				<dt>{ County }</dt>
 				<dd>
 					<span each="{ district, n in data.districts[i][0] }">
 						{ district }

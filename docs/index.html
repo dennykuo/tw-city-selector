@@ -12,7 +12,7 @@
   <link href="css/theme/lumen/bootstrap.min.css" rel="stylesheet">
   <link href="css/app.css" rel="stylesheet">
 
-  <!-- Tw-city-selector -->
+  <!-- tw-city-selector -->
   <script src="js/tw-city-selector.min.js"></script>
 </head>
 
@@ -157,12 +157,12 @@
         <h4>預設選擇 (例：新北市及板橋區)</h4>
         <code-tag content='
 <div role="tw-city-selector"
-     data-selected-country="新北市"
+     data-selected-county="新北市"
      data-selected-district="板橋區">
 </div>
         '></code-tag>
         <div role="tw-city-selector"
-             data-selected-country="新北市"
+             data-selected-county="新北市"
              data-selected-district="板橋區">
         </div>
         <hr>
@@ -171,13 +171,13 @@
         <code-tag content='
 <div role="tw-city-selector"
      data-only="臺北市,臺中市,高雄市"
-     data-selected-country="臺中市"
+     data-selected-county="臺中市"
      data-selected-district="北區">
 </div>
         '></code-tag>
         <div role="tw-city-selector"
              data-only="臺北市,臺中市,高雄市"
-             data-selected-country="臺中市"
+             data-selected-county="臺中市"
              data-selected-district="北區">
         </div>
 				<hr>
@@ -218,8 +218,6 @@
 
 
 
-
-
         <div class="page-header">
           <h1>js 實例方式加載</h1>
           <p>[ 靈活配置 DOM ]</p>
@@ -252,7 +250,7 @@
         <code-tag content='
 <div class="my-selector-c">
   <div>
-    <select class="country"></select>
+    <select class="county"></select>
   </div>
   <div>
     <select class="district"></select>
@@ -265,7 +263,7 @@
 <script>
   new TwCitySelector(\{
     el: ".my-selector-c",
-    elCountry: ".country", // 在 el 裡查找 dom
+    elCounty: ".county", // 在 el 裡查找 dom
     elDistrict: ".district", // 在 el 裡查找 dom
     elZipcode: ".zipcode" // 在 el 裡查找 dom
   \});
@@ -273,7 +271,7 @@
         '></code-tag>
         <div class="my-selector-c">
           <div>
-            <select class="country"></select>
+            <select class="county"></select>
           </div>
           <div>
             <select class="district"></select>
@@ -285,7 +283,7 @@
         <script>
           new TwCitySelector({
             el: ".my-selector-c",
-            elCountry: ".country",
+            elCounty: ".county",
             elDistrict: ".district",
             elZipcode: ".zipcode"
           });
@@ -293,40 +291,9 @@
         <style>
           .my-selector-c > div { margin: 0 0 5px; }
         </style>
-        <hr>
-
-
-<!-- 以下為實例方式，待修改 -->
-
-        <!--
-				<h4>設定顯示部分縣市-臺北市、臺中市、高雄市</h4>
-        <div class="selector-customCountry"></div>
-
-        <h4>選定新北市及其板橋區</h4>
-        <div class="selector-itemSelected"></div>
-
-        <h4>設定顯示部分縣市 & 選定臺中市及其北區</h4>
-        <div class="selector-customCountry-itemSelected"></div> -->
-
-        <!-- 未寫測試 -->
-        <!-- <h4>使用已存在的 dom (例：Bootstrap 樣式)</h4>
-        <div class="selector-bootstrap row">
-          <div class="form-group col-sm-2">
-            <label class="control-label">縣市</label>
-            <select class="el-country"></select>
-          </div>
-          <div class="form-group col-sm-2">
-            <label class="control-label">區域</label>
-            <select class="el-district"></select>
-          </div>
-          <div class="form-group col-sm-2">
-            <label class="control-label">郵遞區號</label>
-            <input class="el-zipcode" type="text">
-          </div>
-        </div> -->
 
       </div>
-			<!-- /.content -->
+	  <!-- /.content -->
     </div>
   </div>
 
@@ -347,42 +314,10 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
-
+<!-- Script -->
 <script>
-	// sample - role-attribute
+  // sample - role-attribute
   new TwCitySelector();
-
-  // new TwCitySelector({
-  //   el: '.selector-customCountry',
-  //   only: ['臺北市', '臺中市', '高雄市'],
-  //   showZipcode: true
-  // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-itemSelected',
-  //   selectedCountry: '新北市',
-  //   selectedDistrict: '板橋區',
-  //   showZipcode: true
-  // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-customCountry-itemSelected',
-  //   only: ['臺北市', '臺中市', '高雄市'],
-  //   selectedCountry: '臺中市',
-  //   selectedDistrict: '北區',
-  //   showZipcode: true
-  // });
-	//
-  // new TwCitySelector({
-  //   el: '.selector-bootstrap',
-  //   elCountry: '.el-country',
-  //   countryClassName: 'country form-control',
-  //   elDistrict: '.el-district',
-  //   districtClassName: 'district form-control',
-  //   elZipcode: '.el-zipcode',
-  //   zipcodeClassName: 'zipcode form-control',
-  //   showZipcode: true
-  // });
 </script>
 
 <!-- Vendor -->

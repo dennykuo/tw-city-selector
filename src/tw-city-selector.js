@@ -24,17 +24,17 @@ function TwCitySelector() {
 	// Setting options
 	var optionsDefault = {
 		el: null,
-		elCountry: null,
+		elCounty: null,
 		elDistrict: null,
 		elZipcode: null,
-		selectedCountry: null, // {boolean} 預設選擇的縣市
-		selectedDistrict: null, // {boolean} 預設選擇的區域
+		selectedCounty: null, // 預設選擇的縣市名稱
+		selectedDistrict: null, // 預設選擇的區域名稱
 		only: null, // {array} 限制顯示哪些縣市 (下個版本棄用)
         onlyCity: null, // {array} 限制顯示哪些縣市
 		showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
 		bootstrapStyle: false,
-		countryClassName: 'country',
-		countryFiledName: 'country',
+		countyClassName: 'county',
+		countyFiledName: 'county',
 		districtClassName: 'district',
 		districtFieldName: 'district',
 		zipcodeClassName: 'zipcode',
@@ -71,7 +71,7 @@ function elSetup() {
     // 有指定 element 的初始化
 	if (this.options.el) {
 		this.el = getElement(this.options.el);
-		this.elCountry = getElement(this.options.elCountry, this.el);
+		this.elCounty = getElement(this.options.elCounty, this.el);
 		this.elDistrict = getElement(this.options.elDistrict, this.el);
 		this.elZipcode = getElement(this.options.elZipcode, this.el);
 
@@ -85,7 +85,7 @@ function elSetup() {
 
 		// 重置設定
 		self.el = el;
-		self.elCountry = null;
+		self.elCounty = null;
 		self.elDistrict = null;
 		self.elZipcode = null;
 
@@ -100,7 +100,7 @@ function elSetup() {
 			: null;
 
 		// 預設選擇的縣市
-		self.options.selectedCountry = el.getAttribute('data-selected-country');
+		self.options.selectedCounty = el.getAttribute('data-selected-county') || el.getAttribute('data-selected-country'); // 拼字錯誤
 
 		// 預設選擇的區域
 		self.options.selectedDistrict = el.getAttribute('data-selected-district');
@@ -121,7 +121,7 @@ function init() {
 	setElements.call(this);
 
     // 監聽選單動作
-	listenCountryChanged.call(this);
+	listenCountyChanged.call(this);
 	listenDistrictChanged.call(this);
 
 	// 設定預設選定的縣市
@@ -147,16 +147,16 @@ function setElements() {
 	var fragment = document.createDocumentFragment();
 
 	// 縣市選單
-	if ( ! this.elCountry) {
-		var country = document.createElement('select');
-		this.elCountry = country;
-		fragment.appendChild(country);
+	if ( ! this.elCounty) {
+		var county = document.createElement('select');
+		this.elCounty = county;
+		fragment.appendChild(county);
 	}
 
 	// 縣市選單屬性
-	this.elCountry.innerHTML = getCountryOptions.call(this);
-	this.elCountry.setAttribute('class', this.options.countryClassName);
-	this.elCountry.name = this.options.countryFiledName;
+	this.elCounty.innerHTML = getCountyOptions.call(this);
+	this.elCounty.setAttribute('class', this.options.countyClassName);
+	this.elCounty.name = this.options.countyFiledName;
 
 	// 區域選單
 	if ( ! this.elDistrict) {
@@ -191,32 +191,32 @@ function setElements() {
 	this.el.appendChild(fragment);
 }
 
-function setCountryElement() {
+function setCountyElement() {
     // 縣市選單
-	if ( ! this.elCountry) {
-		var country = document.createElement('select');
-		this.elCountry = country;
-		fragment.appendChild(country);
+	if ( ! this.elCounty) {
+		var county = document.createElement('select');
+		this.elCounty = county;
+		fragment.appendChild(county);
 	}
 
 	// 縣市選單屬性
-	this.elCountry.innerHTML = getCountryOptions.call(this);
-	this.elCountry.setAttribute('class', this.options.countryClassName);
-	this.elCountry.name = this.options.countryFiledName;
+	this.elCounty.innerHTML = getCountyOptions.call(this);
+	this.elCounty.setAttribute('class', this.options.countyClassName);
+	this.elCounty.name = this.options.countyFiledName;
 }
 
-function getCountryOptions() {
+function getCountyOptions() {
 	var elOptions = '<option value="">選擇縣市</option>';
     var onlyCity = this.options.only || this.options.onlyCity; // this.options.only 下個版本棄用
 
-	for (var i = 0, j = data.countries.length; i < j; i++) {
+	for (var i = 0, j = data.counties.length; i < j; i++) {
 		// 若有設定限制顯示的縣市，且該項目不在自訂縣市中
-		if (onlyCity && Array.isArray(onlyCity) && onlyCity.indexOf(data.countries[i]) === -1) {
+		if (onlyCity && Array.isArray(onlyCity) && onlyCity.indexOf(data.counties[i]) === -1) {
 			continue;
 		}
 
 		// format: <option value="臺北市" data-index="0">臺北市</option>
-		elOptions += `<option value="${data.countries[i]}" data-index="${i}">${data.countries[i]}</option>`;
+		elOptions += `<option value="${data.counties[i]}" data-index="${i}">${data.counties[i]}</option>`;
 	}
 
 	return elOptions;
@@ -240,14 +240,14 @@ function getDistrictOptions(index) {
 	return elOptions;
 }
 
-function listenCountryChanged() {
+function listenCountyChanged() {
 	var handler = function() {
-		var index = this.elCountry.querySelector('option:checked').dataset.index;
+		var index = this.elCounty.querySelector('option:checked').dataset.index;
 		this.elDistrict.innerHTML = getDistrictOptions(index);
 		this.elZipcode.value = '';
 	}.bind(this);
 
-	this.elCountry.addEventListener('change', handler);
+	this.elCounty.addEventListener('change', handler);
 }
 
 function listenDistrictChanged() {
@@ -260,12 +260,12 @@ function listenDistrictChanged() {
 }
 
 function setSelectedItem() {
-    if (this.options.selectedCountry) {
+    if (this.options.selectedCounty) {
         var event = document.createEvent('Event');
     	event.initEvent('change', true, true);
 
-    	this.elCountry.value = this.options.selectedCountry;
-    	this.elCountry.dispatchEvent(event);
+    	this.elCounty.value = this.options.selectedCounty;
+    	this.elCounty.dispatchEvent(event);
     }
 
 	if (this.options.selectedDistrict) {
@@ -275,7 +275,7 @@ function setSelectedItem() {
 }
 
 function resetSelectors() {
-	this.elCountry.selectedIndex = 0;
+	this.elCounty.selectedIndex = 0;
 	this.elDistrict.innerHTML = getDistrictOptions();
 	this.elZipcode.value = '';
 
@@ -287,16 +287,16 @@ function setBootstrapStyle() {
     var wrapperClassName = 'form-group';
 	var fragment = document.createDocumentFragment();
 
-	this.elCountry.setAttribute('class', fieldClassName);
+	this.elCounty.setAttribute('class', fieldClassName);
 	this.elDistrict.setAttribute('class', fieldClassName);
 	this.elZipcode.setAttribute('class', fieldClassName);
 
     var wrapper = document.createElement('div');
     wrapper.setAttribute('class', wrapperClassName);
 
-	var elCountry = wrapper.cloneNode();
-	elCountry.appendChild(this.elCountry);
-	fragment.appendChild(elCountry);
+	var elCounty = wrapper.cloneNode();
+	elCounty.appendChild(this.elCounty);
+	fragment.appendChild(elCounty);
 
 	var elDistrict = wrapper.cloneNode();
 	elDistrict.appendChild(this.elDistrict);
