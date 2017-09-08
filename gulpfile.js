@@ -1,15 +1,15 @@
 // *************************
-// File Setting
+// Setting
 // *************************
 
-// Dir
-var jsDir = './src/*.js';
-var jsSrc = './src/tw-city-selector.js';
-var jsDest = './';
-var dataSrc = './src/data.js';
-var dataDest = './docs/js/';
-var docsJs = './docs/js/';
-var fileName = 'tw-city-selector.js';
+let host = '127.0.0.1';
+let jsDir = './src/*.js';
+let jsSrc = './src/tw-city-selector.js';
+let jsDest = './';
+let dataSrc = './src/data.js';
+let dataDest = './docs/js/';
+let docsJs = './docs/js/';
+let fileName = 'tw-city-selector.js';
 
 
 // *************************
@@ -18,57 +18,42 @@ var fileName = 'tw-city-selector.js';
 
 // Core
 // -------------
-var gulp = require('gulp');
-var webServer = require('gulp-webserver');
-var clean = require('gulp-clean');
-var sourcemaps = require('gulp-sourcemaps');
-var rename = require('gulp-rename');
-var notify = require('gulp-notify');
-var concat = require('gulp-concat');
-var groupConcat = require('gulp-group-concat');
-
-// JS
-// -------------
-var uglify = require('gulp-uglify');
-var babel = require('gulp-babel');
-
-// Browserify
-// -------------
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var babelify = require('babelify');
-var stringify = require('stringify');
+let gulp = require('gulp');
+let webServer = require('gulp-webserver');
+let sourcemaps = require('gulp-sourcemaps');
+let uglify = require('gulp-uglify');
+let rename = require('gulp-rename');
+let notify = require('gulp-notify');
 
 // Rollup
 // -------------
-// var rollup = require('rollup');
-var rollup = require('rollup-stream');
-var babelRollup = require('rollup-plugin-babel');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-// var rollupNodeResolve = require('rollup-plugin-node-resolve');
-// var rollupCommonjs = require('rollup-plugin-commonjs');
+let rollup = require('rollup');
+let rollupStream = require('rollup-stream');
+let babelRollup = require('rollup-plugin-babel');
+let source = require('vinyl-source-stream');
+let buffer = require('vinyl-buffer');
+// let rollupStreamNodeResolve = require('rollupStream-plugin-node-resolve');
+// let rollupStreamCommonjs = require('rollupStream-plugin-commonjs');
 
-// Test
+// Babel
 // -------------
-var nightwatch = require('gulp-nightwatch');
+let babel = require('gulp-babel');
 
 
 // *************************
-// Run Gulp
+// Run Tasks
 // *************************
 
 // Default
 // -------------
 gulp.task('default', function () {
-    gulp.start('ru');
+    gulp.start(['scripts', 'demo-data']);
 });
 
 // Watch
 // -------------
 gulp.task('watch', function () {
-    gulp.watch([jsDir, './tests/*.js'], ['ru', 'data']);
+    gulp.watch([jsDir, './tests/*.js'], ['scripts', 'demo-data']);
     gulp.start(['webServer']);
 });
 
@@ -82,55 +67,18 @@ gulp.task('watch', function () {
 gulp.task('webServer', function() {
   return gulp.src('./docs')
     .pipe(webServer({
-        host: '127.0.0.1',
+        host: host,
         fallback: 'index.html',
         livereload: true
     }));
 });
 
-// Javascript
+// Ccripts
 // -------------
-gulp.task('js', function () {
-    return gulp.src(srcDir + 'js/main.js')
-        .pipe(gulp.dest(jsDest))
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(jsDest))
-		.pipe(gulp.dest(docsJs))
-        .pipe(notify({ message: 'JS task complete' }))
-});
-
-// Browserify
-// -------------
-gulp.task('bf', function () {
-    var b = browserify({
-        entries: [jsSrc],
-        standalone: 'TwCitySelector',
-        debug: true
-    })
-    .transform(babelify);
-
-    return b.bundle()
-        .pipe(source(fileName))
-        .pipe(gulp.dest(jsDest))
-        .pipe(buffer())
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(jsDest))
-		.pipe(gulp.dest(docsJs))
-        .pipe(notify({ message: 'BF task complete' }))
-});
-
-// Rollup
-// -------------
-gulp.task('ru', function () {
-    return rollup({
+gulp.task('scripts', function () {
+    return rollupStream({
         entry: jsSrc,
-        rollup: require('rollup'), // 使用原生 rollup
+        // rollup: rollup,
         plugins: [
             babelRollup({
                 babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
@@ -144,19 +92,18 @@ gulp.task('ru', function () {
     .pipe(source(fileName))
     .pipe(gulp.dest(jsDest))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true })) // 讀取原始文件中 sourcemap
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(uglify())
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(jsDest))
 	.pipe(gulp.dest(docsJs))
-    .pipe(notify({ message: 'RU task complete' }))
+    .pipe(notify({ message: 'scripts task complete' }))
 });
 
-gulp.task('data', function () {
-	return rollup({
+gulp.task('demo-data', function () {
+	return rollupStream({
         entry: dataSrc,
-        rollup: require('rollup'), // 使用原生 rollup
         plugins: [
             babelRollup({
                 babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
@@ -164,46 +111,8 @@ gulp.task('data', function () {
             })
         ],
         format: 'umd',
-        moduleName: 'data', // umd 或 iife 格式時，若入口文件含 export，必須加上
-        // sourceMap: true
+        moduleName: 'data' // umd 或 iife 格式時，若入口文件含 export，必須加上
     })
     .pipe(source('data.js'))
     .pipe(gulp.dest(dataDest))
-    // .pipe(buffer())
-    // .pipe(sourcemaps.init({ loadMaps: true })) // 讀取原始文件中 sourcemap
-    // .pipe(uglify())
-    // .pipe(rename({ suffix: '.min' }))
-    // .pipe(sourcemaps.write('./'))
-    // .pipe(gulp.dest(jsDest))
-	// .pipe(gulp.dest(docsJs))
-    .pipe(notify({ message: 'Data task complete' }))
-});
-
-// jQuery
-// gulp.task('jq', function () {
-//     var b = browserify({
-//         entries: ['./src/jquery.tw-city-selector.js'],
-//         // standalone: 'App',
-//         debug: true
-//     })
-//     .transform(babelify);
-//
-//     return b.bundle()
-//         .pipe(source('jquery.tw-city-selector.js'))
-//         .pipe(gulp.dest(jsDest))
-//         .pipe(buffer())
-//         .pipe(sourcemaps.init())
-//         .pipe(uglify())
-//         .pipe(rename({ suffix: '.min' }))
-//         .pipe(sourcemaps.write('./'))
-//         .pipe(gulp.dest(jsDest))
-//         .pipe(notify({ message: 'jq task complete' }))
-// });
-
-// Test
-gulp.task('test', ['bf'], function () {
-    return gulp.src(jsSrc)
-        .pipe(nightwatch({
-            configFile: 'nightwatch.json'
-        }));
 });

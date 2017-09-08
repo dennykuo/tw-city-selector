@@ -1,23 +1,20 @@
 {
-  "name": "tw-city-selector",
-  "version": "1.0.8",
-  "homepage": "http://dennykuo.github.io/tw-city-selector",
-  "keywords": [
-    "dk",
-    "tw"
-  ],
-  "main": [
-    "jquery.tw-city-selector.js"
-  ],
-  "ignore": [
-	"src/",
-    ".git",
-    ".gitignore",
-	"tests",
-	"nightwatch.json",
-	"cypress",
-	"cypress.json",
-	"gulpfile.js",
-	".babelrc"
-  ]
+    "name": "tw-city-selector",
+    "version": "1.0.8",
+    "homepage": "http://dennykuo.github.io/tw-city-selector",
+    "keywords": [
+        "dk",
+        "tw"
+    ],
+    "main": [
+        "jquery.tw-city-selector.js"
+    ],
+    "ignore": [
+        "src/",
+        ".git",
+        ".gitignore",
+        "cypress",
+        "cypress.json",
+        "gulpfile.js"
+    ]
 }
