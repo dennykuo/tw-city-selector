@@ -27,7 +27,6 @@ let notify = require('gulp-notify');
 
 // Rollup
 // -------------
-let rollup = require('rollup');
 let rollupStream = require('rollup-stream');
 let babelRollup = require('rollup-plugin-babel');
 let source = require('vinyl-source-stream');
