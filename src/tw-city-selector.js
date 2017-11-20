@@ -29,8 +29,8 @@ function TwCitySelector() {
 		elZipcode: null,
 		selectedCounty: null, // 預設選擇的縣市名稱
 		selectedDistrict: null, // 預設選擇的區域名稱
-		only: null, // {array} 限制顯示哪些縣市 (下個版本棄用)
-        onlyCity: null, // {array} 限制顯示哪些縣市
+		only: null, // {array} 限制顯示哪些縣市及區域
+        // onlyCity: null, // {array} 限制顯示哪些縣市 @封存
 		showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
 		bootstrapStyle: false,
 		countyClassName: 'county',
@@ -83,21 +83,21 @@ function elSetup() {
 	Array.prototype.forEach.call(els, function(el) {
 		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 
-		// 重置設定
+		// 因可能同時使用兩種初始化方式，需重置設定
 		self.el = el;
 		self.elCounty = null;
 		self.elDistrict = null;
 		self.elZipcode = null;
 
-		// 限制顯示哪些縣市 (下個版本棄用)
+		// 限制只顯示哪些縣市、區域
 		self.options.only = el.getAttribute('data-only')
 			? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
 			: null;
 
-        // 限制顯示哪些縣市
-    	self.options.onlyCity = el.getAttribute('data-only-city')
-			? el.getAttribute('data-only-city').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
-			: null;
+        // 限制顯示哪些縣市 @封存
+    	// self.options.onlyCity = el.getAttribute('data-only-city')
+		// 	? el.getAttribute('data-only-city').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
+		// 	: null;
 
 		// 預設選擇的縣市
 		self.options.selectedCounty = el.getAttribute('data-selected-county') || el.getAttribute('data-selected-country'); // 拼字錯誤
@@ -166,7 +166,7 @@ function setElements() {
 	}
 
 	// 區域選單屬性
-	this.elDistrict.innerHTML = getDistrictOptions();
+	this.elDistrict.innerHTML = getDistrictOptions.call(this);
 	this.elDistrict.setAttribute('class', this.options.districtClassName);
 	this.elDistrict.name = this.options.districtFieldName;
 
@@ -207,11 +207,11 @@ function setCountyElement() {
 
 function getCountyOptions() {
 	var elOptions = '<option value="">選擇縣市</option>';
-    var onlyCity = this.options.only || this.options.onlyCity; // this.options.only 下個版本棄用
+    var onlyItems = getCountyOnlyItems.call(this);
 
 	for (var i = 0, j = data.counties.length; i < j; i++) {
-		// 若有設定限制顯示的縣市，且該項目不在自訂縣市中
-		if (onlyCity && Array.isArray(onlyCity) && onlyCity.indexOf(data.counties[i]) === -1) {
+		// 若有設定限制顯示的縣市，且該項目不在自訂縣市中，則不顯示
+		if (onlyItems && onlyItems.indexOf(data.counties[i]) === -1) {
 			continue;
 		}
 
@@ -223,27 +223,63 @@ function getCountyOptions() {
 }
 
 function getDistrictOptions(index) {
-	if ( ! index) {
-		return '<option value="" selected>---</option>';
-	}
+	if ( ! index) return '<option value="" selected>---</option>';
 
 	var elOptions = '<option value="" selected>選擇區域</option>';
+    var countyValue = this.elCounty.value;
+    var onlyItems = getDistrictOnlyItems.call(this, countyValue);
+    // console.log(onlyItems);
 
 	for(var i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
+        // 若有設定限制顯示的區域，且該項目不在自訂區域中，則不顯示
+        if (onlyItems && onlyItems.indexOf(data.districts[index][0][i]) === -1) {
+            continue;
+        }
+
 		// format: <option value="中正區" data-zipcode="100">中正區</option>
 		elOptions += `<option value="${data.districts[index][0][i]}"
-                            data-zipcode="${data.districts[index][1][i]}">
-		                ${data.districts[index][0][i]}
-		            </option>`;
+                              data-zipcode="${data.districts[index][1][i]}"
+                      >
+		                  ${data.districts[index][0][i]}
+		              </option>`;
 	}
 
 	return elOptions;
 }
 
+function getCountyOnlyItems() {
+    var onlyItems = this.options.only;
+    if ( ! Array.isArray(onlyItems)) return null;
+
+    // 取出縣市資料
+    return onlyItems.map(function(item) {
+        var index = item.indexOf('@');
+        return index === -1 ? item : item.substring(0, index);
+    });
+}
+
+function getDistrictOnlyItems(county) {
+    var onlyItems = this.options.only;
+    if ( ! Array.isArray(onlyItems)) return null;
+
+    // 取出區域資料
+    var items = null;
+    onlyItems.forEach(function(item) {
+        if (item.indexOf(county) === -1) return;
+
+        var index = item.lastIndexOf('@');
+        if (index !== -1) {
+            return items = item.substring(index + 1).split('|'); // 轉陣列
+        }
+    });
+
+    return items;
+}
+
 function listenCountyChanged() {
 	var handler = function() {
 		var index = this.elCounty.querySelector('option:checked').dataset.index;
-		this.elDistrict.innerHTML = getDistrictOptions(index);
+		this.elDistrict.innerHTML = getDistrictOptions.call(this, index);
 		this.elZipcode.value = '';
 	}.bind(this);
 
@@ -276,7 +312,7 @@ function setSelectedItem() {
 
 function resetSelectors() {
 	this.elCounty.selectedIndex = 0;
-	this.elDistrict.innerHTML = getDistrictOptions();
+	this.elDistrict.innerHTML = getDistrictOptions.call(this);
 	this.elZipcode.value = '';
 
 	return this;

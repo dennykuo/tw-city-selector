@@ -122,13 +122,17 @@
         <h4 style="padding: .6em; background: rgb(232, 250, 250)">element 加上 role-attribute (預設用法，自訂性低)</h4>
         <h4 style="padding: .6em; background: rgb(234, 255, 228)">js 實例 (自訂性高)</h4>
 
-
-
-
         <div class="page-header">
           <h1>element 加上 role-attribute 方式</h1>
           <p>[ 配置簡單 ]</p>
         </div>
+
+        <h4>在適當的地方加入下方 script</h4>
+        <code-tag content='
+<script>
+  new TwCitySelector();
+</script>
+        '></code-tag>
 
         <h4>設置一個空 element，加入 role-attribute</h4>
         <code-tag content='
@@ -145,13 +149,24 @@
         <div role="tw-city-selector" data-show-zipcode></div>
         <hr>
 
-        <h4>限制可選擇的縣市 (例：臺北市、臺中市、高雄市)</h4>
+        <h4>限制選擇的縣市</h4>
+        <p>例：臺北市、臺中市、高雄市</p>
         <code-tag content='
 <div role="tw-city-selector"
      data-only="臺北市,臺中市,高雄市">
 </div>
         '></code-tag>
         <div role="tw-city-selector" data-only="臺北市,臺中市,高雄市"></div>
+        <hr>
+
+        <h4>限制選擇的縣市及區域</h4>
+        <p>例：臺北市(大同區、萬華區)、臺中市(西區)、高雄市(不設限)</p>
+        <code-tag content='
+<div role="tw-city-selector"
+     data-only="臺北市@大同區|萬華區,臺中市@西區,高雄市">
+</div>
+        '></code-tag>
+        <div role="tw-city-selector" data-only="臺北市@大同區|萬華區,臺中市@西區,高雄市"></div>
         <hr>
 
         <h4>預設選擇 (例：新北市及板橋區)</h4>
