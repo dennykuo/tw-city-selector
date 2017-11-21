@@ -72,21 +72,20 @@ gulp.task('webServer', function() {
     }));
 });
 
-// Ccripts
+// Scripts
 // -------------
 gulp.task('scripts', function () {
     return rollupStream({
-        entry: jsSrc,
-        // rollup: rollup,
+        input: jsSrc,
+        name: 'TwCitySelector', // umd 或 iife 格式時，若入口文件含 export，必須加上
+        format: 'umd',
+        sourcemap: true,
         plugins: [
             babelRollup({
                 babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
                 presets: ['es2015-rollup']
             })
-        ],
-        format: 'umd',
-        moduleName: 'TwCitySelector', // umd 或 iife 格式時，若入口文件含 export，必須加上
-        sourceMap: true
+        ]
     })
     .pipe(source(fileName))
     .pipe(gulp.dest(jsDest))
@@ -102,15 +101,15 @@ gulp.task('scripts', function () {
 
 gulp.task('demo-data', function () {
 	return rollupStream({
-        entry: dataSrc,
+        input: dataSrc,
+        name: 'data', // umd 或 iife 格式時，若入口文件含 export，必須加上
+        format: 'umd',
         plugins: [
             babelRollup({
                 babelrc: false, // 忽略 babelrc 設定值，以便下方 presets 改為 Rollup 所用
                 presets: ['es2015-rollup']
             })
-        ],
-        format: 'umd',
-        moduleName: 'data' // umd 或 iife 格式時，若入口文件含 export，必須加上
+        ]
     })
     .pipe(source('data.js'))
     .pipe(gulp.dest(dataDest))
