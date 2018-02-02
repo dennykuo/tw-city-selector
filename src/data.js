@@ -1,6 +1,5 @@
-export default data;
+export default {
 
-var data = {
     // 縣市
     counties: [
         '臺北市', '基隆市', '新北市', '宜蘭縣', '桃園市', '新竹市', '新竹縣', '苗栗縣',

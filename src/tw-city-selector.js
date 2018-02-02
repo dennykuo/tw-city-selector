@@ -10,7 +10,7 @@ import handleOptions from './handle-options';
 // --------------------
 // Module export
 // --------------------
-export default TwCitySelector; /* use rollup to build */
+export default TwCitySelector; /* use webpack or rollup to build */
 // module.exports = TwCitySelector; /* use browserify to build */
 
 

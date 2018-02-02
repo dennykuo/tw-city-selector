@@ -9,43 +9,44 @@ export default function handleOptions() {
 }
 
 function getOptionsRequired(optionsCustom, optionsRequired) {
-  var error = '';
-  var length = optionsRequired.length;
-  optionsCustom = optionsCustom || {};
+    var error = '';
+    var length = optionsRequired.length;
 
-  while (length--) {
-    if ( ! optionsCustom.hasOwnProperty(optionsRequired[length]))
-      error += optionsRequired[length] + ',';
-  }
+    optionsCustom = optionsCustom || {};
 
-  if (error) throw '缺少參數: ' + error;
+    while (length--) {
+        if ( ! optionsCustom.hasOwnProperty(optionsRequired[length]))
+            error += optionsRequired[length] + ',';
+    }
+
+    if (error) throw '缺少參數: ' + error;
 }
 
 function getOptionsExtend(optionsCustom, optionsDefault) {
-  if ( ! optionsCustom) {
+    if ( ! optionsCustom) {
+        return optionsDefault;
+    }
+
+    var property;
+    for (property in optionsCustom) {
+        optionsDefault[property] = optionsCustom[property];
+    }
+
+    if (optionsCustom['elCountry']) { // 拼字錯誤修正
+        optionsDefault['elCounty'] = optionsCustom['elCountry'];
+    }
+
+    if (optionsCustom['selectedCountry']) { // 拼字錯誤修正
+        optionsDefault['selectedCounty'] = optionsCustom['selectedCountry'];
+    }
+
+    if (optionsCustom['countryClassName']) { // 拼字錯誤修正
+        optionsDefault['countyClassName'] = optionsCustom['countryClassName'];
+    }
+
+    if (optionsCustom['countryFiledName']) { // 拼字錯誤修正
+        optionsDefault['countyFiledName'] = optionsCustom['countryFiledName'];
+    }
+
     return optionsDefault;
-  }
-
-  var property;
-  for (property in optionsCustom) {
-    optionsDefault[property] = optionsCustom[property];
-  }
-
-  if (optionsCustom['elCountry']) { // 拼字錯誤修正
-      optionsDefault['elCounty'] = optionsCustom['elCountry'];
-  }
-
-  if (optionsCustom['selectedCountry']) { // 拼字錯誤修正
-      optionsDefault['selectedCounty'] = optionsCustom['selectedCountry'];
-  }
-
-  if (optionsCustom['countryClassName']) { // 拼字錯誤修正
-      optionsDefault['countyClassName'] = optionsCustom['countryClassName'];
-  }
-
-  if (optionsCustom['countryFiledName']) { // 拼字錯誤修正
-      optionsDefault['countyFiledName'] = optionsCustom['countryFiledName'];
-  }
-
-  return optionsDefault;
 }

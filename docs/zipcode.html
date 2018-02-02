@@ -125,8 +125,8 @@
 <script type="riot/tag">
   <zipcode-list>
 		<dl class="zipcode-list dl-horizontal">
-			<virtual each="{ County, i in data.counties }">
-				<dt>{ County }</dt>
+			<virtual each="{ county, i in data.counties }">
+				<dt>{ county }</dt>
 				<dd>
 					<span each="{ district, n in data.districts[i][0] }">
 						{ district }
@@ -139,6 +139,7 @@
 </script>
 
 <script>
+  console.log(data);
 	riot.mount('zipcode-list');
 </script>
 
