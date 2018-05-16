@@ -17,38 +17,47 @@ export default TwCitySelector; /* use webpack or rollup to build */
 // --------------------
 // Constructor
 // --------------------
-function TwCitySelector() {
+function TwCitySelector(options = {}) {
 
-	this.elRoleName = 'tw-city-selector';
+	this.elRoleAttrName = 'tw-city-selector';
 
 	// Setting options
 	var optionsDefault = {
-		el: null,
-		elCounty: null,
-		elDistrict: null,
-		elZipcode: null,
-		selectedCounty: null, // 預設選擇的縣市名稱
-		selectedDistrict: null, // 預設選擇的區域名稱
-		only: null, // {array} 限制顯示哪些縣市及區域
+        // *** 作用目標
+		el: null, // {string | HTMLElement}
+		elCounty: null, // {string | HTMLElement}
+		elDistrict: null, // {string | HTMLElement}
+		elZipcode: null, // {string | HTMLElement}
+
+        // *** 元件的內容限制
+        only: null, // {array} 限制可選擇的縣市
         // onlyCity: null, // {array} 限制顯示哪些縣市 @封存
-		showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
-		bootstrapStyle: false,
-		countyClassName: 'county',
-		countyFiledName: 'county',
-		districtClassName: 'district',
-		districtFieldName: 'district',
-		zipcodeClassName: 'zipcode',
-		zipcodeFieldName: 'zipcode'
+        showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
+
+        // *** 元件的預設選定值
+		selectedCounty: null, // {string} 預設選擇的縣市
+		selectedDistrict: null, // {string} 預設選擇的區域
+
+        // *** 元件 tag 屬性
+		countyClassName: 'county', // {string}
+		countyFiledName: 'county', // {string}
+		districtClassName: 'district', // {string}
+		districtFieldName: 'district', // {string}
+		zipcodeClassName: 'zipcode', // {string}
+		zipcodeFieldName: 'zipcode', // {string}
+
+        // *** 其他
+        bootstrapStyle: false // {boolean}
 	};
 
-    var optionsCustom = arguments[0];
-	var optionsRequired = arguments.length ? ['el'] : null; // 設置必要參數，若無帶入任何參數則設不設置
+    var optionsCustom = options;
+	var optionsRequired = options.length ? ['el'] : null; // 設置必要參數，若無帶入任何參數則設不設置
 	this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
 
     // Setup
 	elSetup.call(this);
 
-	// return this;
+	return this;
 };
 
 
@@ -79,7 +88,7 @@ function elSetup() {
 	}
 
 	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
-	var els = document.querySelectorAll('[role='+ this.elRoleName +']');
+	var els = document.querySelectorAll('[role='+ this.elRoleAttrName +']');
 	Array.prototype.forEach.call(els, function(el) {
 		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
 
@@ -223,9 +232,10 @@ function getCountyOptions() {
 }
 
 function getDistrictOptions(index) {
-	if ( ! index) return '<option value="" selected>---</option>';
+    var elOptions = '<option value="" selected>選擇區域</option>';
 
-	var elOptions = '<option value="" selected>選擇區域</option>';
+	if ( ! index) return elOptions;
+
     var countyValue = this.elCounty.value;
     var onlyItems = getDistrictOnlyItems.call(this, countyValue);
     // console.log(onlyItems);

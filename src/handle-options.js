@@ -1,14 +1,15 @@
-export default function handleOptions() {
-  // Check options required
-  if (arguments[1]) {
-    getOptionsRequired(arguments[0], arguments[1]);
-  }
+export default handleOptions;
 
-  // Extend options
-  return getOptionsExtend(arguments[0], arguments[2]);
+function handleOptions() {
+    // Check options required
+    if (arguments[1])
+        checkRequired(arguments[0], arguments[1]);
+
+    // Extend options
+    return getOptionsExtend(arguments[0], arguments[2]);
 }
 
-function getOptionsRequired(optionsCustom, optionsRequired) {
+function checkRequired(optionsCustom, optionsRequired) {
     var error = '';
     var length = optionsRequired.length;
 
@@ -23,30 +24,28 @@ function getOptionsRequired(optionsCustom, optionsRequired) {
 }
 
 function getOptionsExtend(optionsCustom, optionsDefault) {
-    if ( ! optionsCustom) {
+    if ( ! optionsCustom)
         return optionsDefault;
-    }
 
     var property;
     for (property in optionsCustom) {
         optionsDefault[property] = optionsCustom[property];
     }
 
-    if (optionsCustom['elCountry']) { // 拼字錯誤修正
+    //
+    // 拼字錯誤修正，更大版號後移除
+    //
+    if (optionsCustom['elCountry'])
         optionsDefault['elCounty'] = optionsCustom['elCountry'];
-    }
 
-    if (optionsCustom['selectedCountry']) { // 拼字錯誤修正
+    if (optionsCustom['selectedCountry'])
         optionsDefault['selectedCounty'] = optionsCustom['selectedCountry'];
-    }
 
-    if (optionsCustom['countryClassName']) { // 拼字錯誤修正
+    if (optionsCustom['countryClassName'])
         optionsDefault['countyClassName'] = optionsCustom['countryClassName'];
-    }
 
-    if (optionsCustom['countryFiledName']) { // 拼字錯誤修正
+    if (optionsCustom['countryFiledName'])
         optionsDefault['countyFiledName'] = optionsCustom['countryFiledName'];
-    }
 
     return optionsDefault;
 }
