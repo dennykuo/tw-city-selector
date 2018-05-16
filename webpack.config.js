@@ -1,52 +1,76 @@
+const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-// tw-city-selector.js
-let pluginConfig = {
-    entry: './src/tw-city-selector.js',
-    output: {
-        filename: 'tw-city-selector.js',
-        library: 'TwCitySelector',
-        libraryExport: 'default',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    },
-    watch: true,
-    devtool: 'source-map',
-    plugins: [
-        new UglifyJsPlugin({
-            sourceMap: true
-        }),
-        new CopyWebpackPlugin([
-            { from: './tw-city-selector.*', to: './docs/js' }
-        ])
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.js?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2015']
+let fileName = 'tw-city-selector';
+let moduleName = 'TwCitySelector';
+let isProduction = process.env.NODE_ENV === 'production';
+let config = [];
+
+
+// ------------------------------
+// Library config
+// ------------------------------
+[fileName, fileName + '.min'].forEach(function(key) {
+    config.push(makeLibraryConfig(key));
+    config.push(makeLibraryConfig(key, './docs/js'));
+});
+
+function makeLibraryConfig(configName, outputPath = './dist') {
+    let isMinify = configName.indexOf('min') > -1;
+
+    let config = {
+        mode: 'production',
+        entry: './src/' + fileName + '.js',
+        output: {
+            path: path.resolve(__dirname, outputPath),
+            filename: configName + '.js',
+            library: moduleName,
+            libraryTarget: 'umd',
+            libraryExport: 'default',
+            umdNamedDefine: true
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js?$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['es2015']
+                        }
                     }
                 }
-            }
+            ]
+        },
+        plugins: [
+            //
         ]
-    }
-};
+    };
 
-// data.js (for demo)
-let dataConfig = {
+    if ( ! isMinify) config.devtool = 'source-map';
+
+    return config;
+}
+
+
+// ------------------------------
+// data file config
+// ------------------------------
+config.push({
+    mode: 'production',
     entry: './src/data.js',
     output: {
-        path: path.resolve(__dirname, 'docs/js/'),
+        path: path.resolve(__dirname, './docs/js/'),
         filename: 'data.js',
         library: 'data',
         libraryExport: 'default'
     }
-};
+});
 
-module.exports = [ pluginConfig, dataConfig ];
+
+
+// ------------------------------
+// exports
+// ------------------------------
+module.exports = config;
