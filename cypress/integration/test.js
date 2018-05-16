@@ -1,4 +1,4 @@
-const url = 'http://127.0.0.1:8887/docs/test.html';
+const url = 'http://localhost:8080/test.html';
 
 describe('role-attribute方式加載', function() {
 
