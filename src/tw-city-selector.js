@@ -31,6 +31,7 @@ function TwCitySelector() {
 		selectedDistrict: null, // 預設選擇的區域名稱
 		only: null, // {array} 限制顯示哪些縣市及區域
         // onlyCity: null, // {array} 限制顯示哪些縣市 @封存
+		showDistrict: true, // {boolean} 是否顯示區域欄位
 		showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
 		bootstrapStyle: false,
 		countyClassName: 'county',
@@ -108,6 +109,9 @@ function elSetup() {
         // 是否使用 bootstrap 樣式
 		self.options.bootstrapStyle = (el.getAttribute('data-bootstrap-style') != null);
 
+		// 是否顯示區域
+		self.options.showDistrict = (el.getAttribute('data-show-district') != null);
+
         // 是否顯示郵遞區號
 		self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
 
@@ -166,6 +170,9 @@ function setElements() {
 	}
 
 	// 區域選單屬性
+	if (!this.options.showDistrict) {
+		this.elDistrict.style.display = 'none';
+	}
 	this.elDistrict.innerHTML = getDistrictOptions.call(this);
 	this.elDistrict.setAttribute('class', this.options.districtClassName);
 	this.elDistrict.name = this.options.districtFieldName;
