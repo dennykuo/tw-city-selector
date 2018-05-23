@@ -15,30 +15,31 @@ export default TwCitySelector; /* use webpack or rollup to build */
 
 
 // --------------------
-// Constructor
+// Module Constructor
 // --------------------
 function TwCitySelector(options = {}) {
 
+    this.VERSION = '2.0.0';
 	this.elRoleAttrName = 'tw-city-selector';
 
 	// Setting options
 	var optionsDefault = {
-        // *** 作用目標
+        // *** 作用目標 elements
 		el: null, // {string | HTMLElement}
 		elCounty: null, // {string | HTMLElement}
 		elDistrict: null, // {string | HTMLElement}
 		elZipcode: null, // {string | HTMLElement}
 
         // *** 元件的內容限制
-        only: null, // {array} 限制可選擇的縣市
-        // onlyCity: null, // {array} 限制顯示哪些縣市 @封存
-        showZipcode: false, // {boolean} 是否顯示郵遞區號欄位
+        only: null, // {string | array} 限制可選擇的縣市
+        hasZipcode: false, // {boolean} 是否創建郵遞區號欄位
+        showZipcode: false, // {boolean} 是否顯示郵遞區號欄位 (hasZipcode 為 true 時，才會生效)
 
         // *** 元件的預設選定值
 		selectedCounty: null, // {string} 預設選擇的縣市
 		selectedDistrict: null, // {string} 預設選擇的區域
 
-        // *** 元件 tag 屬性
+        // *** elements 屬性
 		countyClassName: 'county', // {string}
 		countyFiledName: 'county', // {string}
 		districtClassName: 'district', // {string}
@@ -46,28 +47,34 @@ function TwCitySelector(options = {}) {
 		zipcodeClassName: 'zipcode', // {string}
 		zipcodeFieldName: 'zipcode', // {string}
 
-        // *** 其他
+        // *** 其他設定
+        standardWords: false, // {boolean} 使用「臺」的正體字，而非俗體字「台」
         bootstrapStyle: false // {boolean}
 	};
 
-    var optionsCustom = options;
 	var optionsRequired = options.length ? ['el'] : null; // 設置必要參數，若無帶入任何參數則設不設置
-	this.options = handleOptions(optionsCustom, optionsRequired, optionsDefault);
 
-    // Setup
-	elSetup.call(this);
+	this.options = handleOptions(options, optionsRequired, optionsDefault);
 
-	return this;
+    /**
+     Vue 等 framework 可能會 element 加載的時間差，而讓選單的事件監聽不在掛載的 element 上
+     使用 window onload event 可解決，卻又會因可能使用 js 路由 (history api) 而失效，
+     原本預期採用 DOMNodeInserted api 監聽 element 掛載，但語法已將被棄用，
+     等瀏覽器較普遍接受 MutationObserver api 時，再使用 MutationObserver 監聽 element 掛載，
+     目前使用 setTimeout 作為 trick 解法...
+     */
+
+    var check = setTimeout(function() {
+        createElements.call(this);
+    }.bind(this), 0);
+
+    return this.__proto__;
 };
 
 
 // --------------------
 // Public Methods
 // --------------------
-// TwCitySelector.prototype.init = function() {
-// 	return init.call(this);
-// };
-
 TwCitySelector.prototype.reset = function() {
 	return resetSelectors.call(this);
 };
@@ -76,8 +83,10 @@ TwCitySelector.prototype.reset = function() {
 // --------------------
 // Private Methods
 // --------------------
-function elSetup() {
-    // 有指定 element 的初始化
+function createElements() {
+    //
+    // 有指定 elements 的初始化
+    //
 	if (this.options.el) {
 		this.el = getElement(this.options.el);
 		this.elCounty = getElement(this.options.elCounty, this.el);
@@ -87,7 +96,9 @@ function elSetup() {
 		return init.call(this);
 	}
 
-	// 無指定 element 的初始化，使用 role-attribute element 作為預設 elements
+    //
+	// 無指定 elements 的初始化，使用具有 role-attribute 的 elements 作為作用目標
+	//
 	var els = document.querySelectorAll('[role='+ this.elRoleAttrName +']');
 	Array.prototype.forEach.call(els, function(el) {
 		var self = JSON.parse(JSON.stringify(this)); // clone object，因 object 為參考
@@ -98,27 +109,7 @@ function elSetup() {
 		self.elDistrict = null;
 		self.elZipcode = null;
 
-		// 限制只顯示哪些縣市、區域
-		self.options.only = el.getAttribute('data-only')
-			? el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
-			: null;
-
-        // 限制顯示哪些縣市 @封存
-    	// self.options.onlyCity = el.getAttribute('data-only-city')
-		// 	? el.getAttribute('data-only-city').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
-		// 	: null;
-
-		// 預設選擇的縣市
-		self.options.selectedCounty = el.getAttribute('data-selected-county') || el.getAttribute('data-selected-country'); // 拼字錯誤
-
-		// 預設選擇的區域
-		self.options.selectedDistrict = el.getAttribute('data-selected-district');
-
-        // 是否使用 bootstrap 樣式
-		self.options.bootstrapStyle = (el.getAttribute('data-bootstrap-style') != null);
-
-        // 是否顯示郵遞區號
-		self.options.showZipcode = (el.getAttribute('data-show-zipcode') != null);
+        self = getDataAttrOptions.call(self);
 
 		return init.call(self);
 	}, this);
@@ -126,20 +117,45 @@ function elSetup() {
     return els;
 }
 
-function init() {
-	setElements.call(this);
+function getDataAttrOptions() {
+	// *** 限制只顯示哪些縣市、區域
+	this.options.only = this.el.getAttribute('data-only')
+		? this.el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
+		: null;
+	// *** 預設的縣市選單值
+	this.options.selectedCounty = this.el.getAttribute('data-selected-county');
+	// *** 預設的區域選單值
+	this.options.selectedDistrict = this.el.getAttribute('data-selected-district');
+    // *** 是否產生郵遞區號欄位
+	this.options.hasZipcode = (this.el.getAttribute('data-has-zipcode') != null);
+    // *** 是否顯示郵遞區號欄位
+	this.options.showZipcode = (this.el.getAttribute('data-show-zipcode') != null);
+    // *** 是否使用臺的正體字
+    this.options.standardWords = (this.el.getAttribute('data-standard-words') != null);
+    // *** 是否使用 bootstrap 樣式
+    this.options.bootstrapStyle = (this.el.getAttribute('data-bootstrap-style') != null);
 
-    // 監聽選單動作
+    return this;
+}
+
+function init() {
+    // *** standardWords 使用正體字
+    if (this.options.standardWords)
+        setStandardWords.call(this);
+
+    // *** 置入 elemnts
+    setElements.call(this);
+
+    // *** 監聽選單動作
 	listenCountyChanged.call(this);
 	listenDistrictChanged.call(this);
 
-	// 設定預設選定的縣市
+	// *** 設定預設選定的縣市
 	setSelectedItem.call(this);
 
-	// bootstrap 樣式套入
-	if (this.options.bootstrapStyle) {
+	// *** bootstrap 樣式套入
+	if (this.options.bootstrapStyle)
 		setBootstrapStyle.call(this);
-	}
 
 	return this;
 }
@@ -147,71 +163,67 @@ function init() {
 function getElement(el, parent) {
     if ( ! el)
         return null;
-    if (parent)
+    if (el && parent)
         return parent.querySelector(el);
 	return document.querySelector(el);
 }
 
 function setElements() {
+    //
+    //  element 片段
+    //
 	var fragment = document.createDocumentFragment();
 
-	// 縣市選單
+    //
+	//  縣市選單
+	//
 	if ( ! this.elCounty) {
 		var county = document.createElement('select');
 		this.elCounty = county;
-		fragment.appendChild(county);
+		fragment.appendChild(this.elCounty);
 	}
-
 	// 縣市選單屬性
 	this.elCounty.innerHTML = getCountyOptions.call(this);
-	this.elCounty.setAttribute('class', this.options.countyClassName);
+	this.elCounty.classList.add(this.options.countyClassName);
 	this.elCounty.name = this.options.countyFiledName;
 
+    //
 	// 區域選單
+	//
 	if ( ! this.elDistrict) {
 		var district = document.createElement('select');
 		this.elDistrict = district;
-		fragment.appendChild(district);
+		fragment.appendChild(this.elDistrict);
 	}
-
 	// 區域選單屬性
 	this.elDistrict.innerHTML = getDistrictOptions.call(this);
-	this.elDistrict.setAttribute('class', this.options.districtClassName);
+	this.elDistrict.classList.add(this.options.districtClassName);
 	this.elDistrict.name = this.options.districtFieldName;
 
+    //
 	// 郵遞區號
-	if ( ! this.elZipcode) {
+	//
+	if ( ! this.elZipcode && this.options.hasZipcode) {
 		var zipcode = document.createElement('input');
 		this.elZipcode = zipcode;
-		fragment.appendChild(zipcode);
+		fragment.appendChild(this.elZipcode);
 
         // 郵遞區號屬性設定
         this.elZipcode.style.display = this.options.showZipcode || 'none';
-        this.elZipcode.style.width = '6em';
+        this.elZipcode.name = this.options.zipcodeFieldName;
+        this.elZipcode.classList.add(this.options.zipcodeClassName);
         this.elZipcode.readOnly = true;
         this.elZipcode.type = 'text';
         this.elZipcode.placeholder = '郵遞區號';
-        this.elZipcode.name = this.options.zipcodeFieldName;
-        this.elZipcode.setAttribute('class', this.options.zipcodeClassName);
+        // this.elZipcode.size = 3;
+        // this.elZipcode.width = 3;
         this.elZipcode.autocomplete = 'off';
 	}
 
-	// element 片段塞入 el
+    //
+	// element 片段置入 el
+	//
 	this.el.appendChild(fragment);
-}
-
-function setCountyElement() {
-    // 縣市選單
-	if ( ! this.elCounty) {
-		var county = document.createElement('select');
-		this.elCounty = county;
-		fragment.appendChild(county);
-	}
-
-	// 縣市選單屬性
-	this.elCounty.innerHTML = getCountyOptions.call(this);
-	this.elCounty.setAttribute('class', this.options.countyClassName);
-	this.elCounty.name = this.options.countyFiledName;
 }
 
 function getCountyOptions() {
@@ -238,7 +250,6 @@ function getDistrictOptions(index) {
 
     var countyValue = this.elCounty.value;
     var onlyItems = getDistrictOnlyItems.call(this, countyValue);
-    // console.log(onlyItems);
 
 	for(var i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
         // 若有設定限制顯示的區域，且該項目不在自訂區域中，則不顯示
@@ -259,6 +270,10 @@ function getDistrictOptions(index) {
 
 function getCountyOnlyItems() {
     var onlyItems = this.options.only;
+    var isString = typeof onlyItems == 'string';
+
+    if (isString) return onlyItems;
+
     if ( ! Array.isArray(onlyItems)) return null;
 
     // 取出縣市資料
@@ -270,7 +285,12 @@ function getCountyOnlyItems() {
 
 function getDistrictOnlyItems(county) {
     var onlyItems = this.options.only;
-    if ( ! Array.isArray(onlyItems)) return null;
+    var isString = typeof onlyItems == 'string';
+
+    if ( ! isString && ! Array.isArray(onlyItems)) return null;
+
+    if (isString)
+        onlyItems = [onlyItems];
 
     // 取出區域資料
     var items = null;
@@ -288,44 +308,66 @@ function getDistrictOnlyItems(county) {
 
 function listenCountyChanged() {
 	var handler = function() {
-		var index = this.elCounty.querySelector('option:checked').dataset.index;
+        var index = this.elCounty.querySelector('option:checked').dataset.index;
+		// var index = this.elCounty.selectedIndex - 1;
+        // console.log(this.elCounty.querySelector('option:checked').dataset.index, this.elCounty.selectedIndex - 1)
+        // console.log(getDistrictOptions.call(this, index))
 		this.elDistrict.innerHTML = getDistrictOptions.call(this, index);
-		this.elZipcode.value = '';
+
+        if (this.options.hasZipcode) this.elZipcode.value = '';
 	}.bind(this);
 
-	this.elCounty.addEventListener('change', handler);
+    // this.elCounty.addEventListener('change', handler); // jquery trigger change 會失敗，改下列
+    this.elCounty.onchange = handler;
 }
 
 function listenDistrictChanged() {
 	var handler = function() {
 		var zipcode = this.elDistrict.querySelector('option:checked').dataset.zipcode || '';
-		this.elZipcode.value = zipcode;
+
+        if (this.options.hasZipcode) this.elZipcode.value = zipcode;
 	}.bind(this);
 
-	this.elDistrict.addEventListener('change', handler);
+	// this.elDistrict.addEventListener('change', handler); // jquery trigger change 會失敗，改下列
+	this.elDistrict.onchange = handler;
 }
 
 function setSelectedItem() {
-    if (this.options.selectedCounty) {
-        var event = document.createEvent('Event');
-    	event.initEvent('change', true, true);
+    var changeEvent = createEvent('change');
 
+    if (this.options.selectedCounty) {
     	this.elCounty.value = this.options.selectedCounty;
-    	this.elCounty.dispatchEvent(event);
+    	this.elCounty.dispatchEvent(changeEvent);
     }
 
 	if (this.options.selectedDistrict) {
 		this.elDistrict.value = this.options.selectedDistrict;
-		this.elDistrict.dispatchEvent(event);
+		this.elDistrict.dispatchEvent(changeEvent);
 	}
 }
 
 function resetSelectors() {
 	this.elCounty.selectedIndex = 0;
 	this.elDistrict.innerHTML = getDistrictOptions.call(this);
-	this.elZipcode.value = '';
+    if (this.options.hasZipcode) this.elZipcode.value = '';
 
 	return this;
+}
+
+function setStandardWords() {
+    data.counties = data.counties.map(function(county) {
+        if (county.includes('台'))
+            return county.replace('台', '臺');
+        return county;
+    });
+
+    data.districts.forEach(function(current, i, districts) {
+		districts[i][0] = current[0].map(function(district) {
+		   if (district.includes('台'))
+			   return district.replace('台', '臺');
+		   return district;
+		});
+	});
 }
 
 function setBootstrapStyle() {
@@ -335,7 +377,7 @@ function setBootstrapStyle() {
 
 	this.elCounty.setAttribute('class', fieldClassName);
 	this.elDistrict.setAttribute('class', fieldClassName);
-	this.elZipcode.setAttribute('class', fieldClassName);
+    if (this.options.hasZipcode) this.elZipcode.setAttribute('class', fieldClassName);
 
     var wrapper = document.createElement('div');
     wrapper.setAttribute('class', wrapperClassName);
@@ -348,9 +390,21 @@ function setBootstrapStyle() {
 	elDistrict.appendChild(this.elDistrict);
 	fragment.appendChild(elDistrict);
 
-	var elZipcode = wrapper.cloneNode();
-	elZipcode.appendChild(this.elZipcode);
-	fragment.appendChild(elZipcode);
+    if (this.options.hasZipcode) {
+        var elZipcode = wrapper.cloneNode();
+        elZipcode.appendChild(this.elZipcode);
+        fragment.appendChild(elZipcode);
+    }
 
 	this.el.appendChild(fragment);
+}
+
+function createEvent(eventName) {
+    if (typeof(Event) === 'function')
+        return new Event(eventName, { 'bubbles': true, 'cancelable': false });
+
+    // Old IE
+    event = document.createEvent('Event');
+    event.initEvent(eventName, true, true);
+    return event;
 }

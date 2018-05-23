@@ -2,4 +2,5 @@
 - [基本用法](basic)
 - [進階用法](advanced)
 - [API](api)
+- [版本遷移](migrate)
 - [郵遞區號表](zipcode)

@@ -20,9 +20,7 @@ bower install tw-city-selector --save
 透過 [Github](https://github.com/dennykuo/tw-city-selector ':target=_blank') 下載
 
 ##### - 使用 CDN
-```
-待補充
-```
+請參閱 [jsDelivr](https://www.jsdelivr.com/package/npm/tw-city-selector)
 
 
 ## 引用
@@ -80,44 +78,46 @@ element tag 增加 data-show-zipcode 屬性
 
 tag 增加 data-only 屬性，值為可選擇的縣市 (不可有空格)
 
-例：只可選擇臺北市、臺中市、高雄市
+例：只可選擇台北市、台中市、高雄市
 
 ```html
-<div role="tw-city-selector" data-only="臺北市,臺中市,高雄市"></div>
+<div role="tw-city-selector" data-only="台北市,台中市,高雄市"></div>
 ```
 
 示例：
-<div role="tw-city-selector" data-only="臺北市,臺中市,高雄市"></div>
+<div role="tw-city-selector" data-only="台北市,台中市,高雄市"></div>
 
 
 #### 限制可選擇的縣市及區域
 
 element tag 增加 data-only 屬性，值為可選擇的縣市及區域 (不可有空格)
 
-例：只可選擇臺北市(大同區、萬華區)、臺中市(西區)、高雄市(不設限其中區域)
+例：只可選擇台北市(大同區、萬華區)、台中市(西區)、高雄市(不設限其中區域)
 
 ```html
-<div role="tw-city-selector" data-only="臺北市@大同區|萬華區,臺中市@西區,高雄市"></div>
+<div role="tw-city-selector" data-only="台北市@大同區|萬華區,台中市@西區,高雄市"></div>
 ```
 
-<div role="tw-city-selector" data-only="臺北市@大同區|萬華區,臺中市@西區,高雄市"></div>
+示例：
+<div role="tw-city-selector" data-only="台北市@大同區|萬華區,台中市@西區,高雄市"></div>
 
 
 #### 預設選定
 
 element tag 增加 data-selected-county 及 data-selected-district 屬性
 
-例：設定其值為「臺北市」及「中正區」
+例：設定其值為「台北市」及「中正區」
 
 ```html
 <div role="tw-city-selector"
-     data-selected-county="臺北市"
+     data-selected-county="台北市"
      data-selected-district="中正區">
 </div>
 ```
 
+示例：
 <div role="tw-city-selector"
-     data-selected-county="臺北市"
+     data-selected-county="台北市"
      data-selected-district="中正區">
 </div>
 
@@ -129,7 +129,7 @@ element tag 增加 data-selected-county 及 data-selected-district 屬性
 
 ```html
 <style>
-  /* 替換適合的 selector */
+  /* 替換適合的 css 樣式 */
   .my-selector select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -164,6 +164,24 @@ element tag 增加 data-selected-county 及 data-selected-district 屬性
     padding: .3em 1.25em;
   }
 </style>
+
+
+## 使用正體字
+
+#### 將「台」俗體字改為「臺」正體字
+
+element tag 增加 data-standard-words 屬性
+
+```html
+<div role="tw-city-selector"
+     data-standard-words>
+</div>
+```
+
+示例：
+<div role="tw-city-selector"
+     data-standard-words>
+</div>
 
 
 ## Bootstrap 對應
@@ -199,5 +217,5 @@ element tag 增加 data-selected-county 及 data-selected-district 屬性
 
 <!-- 頁面示例用的 JS -->
 <script>
-  new TwCitySelector();
+  var a = new TwCitySelector();
 </script>

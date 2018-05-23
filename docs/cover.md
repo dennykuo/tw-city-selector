@@ -12,4 +12,4 @@
 <br>
 
 [GitHub](https://github.com/dennykuo/tw-city-selector)
-[開始吧](?id=如何開始)
+[開始吧](index)

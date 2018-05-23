@@ -1,6 +1,10 @@
 # 進階用法
 
-使用 JS 實例方式，可設定多項參數彈性運用，參數請參閱文件中 [API](api) 章節
+##### 使用 JS 實例方式，可設定多項參數彈性運用
+
+> 詳細參數設定請參閱文件中 [API](api) 章節
+
+<hr>
 
 ## 指定上層 element
 
@@ -14,6 +18,9 @@
 </script>
 ```
 
+示例：
+<div class="city-selector"></div>
+
 
 ## 指定 selector element
 
@@ -25,7 +32,7 @@
 !> 縣市選單及區域選單只接受 select tag；郵遞區號只接受 input tag
 
 ```html
-<div class="city-selector">
+<div class="city-selector-set">
   <div>
     <select class="county"></select>
   </div>
@@ -33,16 +40,70 @@
     <select class="district"></select>
   </div>
   <div>
-    <input class="zipcode" type="text">
+    <!-- 強烈建議郵遞區號的屬性加入 readonly -->
+    <input class="zipcode" type="text" size="3" readonly>
   </div>
 </div>
 
 <script>
   new TwCitySelector({
-    el: '.city-selector',
+    el: '.city-selector-set',
     elCounty: '.county', // 在 el 裡查找 element
     elDistrict: '.district', // 在 el 裡查找 element
     elZipcode: '.zipcode' // 在 el 裡查找 element
   });
 </script>
 ```
+
+示例：
+<div class="city-selector-set">
+  <div style="margin: 8px 0;">
+    <select class="county"></select>
+  </div>
+  <div style="margin: 8px 0;">
+    <select class="district"></select>
+  </div>
+  <div style="margin: 8px 0;">
+    <input class="zipcode" type="text" size="3" readonly>
+  </div>
+</div>
+
+
+## 使用正體字
+
+#### 將縣市名稱中的「台」俗體字改用「臺」正體字
+
+若有指定選單預設值，也注意改用正體字
+
+```html
+<div class="city-selector-standard-words"></div>
+
+<script>
+  new TwCitySelector({
+    el: '.city-selector-standard-words',
+    standardWords: true
+  });
+</script>
+```
+
+示例：
+<div class="city-selector-standard-words"></div>
+
+
+<script>
+  new TwCitySelector({
+    el: '.city-selector'
+  });
+
+  new TwCitySelector({
+    el: '.city-selector-set',
+    elCounty: '.county',
+    elDistrict: '.district',
+    elZipcode: '.zipcode'
+  });
+
+  new TwCitySelector({
+    el: '.city-selector-standard-words',
+    standardWords: true
+  });
+</script>
