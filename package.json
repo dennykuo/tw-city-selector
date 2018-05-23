@@ -1,11 +1,8 @@
 {
   "name": "tw-city-selector",
   "version": "1.0.12",
-  "main": "tw-city-selector.js",
+  "main": "dist/tw-city-selector.js",
   "files": [
-    "tw-city-selector.js",
-    "tw-city-selector.min.js",
-    "tw-city-selector.min.js.map",
     "dist/",
     "bower.json",
     "docs/",
@@ -16,7 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --hot --content-base ./docs",
+    "start": "webpack-dev-server --open --content-base ./docs",
     "docs:vendor": "webpack --config=webpack.docs.config",
     "umd:test": "webpack --config=webpack.umd-test.config"
   },
@@ -31,16 +28,16 @@
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
     "bable-loader": "0.0.1-security",
-    "copy": "^0.3.1",
+    "copy": "^0.3.2",
     "css-loader": "^0.28.11",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.21.0",
-    "webpack": "^4.8.0",
+    "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4",
-    "webpack-hot-middleware": "^2.22.1"
+    "webpack-hot-middleware": "^2.22.2"
   },
   "dependencies": {
     "docsify": "^4.6.10",
