@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <title>test - tw-city-selector.js</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <meta name="description" content="台灣縣市選單 tw-city-selector.js">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- <link href="css/app.css" rel="stylesheet"> -->
+  <style>
+    html, body {
+      font-size: 15px;
+      margin: 30px 50px;
+    }
+    .subject {
+      margin: 12px 0 5px;
+      font-size: 1rem;
+    }
+    .my-20 {
+      margin: 20px 0;
+    }
+    .subject + .my-20 {
+      margin-top: 0;
+    }
+    select {
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+    .city-selector-set {
+      background-color: rgb(249, 249, 249);
+      padding: 10px;
+    }
+    .city-selector-set > div {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+
+      <!-- 指定選單 element -->
+      <div class="city-selector-set">
+        <div>
+          <!-- 縣市選單 -->
+          <select class="county" data-value="台北市"></select>
+        </div>
+        <div>
+          <!-- 區域選單 -->
+          <select class="district" data-value="大安區"></select>
+        </div>
+        <div>
+          <!-- 郵遞區號欄位 (建議加入 readonly 屬性，防止修改) -->
+          <input class="zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+
+<script src="./js/tw-city-selector.js"></script>
+
+<script>
+  // 指定選單 element
+  new TwCitySelector({
+    el: '.city-selector-set',
+    elCounty: '.county', // 在 el 裡查找 element
+    elDistrict: '.district', // 在 el 裡查找 element
+    elZipcode: '.zipcode' // 在 el 裡查找 element
+  });
+</script>
+
+</body>
+</html>

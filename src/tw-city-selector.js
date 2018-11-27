@@ -105,6 +105,12 @@ function createElements() {
         this.elDistrict = getElement(this.options.elDistrict, this.el);
         this.elZipcode = getElement(this.options.elZipcode, this.el);
 
+        // 預設值，抓該 element 的 data-value
+        if (this.elCounty && this.elCounty.dataset.value) {
+            this.options.countyValue = this.elCounty.dataset.value;
+            this.options.districtValue = this.elDistrict.dataset.value;
+        }
+
         return init.call(this);
     }
 
@@ -129,6 +135,7 @@ function createElements() {
 
 function getDataAttrOptions() {
     /**
+     * 使用 role-attribute 加載時使用這邊抓設定值
      * element.getAttribute('data-xxx') 比 element.dataset.xxx 來得快
      */
 
@@ -317,20 +324,6 @@ function getDistrictOnlyItems(countyValue) {
 }
 
 function listenCountyChanged() {
-    // let handler = function () {
-    //     let _el = this.elCounty.querySelector('option:last-of-type');
-    //
-    //     if (_el.isConnected && this.elCounty.querySelector('option:checked')) {
-    //         _el = this.elCounty.querySelector('option:checked');
-    //         // index 不使用 xx.selectedIndex 是因若有設限縣市選單時順序會錯
-    //         let index = _el.getAttribute('data-index');
-    //         setDistrictOptions.call(this, index);
-    //         if (this.options.hasZipcode) this.elZipcode.value = '';
-    //     } else {
-    //         setTimeout(handler, 3);
-    //     }
-    // }.bind(this);
-
     let handler = function() {
         let _el = this.elCounty.querySelector('option:checked');
         // index 不使用 xx.selectedIndex 是因若有設限縣市選單時順序會錯
@@ -344,21 +337,10 @@ function listenCountyChanged() {
 };
 
 function listenDistrictChanged() {
-    // let handler = function() {
-    //     let _el = this.elDistrict.querySelector('option:checked');
-    //
-    //     if (_el) {
-    //         let zipcode = _el.dataset.zipcode || '';
-    //         if (this.options.hasZipcode) this.elZipcode.value = zipcode;
-    //     } else {
-    //         setTimeout(handler, 3);
-    //     }
-    // }.bind(this);
-
     let handler = function () {
         let _el = this.elDistrict.querySelector('option:checked');
         let zipcode = _el.dataset.zipcode || '';
-        if (this.options.hasZipcode) this.elZipcode.value = zipcode;
+        if (this.options.hasZipcode || this.elZipcode) this.elZipcode.value = zipcode; // 有設定 hasZipcode 或有指定 elZipcode
     }.bind(this);
 
     // this.elDistrict.addEventListener('change', handler); // jquery trigger change 會失敗，改用此段

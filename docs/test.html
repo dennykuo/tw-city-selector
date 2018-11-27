@@ -11,6 +11,7 @@
   <style>
     html, body {
       font-size: 15px;
+      margin: 30px 50px;
     }
     .subject {
       margin: 12px 0 5px;
@@ -25,6 +26,13 @@
     select {
       margin-right: 8px;
       font-size: 1rem;
+    }
+    .city-selector-set {
+      background-color: rgb(249, 249, 249);
+      padding: 10px;
+    }
+    .city-selector-set > div {
+      margin: 5px 0;
     }
   </style>
 </head>
@@ -88,6 +96,22 @@
 
       <!-- 待補其他測試 -->
 
+      <!-- 指定選單 element -->
+      <div class="city-selector-set">
+        <div>
+          <!-- 縣市選單 -->
+          <select class="county" data-value="台北市"></select>
+        </div>
+        <div>
+          <!-- 區域選單 -->
+          <select class="district" data-value="大安區"></select>
+        </div>
+        <div>
+          <!-- 郵遞區號欄位 (建議加入 readonly 屬性，防止修改) -->
+          <input class="zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+        </div>
+      </div>
+
       <!-- <div class="selector-bootstrap row my-20">
         <div class="form-group">
           <label class="control-label">縣市</label>
@@ -108,7 +132,7 @@
 </main>
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script src="./js/tw-city-selector.js"></script>
 
 <script>
@@ -153,7 +177,13 @@
     // only: '台北市@大同區|萬華區'
   });
 
-
+  // 指定選單 element
+  new TwCitySelector({
+    el: '.city-selector-set',
+    elCounty: '.county', // 在 el 裡查找 element
+    elDistrict: '.district', // 在 el 裡查找 element
+    elZipcode: '.zipcode' // 在 el 裡查找 element
+  });
 
   // new TwCitySelector({
   //   el: '.selector-bootstrap',

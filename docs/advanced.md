@@ -27,7 +27,7 @@
 
 注意所有選單的元件都需在同個 parent dom 內，作為 el 參數的設定
 
-!> 縣市選單及區域選單只接受 <select> tag；郵遞區號只接受 <input> tag
+!> 縣市選單及區域選單只接受 ``<select>`` tag；郵遞區號只接受 ``<input>`` tag
 
 ```html
 <div class="city-selector-set">
@@ -55,7 +55,30 @@
 </script>
 ```
 
-示例：
+要設定選單值，在 element tag 加上 data-value 屬性
+
+```html
+<div class="city-selector-set-has-value">
+  <div>
+    <!-- 縣市選單 -->
+    <select class="county" data-value="台北市"></select>
+  </div>
+  <div>
+    <!-- 區域選單 -->
+    <select class="district" data-value="大安區"></select>
+  </div>
+</div>
+
+<script>
+  new TwCitySelector({
+    el: '.city-selector-set-has-value',
+    elCounty: '.county',
+    elDistrict: '.district'
+  });
+</script>
+```
+
+示例1：
 <div class="city-selector-set">
   <div style="margin: 8px 0;">
     <select class="county"></select>
@@ -65,6 +88,16 @@
   </div>
   <div style="margin: 8px 0;">
     <input class="zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+  </div>
+</div>
+
+示例2：
+<div class="city-selector-set-has-value">
+  <div style="margin: 8px 0;">
+    <select class="county" data-value="台北市"></select>
+  </div>
+  <div style="margin: 8px 0;">
+    <select class="district" data-value="大安區"></select>
   </div>
 </div>
 
@@ -102,6 +135,12 @@
     elCounty: '.county',
     elDistrict: '.district',
     elZipcode: '.zipcode'
+  });
+
+  new TwCitySelector({
+    el: '.city-selector-set-has-value',
+    elCounty: '.county',
+    elDistrict: '.district'
   });
 
   new TwCitySelector({
