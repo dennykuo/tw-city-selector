@@ -14,6 +14,11 @@
 <small>中華郵政所使用的縣市、區域名稱，皆使用正體的「臺」字。<br>
 但考慮一般使用情境上多傾向用俗體的「台」字，因此**預設使用俗體字「台」**，另可透過設定改用正體字。</small>
 
+?>
+其他版本文件<br>
+<small>[v1 版本文件](https://dennykuo.github.io/tw-city-selector/archive/v1/ ':target=_blank')</small>
+
+
 <hr>
 
 ## 版本更新

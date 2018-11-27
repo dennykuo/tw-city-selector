@@ -272,7 +272,7 @@ new TwCitySelector({
 });
 ```
 
-### countyFiledName
+### countyFieldName
 - 說明：縣市選單的 name 屬性
 - 必須：否
 - 類型：string
@@ -281,7 +281,7 @@ new TwCitySelector({
 ```javascript
 new TwCitySelector({
   el: '.city-selector',
-  countyFiledName: 'county-name'
+  countyFieldName: 'county-name'
 });
 ```
 
@@ -298,7 +298,7 @@ new TwCitySelector({
 });
 ```
 
-### districtFiledName
+### districtFieldName
 - 說明：區域選單的 name 屬性
 - 必須：否
 - 類型：string
@@ -307,7 +307,7 @@ new TwCitySelector({
 ```javascript
 new TwCitySelector({
   el: '.city-selector',
-  districtFiledName: 'district-name'
+  districtFieldName: 'district-name'
 });
 ```
 
@@ -324,7 +324,7 @@ new TwCitySelector({
 });
 ```
 
-### zipcodeFiledName
+### zipcodeFieldName
 - 說明：區域選單的 name 屬性
 - 必須：否
 - 類型：string
@@ -333,7 +333,7 @@ new TwCitySelector({
 ```javascript
 new TwCitySelector({
   el: '.city-selector',
-  zipcodeFiledName: 'zipcode-name'
+  zipcodeFieldName: 'zipcode-name'
 });
 ```
 

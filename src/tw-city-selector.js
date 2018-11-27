@@ -42,7 +42,7 @@ function TwCitySelector(options = {}) {
 
         // elements 屬性
         countyClassName: 'county', // {string}
-        countyFiledName: 'county', // {string}
+        countyFieldName: 'county', // {string}
         districtClassName: 'district', // {string}
         districtFieldName: 'district', // {string}
         zipcodeClassName: 'zipcode', // {string}
@@ -194,7 +194,7 @@ function setElements() {
     }
     // 縣市選單屬性
     this.elCounty.classList.add(this.options.countyClassName);
-    this.elCounty.name = this.options.countyFiledName;
+    this.elCounty.name = this.options.countyFieldName;
     if (this.options.disabled) this.elCounty.setAttribute('disabled', true);
     setCountyOptions.call(this);
 
