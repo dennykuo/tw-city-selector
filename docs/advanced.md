@@ -107,7 +107,7 @@
 
 #### 將縣市名稱中的「台」俗體字改用「臺」正體字
 
-若有指定選單預設值，注意參數要用正體字代入 (countyValue, districtValue)
+若有指定選單預設值，注意參數要用正體字代入參數 countyValuer 及 districtValue
 
 ```html
 <div class="city-selector-standard-words"></div>
