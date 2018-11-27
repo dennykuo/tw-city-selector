@@ -1,51 +1,36 @@
-export default handleOptions;
+export default class HandleOptions {
 
-function handleOptions() {
-    // Check options required
-    if (arguments[1])
-        checkRequired(arguments[0], arguments[1]);
+    constructor(options = {}, optionsRequired = [], optionsDefault = {}) {
+        // Check options required
+        if (optionsRequired.length)
+            this.checkOptionsRequired(options, optionsRequired);
 
-    // Extend options
-    return getOptionsExtend(arguments[0], arguments[2]);
-}
-
-function checkRequired(optionsCustom, optionsRequired) {
-    var error = '';
-    var length = optionsRequired.length;
-
-    optionsCustom = optionsCustom || {};
-
-    while (length--) {
-        if ( ! optionsCustom.hasOwnProperty(optionsRequired[length]))
-            error += optionsRequired[length] + ',';
+        // Extend options
+        return this.setOptionsExtend(options, optionsDefault);
     }
 
-    if (error) throw '缺少參數: ' + error;
-}
+    checkOptionsRequired(optionsCustom, optionsRequired) {
+        let error = '';
+        optionsCustom = optionsCustom || {};
 
-function getOptionsExtend(optionsCustom, optionsDefault) {
-    if ( ! optionsCustom)
+        Object.keys(optionsRequired).forEach(function (property) {
+            if (!optionsCustom.hasOwnProperty(property))
+                error += property + ',';
+        });
+
+        if (error) throw '缺少參數: ' + error;
+    }
+
+    setOptionsExtend(optionsCustom, optionsDefault) {
+        if (!optionsCustom)
+            return optionsDefault;
+
+        let property;
+        for (property in optionsCustom) {
+            optionsDefault[property] = optionsCustom[property];
+        }
+
         return optionsDefault;
-
-    var property;
-    for (property in optionsCustom) {
-        optionsDefault[property] = optionsCustom[property];
     }
 
-    //
-    // 拼字錯誤修正，更大版號後移除
-    //
-    if (optionsCustom['elCountry'])
-        optionsDefault['elCounty'] = optionsCustom['elCountry'];
-
-    if (optionsCustom['selectedCountry'])
-        optionsDefault['selectedCounty'] = optionsCustom['selectedCountry'];
-
-    if (optionsCustom['countryClassName'])
-        optionsDefault['countyClassName'] = optionsCustom['countryClassName'];
-
-    if (optionsCustom['countryFiledName'])
-        optionsDefault['countyFiledName'] = optionsCustom['countryFiledName'];
-
-    return optionsDefault;
 }

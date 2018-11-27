@@ -37,10 +37,16 @@
 
       <h1>role-attribute 方式加載</h1>
 
-      <h5 class="subject">一般加載</h5>
+      <h5 class="subject">一般加載 - 無 zipcdoe</h5>
       <div role="tw-city-selector" class="test-roleAttr-normal my-20"></div>
 
-      <h5 class="subject">顯示部分縣市-台北市、台中市、高雄市</h5>
+      <h5 class="subject">一般加載 - 有 zipcdoe</h5>
+      <div role="tw-city-selector" data-has-zipcode class="test-roleAttr-has-zipcode my-20"></div>
+
+      <h5 class="subject">一般加載 - 正體字</h5>
+      <div role="tw-city-selector" data-standard-words class="test-roleAttr-standard-words my-20"></div>
+
+      <h5 class="subject">顯示部分縣市 - 台北市、台中市、高雄市</h5>
 			<div role="tw-city-selector" class="test-roleAttr-limit-counties my-20" data-only="台北市,台中市,高雄市"></div>
 
       <h5 class="subject">顯示部分縣市及區域-台北市(大同區、萬華區)、台中市(西區)、嘉義市(不設限)</h5>
@@ -65,8 +71,14 @@
 
       <h1>實例方式加載</h1>
 
-      <h5 class="subject">一般加載</h5>
+      <h5 class="subject">實例方式加載 - 無 zipcdoe</h5>
       <div class="test-object-normal my-20"></div>
+
+      <h5 class="subject">實例方式加載 - 有 zipcdoe</h5>
+      <div class="test-object-has-zipcode my-20"></div>
+
+      <h5 class="subject">實例方式加載 - 正體字</h5>
+      <div class="test-object-standard-words my-20"></div>
 
       <h5 class="subject">顯示部分縣市-台北市、台中市、高雄市</h5>
       <div class="test-object-limit-counties my-20"></div>
@@ -111,9 +123,21 @@
   // 實例方式加載
 	// --------------------
 
-	// 一般加載
+	// 實例方式加載 - 無zipcode
   var a = new TwCitySelector({
     el: '.test-object-normal'
+  });
+
+  // 實例方式加載 - 有zipcode
+  var a = new TwCitySelector({
+    el: '.test-object-has-zipcode',
+    hasZipcode: true
+  });
+
+  // 實例方式加載 - 正體字
+  var a = new TwCitySelector({
+    el: '.test-object-standard-words',
+    standardWords: true
   });
 
   // 顯示部分縣市-台北市、台中市、高雄市

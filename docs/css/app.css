@@ -108,6 +108,18 @@ select {
 	background-size: 16px;
 	background-position: 93% 50%;
 }
+.my-style-selector select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-color: #6ec3f5;
+  border-width: 2px;
+  border-radius: 10em;
+  color: #1390e8;
+  margin-right: 10px;
+  outline: none;
+  padding: .3em 1.25em;
+}
 /* IE remove arraw */
 select::-ms-expand {
     display: none;
