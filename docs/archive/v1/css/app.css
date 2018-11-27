@@ -4,87 +4,69 @@
 html, body {
     font-size: 16px;
 }
+
 body {
     font-family: 'Source Sans Pro', 'Noto Sans TC', sans-serif;
     line-height: 1.6em;
-    letter-spacing: .075em;
+    letter-spacing: .1em;
     font-weight: 300;
+    color: #636363;
 }
-[v-cloak] {
-    display: none;
+h1, h2, h3, h4, h5, h6, p, li, pre {
+    font-weight: 300;
+    color: #636363;
 }
-section.cover {
-    /* background: linear-gradient(
-        to left bottom,
-        hsl(239, 100%, 88%) 0%,
-        hsl(25, 100%, 88%) 100%
-    ) !important; */
-    background: rgba(255, 225, 231, 0.13) !important;
-    position: relative;
+h1, h2, h3, h4, h5, h6, pre {
+    margin: 1.22em 0;
 }
-section.cover:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.21;
-    background-image: url('/img/cover/1.jpg');
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
+h4, .h4 {
+    font-size: 1.15rem;
 }
-section.cover * {
-    color: #002961;
+h5, .h5 {
+    font-size: 1.05rem;
 }
-section.cover .cover-main {
-    position: relative;
-    z-index: 0;
+p {
+    margin: .28em 0;
 }
-.sidebar > h1 {
-    margin: 0 auto 1.6em;
+hr {
+	margin: 34px 0;
+	border-top: 1px solid #e0e0e0;
 }
-.markdown-section h1 {
-    font-size: 2.6rem;
-    margin: 0 0 1.26em;
+.navbar-default .navbar-brand {
+    color: #8c8c8c;
+    font-size: 1.7em;
 }
-.markdown-section h2 {
-    font-size: 1.74rem;
-    margin: 1.75em 0 1em;
+.main {
+    margin-top: 120px;
+    margin-bottom: 80px;
 }
-.markdown-section h3 {
-    font-size: 1.64rem;
-    margin: 1.75em 0 1em;
+.jumbotron h1, .jumbotron .h1 {
+    font-size: 46px;
 }
-.markdown-section h4 {
-    font-size: 1.32rem;
-    margin: 1.75em 0 1em;
+.jumbotron {
+    padding-top: 38px;
+    padding-bottom: 38px;
 }
-.markdown-section h5 {
-    font-size: 1.2rem;
-    margin: 1.25em 0;
+.page-header {
+    margin-top: 74px;
+    margin-bottom: 48px;
+    padding: 10px 0;
+    border-top: 2px solid #e9e9e9;
+    border-bottom: 2px solid #e9e9e9;
+    text-align: center;
+    color: rgb(144, 170, 191);
 }
-.markdown-section h6 {
-    font-size: .88rem;
-    margin: .75em 0;
+.page-header h1 {
+    margin: .4em 0;
+    color: rgb(91, 91, 91);
 }
-.markdown-section a {
-    font-weight: 400;
-}
-.markdown-section pre > code {
+pre.prettyprint {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: .82rem;
+    line-height: 1.5rem;
     white-space: pre-wrap;
+    padding: 10px 16px !important;
 }
-.markdown-section p.tip:before {
-    letter-spacing: 0px;
-}
-.anchor {
-    padding-top: .75em;
-    margin-top: -.75em;
-}
-
 select, input {
 	-webkit-appearance: none;
     -moz-appearance: none;
@@ -108,37 +90,31 @@ select {
 	background-size: 16px;
 	background-position: 93% 50%;
 }
-.my-style-selector select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-color: #6ec3f5;
-  border-width: 2px;
-  border-radius: 10em;
-  color: #1390e8;
-  margin-right: 10px;
-  outline: none;
-  padding: .3em 1.25em;
-}
 /* IE remove arraw */
 select::-ms-expand {
     display: none;
 }
 
-.zipcode-list {
-    margin: 4em 0;
+
+/*! Color themes for Google Code Prettify | MIT License | github.com/jmblog/color-themes-for-google-code-prettify */
+pre.prettyprint {
+    background: #fbf8fb;
+    font-family: Menlo,Bitstream Vera Sans Mono,DejaVu Sans Mono,Monaco,Consolas,monospace;
+    border: 0!important;
 }
-.zipcode-list dt {
-    width: 6.5em;
-    text-align: left;
-    font-weight: 400;
-    float: left;
+.pln {
+    color:#1b181b;
 }
-.zipcode-list dd {
-    margin-left: 6.5em;
-    margin-bottom: 1.25em;
+ol.linenums {
+    margin-top: 0;
+    margin-bottom :0;
+    color: #5a7b8c;
 }
-.zipcode-list span {
-    display: inline-block;
-    margin: 0 8px;
+li.L0,li.L1,li.L2,li.L3,li.L4,li.L5,li.L6,li.L7,li.L8,li.L9 {
+    padding-left :1em;
+    background-color: #f7f3f7;
+    list-style-type: decimal;
+}
+@media screen {
+    .str {color: #918b3b}.kwd {color: #7b59c0}.com {color: #5a7b8c}.typ {color: #516aec}.lit {color: #a65926}.pun {color: #1b181b}.opn {color: #1b181b}.clo {color: #1b181b}.tag {color: #ca402b}.atn {color: #a65926}.atv {color: #159393}.dec {color: #a65926}.var {color: #ca402b}.fun {color: #516aec}
 }

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="utf-8">
+  <title>tw-city-selector.js</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <meta name="description" content="台灣縣市選單">
+  <meta name="robots" content="Index, Follow">
+
+  <!-- <link href="css/app.css" rel="stylesheet"> -->
+
+  <style>
+    .subject {
+      margin: 10px 0 5px;
+    }
+    .my-15 {
+      margin: 15px 0;
+    }
+
+    .subject + .my-15 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+
+      <h1>role-attribute 方式加載</h1>
+
+      <h5 class="subject">一般加載</h5>
+      <div role="tw-city-selector" class="test-roleAttr-normal my-15"></div>
+
+      <h5 class="subject">顯示部分縣市-臺北市、臺中市、高雄市</h5>
+			<div role="tw-city-selector" class="test-roleAttr-limit-counties my-15" data-only="臺北市,臺中市,高雄市"></div>
+
+      <h5 class="subject">顯示部分縣市及區域-臺北市(大同區、萬華區)、臺中市(西區)、嘉義市(不設限)</h5>
+      <div role="tw-city-selector" class="test-roleAttr-limit-counties-and-district my-15" data-only="臺北市@大同區|萬華區,臺中市@西區,嘉義市"></div>
+
+      <h5 class="subject">預設選定新北市及其板橋區</h5>
+			<div role="tw-city-selector" class="test-roleAttr-is-selected my-15"
+				data-selected-county="新北市"
+				data-selected-district="板橋區">
+			</div>
+
+      <h5 class="subject">預設選定新北市及其板橋區(錯別字容錯 data-selected-country)</h5>
+      <div role="tw-city-selector" class="test-roleAttr-is-selected-2 my-15"
+				data-selected-country="新北市"
+				data-selected-district="板橋區">
+			</div>
+
+      <h5 class="subject">顯示部分縣市-臺北市、臺中市(西區)、高雄市且預設選定臺中市及其西區</h5>
+			<div role="tw-city-selector" class="test-roleAttr-limit-and-selected my-15"
+				data-only="臺北市,臺中市@西區,高雄市"
+				data-selected-county="臺中市"
+				data-selected-district="西區">
+			</div>
+
+      <!-- ****************************************************** -->
+      <hr>
+      <!-- ****************************************************** -->
+
+      <h1>實例方式加載</h1>
+
+      <h5 class="subject">一般加載</h5>
+      <div class="test-object-normal my-15"></div>
+
+      <h5 class="subject">顯示部分縣市-臺北市、臺中市、高雄市</h5>
+      <div class="test-object-limit-counties my-15"></div>
+
+      <h5 class="subject">顯示部分縣市及區域-臺北市(大同區、萬華區)、臺中市(西區)、嘉義市(不設限)</h5>
+      <div class="test-object-limit-counties-and-district my-15"></div>
+
+      <!-- 待補其他測試 -->
+
+      <!-- <div class="selector-bootstrap row my-15">
+        <div class="form-group">
+          <label class="control-label">縣市</label>
+          <select class="el-county"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">區域</label>
+          <select class="el-district"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">郵遞區號</label>
+          <input class="el-zipcode" type="text">
+        </div>
+      </div> -->
+
+      <!-- country 錯別字 -->
+      <!-- <div class="selector-bootstrap-2 row my-15">
+        <div class="form-group">
+          <label class="control-label">縣市</label>
+          <select class="el-country"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">區域</label>
+          <select class="el-district"></select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">郵遞區號</label>
+          <input class="el-zipcode" type="text">
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</main>
+
+<script src="./js/umd-test.budle.js"></script>
+
+<!-- <script src="js/tw-city-selector.js"></script>
+
+<script>
+
+  import TwCitySelector from './js/tw-city-selector.js';
+
+  // --------------------
+	// role-attribute 方式加載
+	// --------------------
+
+  new TwCitySelector();
+
+
+  // --------------------
+  // 實例方式加載
+	// --------------------
+
+	// 一般加載
+  new TwCitySelector({
+    el: '.test-object-normal'
+  });
+
+  // 顯示部分縣市-臺北市、臺中市、高雄市
+  new TwCitySelector({
+    el: '.test-object-limit-counties',
+    only: ['臺北市', '臺中市', '高雄市']
+  });
+
+  // 顯示部分縣市及區域-臺北市(大同區、萬華區)、臺中市(西區)、嘉義市(不設限)
+  new TwCitySelector({
+    el: '.test-object-limit-counties-and-district',
+    only: ['臺北市@大同區|萬華區', '臺中市@西區', '嘉義市']
+  });
+
+
+
+  // new TwCitySelector({
+  //   el: '.selector-bootstrap',
+  //   elCounty: '.el-county',
+  //   countyClassName: 'county form-control',
+  //   elDistrict: '.el-district',
+  //   districtClassName: 'district form-control',
+  //   elZipcode: '.el-zipcode',
+  //   zipcodeClassName: 'zipcode form-control',
+  //   showZipcode: true
+  // });
+  //
+  // // country 錯別字
+  // new TwCitySelector({
+  //   el: '.selector-bootstrap-2',
+  //   elCountry: '.el-country',
+  //   countryClassName: 'country form-control',
+  //   elDistrict: '.el-district',
+  //   districtClassName: 'district form-control',
+  //   elZipcode: '.el-zipcode',
+  //   zipcodeClassName: 'zipcode form-control',
+  //   showZipcode: true
+  // });
+</script> -->
+
+</body>
+</html>
