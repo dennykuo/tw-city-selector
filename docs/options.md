@@ -224,7 +224,7 @@ new TwCitySelector({
 ```
 
 ## standardWords
-- 說明：使用正體字 (將「台」俗體字改為「臺」正體字)
+- 說明：使用正體字 (將「台」異體字改為「臺」正體字)
 - 必須：否
 - 類型：boolean
 - 預設：false

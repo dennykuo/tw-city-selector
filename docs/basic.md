@@ -172,7 +172,7 @@ element tag 增加 data-county-value 及 data-district-value 屬性
 
 ## 使用正體字
 
-#### 將「台」俗體字改為「臺」正體字
+#### 將「台」異體字改為「臺」正體字
 
 element tag 增加 data-standard-words 屬性
 
