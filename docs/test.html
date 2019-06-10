@@ -55,23 +55,30 @@
       <div role="tw-city-selector" data-standard-words class="test-roleAttr-standard-words my-20"></div>
 
       <h5 class="subject">顯示部分縣市 - 台北市、台中市、高雄市</h5>
-			<div role="tw-city-selector" class="test-roleAttr-limit-counties my-20" data-only="台北市,台中市,高雄市"></div>
+      <div role="tw-city-selector" class="test-roleAttr-limit-counties my-20" data-only="台北市,台中市,高雄市"></div>
 
       <h5 class="subject">顯示部分縣市及區域-台北市(大同區、萬華區)、台中市(西區)、嘉義市(不設限)</h5>
       <div role="tw-city-selector" class="test-roleAttr-limit-counties-and-district my-20" data-only="台北市@大同區|萬華區,台中市@西區,嘉義市"></div>
 
+      <h5 class="subject">排除部分縣市 - 台北市、台中市、高雄市</h5>
+      <div role="tw-city-selector" class="test-roleAttr-except-counties my-20" data-except="台北市,台中市,高雄市"></div>
+      <!-- <div role="tw-city-selector" data-except="台北市,,台中市,高雄市" class="my-20"></div> -->
+
+      <h5 class="subject">排除部分縣市 - 台北市(大同區|萬華區)、新北市(板橋區|中和區|永和區)、台中市(全市)、高雄市(全市)</h5>
+      <div role="tw-city-selector" class="test-roleAttr-except-counties-and-district my-20" data-except="台北市@大同區|萬華區,新北市@板橋區|中和區|永和區,台中市,高雄市"></div>
+
       <h5 class="subject">預設選定新北市及其板橋區</h5>
-			<div role="tw-city-selector" class="test-roleAttr-is-selected my-20"
-				data-county-value="新北市"
-				data-district-value="板橋區">
-			</div>
+      <div role="tw-city-selector" class="test-roleAttr-is-selected my-20"
+           data-county-value="新北市"
+           data-district-value="板橋區">
+      </div>
 
       <h5 class="subject">顯示部分縣市-台北市、台中市(西區)、高雄市且預設選定台中市及其西區</h5>
-			<div role="tw-city-selector" class="test-roleAttr-limit-and-selected my-20"
-				data-only="台北市,台中市@西區,高雄市"
-				data-county-value="台中市"
-				data-district-value="西區">
-			</div>
+      <div role="tw-city-selector" class="test-roleAttr-limit-and-selected my-20"
+           data-only="台北市,台中市@西區,高雄市"
+           data-county-value="台中市"
+           data-district-value="西區">
+      </div>
 
       <!-- ****************************************************** -->
       <hr>
@@ -93,6 +100,9 @@
 
       <h5 class="subject">顯示部分縣市及區域-台北市(大同區、萬華區)、台中市(西區)、嘉義市(不設限)</h5>
       <div class="test-object-limit-counties-and-district my-20"></div>
+
+      <h5 class="subject">排除部分縣市 - 台北市(大同區|萬華區)、新北市(板橋區|中和區|永和區)、台中市(全市)、高雄市(全市)</h5>
+      <div class="test-object-except-counties-and-district my-20"></div>
 
       <!-- 待補其他測試 -->
 
@@ -174,6 +184,13 @@
   new TwCitySelector({
     el: '.test-object-limit-counties-and-district',
     only: ['台北市@大同區|萬華區', '台中市@西區', '嘉義市']
+    // only: '台北市@大同區|萬華區'
+  });
+
+  // 排縣市及區域-台北市(大同區|萬華區)、新北市(板橋區|中和區|永和區)、台中市(全市),高雄市(全市)
+  new TwCitySelector({
+    el: '.test-object-except-counties-and-district',
+    except: ['台北市@大同區|萬華區', '新北市@板橋區|中和區|永和區', '台中市', '高雄市']
     // only: '台北市@大同區|萬華區'
   });
 

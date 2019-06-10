@@ -187,6 +187,68 @@ describe('role-attribute方式加載', function() {
             cy.get('.district option')
                 .should('have.length', 3) // 應有兩個區域選項加上空白選項
 		});
+    });
+    
+    it('排除部分縣市-台北市、台中市、高雄市', function() {
+		cy.get('.test-roleAttr-except-counties').within(function() {
+			cy.get('.county')
+				.should('contain', '選擇縣市')
+				.should('not.contain', '台北市')
+				.should('not.contain', '台中市')
+				.should('not.contain', '高雄市')
+				.should('contain', '屏東縣')
+				.should('have.attr.name', 'county')
+				.should('have.class', 'county')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇縣市')
+
+			cy.get('.district')
+				.should('have.attr.name', 'district')
+				.should('have.class', 'district')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇區域')
+
+            cy.get('.county').select('桃園市')
+            cy.get('.district option')
+                .should('have.length', 14) // 應有13個區域選項加上空白選項
+		});
+    });
+    
+    it('排除部分縣市 - 台北市(大同區|萬華區)、新北市(板橋區|中和區|永和區)、台中市(全市)、高雄市(全市)', function() {
+		cy.get('.test-roleAttr-except-counties-and-district').within(function() {
+			cy.get('.county')
+				.should('contain', '選擇縣市')
+				.should('contain', '台北市')
+				.should('contain', '新北市')
+				.should('not.contain', '台中市')
+				.should('not.contain', '高雄市')
+				.should('contain', '屏東縣')
+				.should('have.attr.name', 'county')
+				.should('have.class', 'county')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇縣市')
+
+			cy.get('.district')
+				.should('have.attr.name', 'district')
+				.should('have.class', 'district')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇區域')
+
+            cy.get('.county').select('台北市')
+            cy.get('.district option')
+                .should('not.contain', '大同區')
+                .should('not.contain', '萬華區')
+                .should('contain', '中正區')
+                .should('have.length', 11) // 應有11個區域選項加上空白選項
+
+            cy.get('.county').select('新北市')
+            cy.get('.district option')
+                .should('not.contain', '板橋區')
+                .should('not.contain', '中和區')
+                .should('not.contain', '永和區')
+                .should('contain', '樹林區')
+                .should('have.length', 27) // 應有27個區域選項加上空白選項
+		});
 	});
 
 	it('預設選定新北市及其板橋區', function() {
@@ -398,6 +460,43 @@ describe('實例方式加載', function() {
             cy.get('.county').select('嘉義市')
             cy.get('.district option')
                 .should('have.length', 3) // 應有兩個區域選項加上空白選項
+		});
+    });
+    
+    it('排除部分縣市 - 台北市(大同區|萬華區)、新北市(板橋區|中和區|永和區)、台中市(全市)、高雄市(全市)', function() {
+		cy.get('.test-object-except-counties-and-district').within(function() {
+			cy.get('.county')
+				.should('contain', '選擇縣市')
+				.should('contain', '台北市')
+				.should('contain', '新北市')
+				.should('not.contain', '台中市')
+				.should('not.contain', '高雄市')
+				.should('contain', '屏東縣')
+				.should('have.attr.name', 'county')
+				.should('have.class', 'county')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇縣市')
+
+			cy.get('.district')
+				.should('have.attr.name', 'district')
+				.should('have.class', 'district')
+				.should('have.value', '')
+				.find('option:selected').should('contain', '選擇區域')
+
+            cy.get('.county').select('台北市')
+            cy.get('.district option')
+                .should('not.contain', '大同區')
+                .should('not.contain', '萬華區')
+                .should('contain', '中正區')
+                .should('have.length', 11) // 應有11個區域選項加上空白選項
+
+            cy.get('.county').select('新北市')
+            cy.get('.district option')
+                .should('not.contain', '板橋區')
+                .should('not.contain', '中和區')
+                .should('not.contain', '永和區')
+                .should('contain', '樹林區')
+                .should('have.length', 27) // 應有27個區域選項加上空白選項
 		});
 	});
 

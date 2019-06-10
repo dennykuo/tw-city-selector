@@ -31,7 +31,8 @@ function TwCitySelector(options = {}) {
         elZipcode: null, // {string | HTMLElement}
 
         // 元件的內容限制
-        only: null, // {string | array} 限制可選擇的縣市
+        only: null, // {string | array} 限制可選擇的縣市及區域
+        except: null, // {string | array} 排除縣市及區域
         disabled: false, // {boolean} 元件是否為 disabled 屬性
         hasZipcode: false, // {boolean} 是否創建郵遞區號欄位
         hiddenZipcode: false, // {boolean} 是否顯示郵遞區號欄位 (hasZipcode 為 true 時，才會生效)
@@ -49,7 +50,7 @@ function TwCitySelector(options = {}) {
         zipcodeFieldName: 'zipcode', // {string}
 
         // 其他設定
-        standardWords: false, // {boolean} 使用「臺」的正體字，而非俗體字「台」
+        standardWords: false, // {boolean} 使用「臺」的正體字，而非異體字「台」
         bootstrapStyle: false // {boolean}
     };
 
@@ -142,6 +143,10 @@ function getDataAttrOptions() {
     // *** 限制只顯示哪些縣市、區域 ***
     this.options.only = this.el.getAttribute('data-only')
                         ? this.el.getAttribute('data-only').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
+                        : null;
+    // *** 排除哪些縣市、區域 ***
+    this.options.except = this.el.getAttribute('data-except')
+                        ? this.el.getAttribute('data-except').replace(/\s/g, '').split(',') // 去除空白字元，轉陣列
                         : null;
     // *** 預設的縣市選單值 ***
     this.options.countyValue = this.el.getAttribute('data-county-value');
@@ -245,9 +250,15 @@ function setCountyOptions() {
     select.options.add(new Option('選擇縣市', ''));
 
     let onlyItems = getCountyOnlyItems.call(this);
+    let exceptItems = getCountyExceptItems.call(this);
+
     for (let i = 0, j = data.counties.length; i < j; i++) {
-        // 若有設定限制顯示的縣市，且該項目不在自訂縣市中，則不顯示
+        // 若有設定「限制顯示」的縣市，且該項目不在自訂縣市中，則不顯示
         if (onlyItems && onlyItems.indexOf(data.counties[i]) === -1)
+            continue;
+            
+        // 若有設定「排除顯示」的縣市，且該項目在自訂縣市中，則不顯示
+        if (exceptItems && exceptItems.indexOf(data.counties[i]) !== -1)
             continue;
 
         // format: <option value="臺北市" data-index="0">臺北市</option>
@@ -270,10 +281,15 @@ function setDistrictOptions(index = null) {
     if ( ! index) return true;
 
     let onlyItems = getDistrictOnlyItems.call(this, this.elCounty.value);
+    let exceptItems = getDistrictExceptItems.call(this, this.elCounty.value);
 
     for (let i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
-        // 若有設定限制顯示的區域，且該項目不在自訂區域中，則不顯示
+        // 若有設定「限制顯示」的區域，且該項目不在自訂區域中，則不顯示
         if (onlyItems && onlyItems.indexOf(data.districts[index][0][i]) === -1)
+            continue;
+
+        // 若有設定「排除顯示」的區域，且該項目在自訂區域中，則不顯示
+        if (exceptItems && exceptItems.indexOf(data.districts[index][0][i]) !== -1)
             continue;
 
         // format: <option value="中正區" data-zipcode="100">中正區</option>
@@ -300,6 +316,21 @@ function getCountyOnlyItems() {
     });
 }
 
+function getCountyExceptItems() {
+    let exceptItems = this.options.except;
+    let isString = typeof exceptItems == 'string';
+
+    if (isString) return exceptItems;
+
+    if ( ! Array.isArray(exceptItems)) return null;
+
+    // 取出縣市資料
+    return exceptItems.filter(function (item) {
+        let index = item.indexOf('@'); // 只排除區域則不列入回傳
+        return index === -1;
+    });
+}
+
 function getDistrictOnlyItems(countyValue) {
     let onlyItems = this.options.only;
     let isString = typeof onlyItems == 'string';
@@ -312,6 +343,29 @@ function getDistrictOnlyItems(countyValue) {
     // 取出區域資料
     let items = null;
     onlyItems.forEach(function (item) {
+        if (item.indexOf(countyValue) === -1) return;
+
+        let index = item.lastIndexOf('@');
+        if (index !== -1) {
+            return items = item.substring(index + 1).split('|'); // 轉陣列
+        }
+    });
+
+    return items;
+}
+
+function getDistrictExceptItems(countyValue) {
+    let exceptItems = this.options.except;
+    let isString = typeof exceptItems == 'string';
+
+    if ( ! isString && ! Array.isArray(exceptItems)) return null;
+
+    if (isString)
+        exceptItems = [exceptItems];
+
+    // 取出區域資料
+    let items = null;
+    exceptItems.forEach(function (item) {
         if (item.indexOf(countyValue) === -1) return;
 
         let index = item.lastIndexOf('@');

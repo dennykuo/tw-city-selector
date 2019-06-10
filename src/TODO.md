@@ -1,7 +1,6 @@
 ### 近期 todo
 
 - 自訂屬性
-- 隱藏部分縣市
 - React
 - Vue
 - 指定 element 時，tag 錯誤的提示
