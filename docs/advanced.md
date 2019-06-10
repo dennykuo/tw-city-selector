@@ -234,7 +234,7 @@ new TwCitySelector({
 ```
 
 ### only
-- 說明：限制可選擇的縣市
+- 說明：限制可選擇的縣市、區域
 - 必須：否
 - 類型：string | array
 - 預設：null
@@ -248,11 +248,28 @@ new TwCitySelector({
     '高雄市@新興區' // 高雄市的新興區
   ]
 });
+```
+
+### except
+- 說明：排除縣市、區域
+- 必須：否
+- 類型：string | array
+- 預設：null
+
+```javascript
+new TwCitySelector({
+  el: '.city-selector',
+  except: [
+    '台北市', // 台北市所有區域
+    '台中市@南區|北區|東區', // 台中市的南區、北區、東區
+    '高雄市@新興區' // 高雄市的新興區
+  ]
+});
 
 // 如果只設定單一個縣市，也可傳入字串
 new TwCitySelector({
   el: '.city-selector',
-  only: '台北市@大同區|中正區'
+  except: '台北市@大同區|中正區'
 });
 ```
 

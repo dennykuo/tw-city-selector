@@ -121,6 +121,35 @@ element tag 增加 data-only 屬性，值為可選擇的縣市及區域 (單一�
 示例：
 <div role="tw-city-selector" data-only="台北市@大同區|萬華區,台中市@西區,高雄市"></div>
 
+#### 排除部分縣市
+
+element tag 增加 data-except 屬性，值為排除的縣市 (不可有空格)
+
+例：排除台北市、台中市、高雄市
+
+!> 「預設選單值」可與「排除縣市區域」同時併用
+
+```html
+<div role="tw-city-selector" data-except="台北市,台中市,高雄市"></div>
+```
+
+示例：
+<div role="tw-city-selector" data-except="台北市,台中市,高雄市"></div>
+
+#### 排除部分縣市及區域
+
+element tag 增加 data-except 屬性，值為排除的縣市及區域 (單一縣市及其區域使用@符號分隔，同一縣市中的區域使用|符號分隔，不可有空格，例：台北市@大同區|萬華區,台中市@東區|西區)
+
+!> 「預設選單值」可與「限制縣市區域」同時併用
+
+```html
+<!-- 排除台北市(大同區、萬華區)、台中市(全市)、高雄市(全市) -->
+<div role="tw-city-selector" data-except="台北市@大同區|萬華區,台中市,高雄市"></div>
+```
+
+示例：
+<div role="tw-city-selector" data-except="台北市@大同區|萬華區,台中市,高雄市"></div>
+
 #### 預設選單值
 
 element tag 增加 data-county-value 及 data-district-value 屬性
