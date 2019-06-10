@@ -3,7 +3,6 @@ const path = require('path');
 
 let fileName = 'tw-city-selector';
 let moduleName = 'TwCitySelector';
-let isProduction = process.env.NODE_ENV === 'production';
 let config = [];
 
 
@@ -37,7 +36,7 @@ function makeLibraryConfig(configName, outputPath = './dist') {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['es2015']
+                            presets: ['@babel/preset-env']
                         }
                     }
                 }
