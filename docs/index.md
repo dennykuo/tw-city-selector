@@ -5,7 +5,7 @@
 
 <hr>
 
-瀏覽專案：<a href="https://github.com/dennykuo/tw-city-selector">Github</a>
+瀏覽專案：<a href="https://github.com/dennykuo/tw-city-selector">Github</a><br>
 縣市資料來源：[中華郵政3碼郵遞區號一覽表](http://download.post.gov.tw/post/download/103.12.25-%E8%87%BA%E7%81%A3%E5%9C%B0%E5%8D%80%E9%83%B5%E9%81%9E%E5%8D%80%E8%99%9F%E5%89%8D3%E7%A2%BC%E4%B8%80%E8%A6%BD%E8%A1%A8.xls)<br>
 縣市資料最後更新：2017-04-14 (非程式更新日)<br>
 如果資料有誤或未及更新，發個 [issue](https://github.com/dennykuo/tw-city-selector/issues ':target=_blank') 給我吧
