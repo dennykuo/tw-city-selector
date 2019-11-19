@@ -51,7 +51,9 @@ function TwCitySelector(options = {}) {
 
         // 其他設定
         standardWords: false, // {boolean} 使用「臺」的正體字，而非異體字「台」
-        bootstrapStyle: false // {boolean}
+        bootstrapStyle: false, // {boolean}
+
+        done: null
     };
 
     let optionsRequired = options.length ? ['el'] : []; // 設置必要參數，若無帶入任何參數則設不設置
@@ -112,7 +114,11 @@ function createElements() {
             this.options.districtValue = this.elDistrict.dataset.value;
         }
 
-        return init.call(this);
+        init.call(this);
+        if(typeof(this.options.done) === "function")
+            this.options.done(this.el);
+
+        return this;
     }
 
     // *** 無指定 elements 的初始化，使用具有 role-attribute 的 elements 作為作用目標 ***
@@ -128,7 +134,9 @@ function createElements() {
         // 加入 options
         self = getDataAttrOptions.call(self);
 
-        return init.call(self);
+        init.call(self);
+        if(typeof(this.options.done) === "function")
+            this.options.done(self.el);
     }, this);
 
     return els;
