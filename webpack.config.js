@@ -58,15 +58,25 @@ function makeLibraryConfig(configName, outputPath = './dist') {
 // ------------------------------
 config.push({
     mode: 'production',
-    entry: './src/data.js',
+    entry: './src/data-zh.js',
     output: {
         path: path.resolve(__dirname, './docs/js/'),
-        filename: 'data.js',
+        filename: 'data-zh.js',
         library: 'data',
         libraryExport: 'default'
     }
 });
 
+config.push({
+    mode: 'production',
+    entry: './src/data-en.js',
+    output: {
+        path: path.resolve(__dirname, './docs/js/'),
+        filename: 'data-en.js',
+        library: 'data',
+        libraryExport: 'default'
+    }
+});
 
 
 // ------------------------------

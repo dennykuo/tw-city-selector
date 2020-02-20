@@ -3,7 +3,8 @@
 // ------------------------------
 // Module import
 // ------------------------------
-import data from './data';
+import zhData from './data-zh';
+import enData from './data-en';
 import HandleOptions from './handle-options';
 
 
@@ -48,6 +49,8 @@ function TwCitySelector(options = {}) {
         districtFieldName: 'district', // {string}
         zipcodeClassName: 'zipcode', // {string}
         zipcodeFieldName: 'zipcode', // {string}
+
+        lang: 'zh-tw',
 
         // 其他設定
         standardWords: false, // {boolean} 使用「臺」的正體字，而非異體字「台」
@@ -167,6 +170,13 @@ function getDataAttrOptions() {
 }
 
 function init() {
+    // 選擇資料來源 (zh/en)
+    if(this.options.lang && this.options.lang==='en-us') {
+        this.data = enData;
+    }else {
+        this.data = zhData;
+    }
+
     // *** standardWords 是否使用正體字 (就算不使用，也要設定回復，以防資料源被使用過後，已非原始狀態) ***
     setStandardWords.call(this, this.options.standardWords);
 
@@ -233,7 +243,11 @@ function setElements() {
         this.elZipcode.name = this.options.zipcodeFieldName;
         this.elZipcode.classList.add(this.options.zipcodeClassName);
         this.elZipcode.readOnly = true;
-        this.elZipcode.placeholder = '郵遞區號';
+        if(this.options.lang && this.options.lang==='en-us') {
+            this.elZipcode.placeholder = 'ZIP code';
+        }else {
+            this.elZipcode.placeholder = '郵遞區號';
+        }
         this.elZipcode.size = 3;
         // this.elZipcode.width = 3;
         this.elZipcode.autocomplete = 'off';
@@ -247,22 +261,26 @@ function setElements() {
 function setCountyOptions() {
     let select = this.elCounty;
 
-    select.options.add(new Option('選擇縣市', ''));
+    if(this.options.lang && this.options.lang==='en-us') {
+        select.options.add(new Option('Select County/City', ''));
+    }else {
+        select.options.add(new Option('選擇縣市', ''));
+    }
 
     let onlyItems = getCountyOnlyItems.call(this);
     let exceptItems = getCountyExceptItems.call(this);
 
-    for (let i = 0, j = data.counties.length; i < j; i++) {
+    for (let i = 0, j = this.data.counties.length; i < j; i++) {
         // 若有設定「限制顯示」的縣市，且該項目不在自訂縣市中，則不顯示
-        if (onlyItems && onlyItems.indexOf(data.counties[i]) === -1)
+        if (onlyItems && onlyItems.indexOf(this.data.counties[i]) === -1)
             continue;
             
         // 若有設定「排除顯示」的縣市，且該項目在自訂縣市中，則不顯示
-        if (exceptItems && exceptItems.indexOf(data.counties[i]) !== -1)
+        if (exceptItems && exceptItems.indexOf(this.data.counties[i]) !== -1)
             continue;
 
         // format: <option value="臺北市" data-index="0">臺北市</option>
-        let _option = new Option(data.counties[i], data.counties[i]);
+        let _option = new Option(this.data.counties[i], this.data.counties[i]);
         _option.dataset.index = i;
         select.options.add(_option);
     }
@@ -276,25 +294,29 @@ function setDistrictOptions(index = null) {
     // 清空原有選項
     while (select.firstChild) select.removeChild(select.firstChild);
 
-    select.options.add(new Option('選擇區域', ''));
+    if(this.options.lang && this.options.lang==='en-us') {
+        select.options.add(new Option('Select District', ''));
+    }else {
+        select.options.add(new Option('選擇區域', ''));
+    }
 
     if ( ! index) return true;
 
     let onlyItems = getDistrictOnlyItems.call(this, this.elCounty.value);
     let exceptItems = getDistrictExceptItems.call(this, this.elCounty.value);
 
-    for (let i = 0, j = data.districts[index][0].length - 1; i <= j; i++) {
+    for (let i = 0, j = this.data.districts[index][0].length - 1; i <= j; i++) {
         // 若有設定「限制顯示」的區域，且該項目不在自訂區域中，則不顯示
-        if (onlyItems && onlyItems.indexOf(data.districts[index][0][i]) === -1)
+        if (onlyItems && onlyItems.indexOf(this.data.districts[index][0][i]) === -1)
             continue;
 
         // 若有設定「排除顯示」的區域，且該項目在自訂區域中，則不顯示
-        if (exceptItems && exceptItems.indexOf(data.districts[index][0][i]) !== -1)
+        if (exceptItems && exceptItems.indexOf(this.data.districts[index][0][i]) !== -1)
             continue;
 
         // format: <option value="中正區" data-zipcode="100">中正區</option>
-        let _option = new Option(data.districts[index][0][i], data.districts[index][0][i]);
-        _option.dataset.zipcode = data.districts[index][1][i];
+        let _option = new Option(this.data.districts[index][0][i], this.data.districts[index][0][i]);
+        _option.dataset.zipcode = this.data.districts[index][1][i];
         select.options.add(_option);
     }
 
@@ -427,13 +449,13 @@ function setStandardWords(standard = false) {
     let str = standard ? '台' : '臺';
     let newStr = standard ? '臺' : '台';
 
-    data.counties = data.counties.map(function (county) {
+    this.data.counties = this.data.counties.map(function (county) {
         if (county.includes(str))
             return county.replace(str, newStr);
         return county;
     });
 
-    data.districts.forEach(function (current, i, districts) {
+    this.data.districts.forEach(function (current, i, districts) {
         districts[i][0] = current[0].map(function (district) {
             if (district.includes(str))
                 return district.replace(str, newStr);
