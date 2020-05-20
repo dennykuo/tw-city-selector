@@ -424,16 +424,17 @@ function listenDistrictChanged() {
 }
 
 function setValue(county = null, district = null) {
-    let changeEvent = createEvent('change');
+    let event = document.createEvent('Event');
+    event.initEvent('change', true, true);
 
     if (county) {
         this.elCounty.value = county;
-        this.elCounty.dispatchEvent(changeEvent);
+        this.elCounty.dispatchEvent(event);
     }
 
     if (district) {
         this.elDistrict.value = district;
-        this.elDistrict.dispatchEvent(changeEvent);
+        this.elDistrict.dispatchEvent(event);
     }
 }
 
@@ -450,15 +451,17 @@ function setStandardWords(standard = false) {
     let newStr = standard ? '臺' : '台';
 
     this.data.counties = this.data.counties.map(function (county) {
-        if (county.includes(str))
+        if (county.includes(str)) {
             return county.replace(str, newStr);
+        }
         return county;
     });
 
     this.data.districts.forEach(function (current, i, districts) {
         districts[i][0] = current[0].map(function (district) {
-            if (district.includes(str))
+            if (district.includes(str)) {
                 return district.replace(str, newStr);
+            }
             return district;
         });
     });
@@ -504,4 +507,19 @@ function createEvent(eventName) {
     event = document.createEvent('Event');
     event.initEvent(eventName, true, false);
     return event;
+}
+
+// Ie 11 String.prototype.includes polyfill
+if (! String.prototype.includes) {
+    String.prototype.includes = function(search, start) {
+        if (search instanceof RegExp) {
+            throw TypeError('first argument must not be a RegExp');
+        } 
+
+        if (start === undefined) {
+            start = 0;
+        }
+        
+        return this.indexOf(search, start) !== -1;
+    };
 }
