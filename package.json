@@ -40,7 +40,7 @@
     "webpack-hot-middleware": "^2.25"
   },
   "dependencies": {
-    "docsify": "^4.9",
+    "docsify": "^4.12",
     "vue": "^2.5.16"
   }
 }
