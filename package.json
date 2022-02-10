@@ -30,7 +30,7 @@
     "babel-loader": "^8.0.6",
     "copy": "^0.3.2",
     "css-loader": "^1.0.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.0.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.23.1",
