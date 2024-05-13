@@ -1991,11 +1991,11 @@ dns-txt@^2.0.2:
     buffer-indexof "^1.0.0"
 
 docsify@^4.12:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/docsify/-/docsify-4.12.0.tgz#ac08a5b4a17bd80413b22e5201e35678cdd7e57f"
-  integrity sha512-oLr48dLeJ8sTVQfL8HLFqd2sPPG8DNAOvYAXXJQr/+/K9uC2KDhoeu+GGj5U2uFGR5czF3oLvqNBxhEElg1wGw==
+  version "4.12.2"
+  resolved "https://registry.yarnpkg.com/docsify/-/docsify-4.12.2.tgz#749115d2ff7d358780ea865e01f4a0162423d67f"
+  integrity sha512-hpRez5upcvkYigT2zD8P5kH5t9HpSWL8yn/ZU/g04/WfAfxVNW6CPUVOOF1EsQUDxTRuyNTFOb6uUv+tPij3tg==
   dependencies:
-    dompurify "^2.2.6"
+    dompurify "^2.3.1"
     marked "^1.2.9"
     medium-zoom "^1.0.6"
     opencollective-postinstall "^2.0.2"
@@ -2009,10 +2009,10 @@ domain-browser@^1.1.1:
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
   integrity sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==
 
-dompurify@^2.2.6:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.2.8.tgz#ce88e395f6d00b6dc53f80d6b2a6fdf5446873c6"
-  integrity sha512-9H0UL59EkDLgY3dUFjLV6IEUaHm5qp3mxSqWw7Yyx4Zhk2Jn2cmLe+CNPP3xy13zl8Bqg+0NehQzkdMoVhGRww==
+dompurify@^2.3.1:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.5.3.tgz#bc901a9c40a7d97176c1d0ab9a24939db54270a2"
+  integrity sha512-09uyBM2URzOfXMUAqGRnm9R9IUeSkzO9PktXc2eVQIsBmmJUqRmfL1xW2QPBxVJEtlEVs5d8ndrsIQsyAqs81g==
 
 duplexify@^3.4.2, duplexify@^3.6.0:
   version "3.7.1"
