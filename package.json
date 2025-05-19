@@ -30,7 +30,10 @@
     "babel-loader": "^8.0.6",
     "copy": "^0.3.2",
     "css-loader": "^1.0.1",
+<<<<<<< Updated upstream
     "node-sass": "^7.0.0",
+=======
+>>>>>>> Stashed changes
     "sass-loader": "^7.0.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.23.1",
@@ -40,7 +43,12 @@
     "webpack-hot-middleware": "^2.25"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "docsify": "^4.12",
+=======
+    "docsify": "^4.9",
+    "sass": "^1.89.0",
+>>>>>>> Stashed changes
     "vue": "^2.5.16"
   }
 }
