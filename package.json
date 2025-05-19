@@ -25,9 +25,9 @@
   "bugs": "https://github.com/dennykuo/tw-city-selector/issues",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-loader": "^8.4.1",
     "copy": "^0.3.2",
     "css-loader": "^1.0.1",
     "sass": "^1.89.0",
