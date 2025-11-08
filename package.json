@@ -10,12 +10,15 @@
     "README.md"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --content-base ./docs",
-    "docs:vendor": "webpack --config=webpack.docs.config",
-    "umd:test": "webpack --config=webpack.umd-test.config"
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "build": "npm run build:dist && npm run build:docs && npm run build:data",
+    "build:dist": "vite build",
+    "build:docs": "vite build --config vite.config.docs.js",
+    "build:data": "vite build --config vite.config.data.js && vite build --config vite.config.data-en.js",
+    "start": "vite",
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "repository": {
     "url": "https://github.com/dennykuo/tw-city-selector.git",
@@ -34,6 +37,7 @@
     "sass-loader": "^7.0.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.23.1",
+    "vite": "^7.2.2",
     "webpack": "^4.33",
     "webpack-cli": "^3.3",
     "webpack-dev-server": "^3.7",

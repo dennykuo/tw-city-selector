@@ -53,8 +53,7 @@ function TwCitySelector(options = {}) {
         lang: 'zh-tw',
 
         // 其他設定
-        standardWords: false, // {boolean} 使用「臺」的正體字，而非異體字「台」
-        bootstrapStyle: false // {boolean}
+        standardWords: false // {boolean} 使用「臺」的正體字，而非異體字「台」
     };
 
     let optionsRequired = options.length ? ['el'] : []; // 設置必要參數，若無帶入任何參數則設不設置
@@ -163,8 +162,6 @@ function getDataAttrOptions() {
     this.options.disabled = this.el.getAttribute('data-disabled') != null;
     // *** 是否使用臺的正體字 ***
     this.options.standardWords = this.el.getAttribute('data-standard-words') != null;
-    // *** 是否使用 bootstrap 樣式 ***
-    this.options.bootstrapStyle = this.el.getAttribute('data-bootstrap-style') != null;
 
     return this;
 }
@@ -182,9 +179,6 @@ function init() {
 
     // *** 置入 elemnts ***
     setElements.call(this);
-
-    // *** bootstrap 樣式套入 ***
-    if (this.options.bootstrapStyle) setBootstrapStyle.call(this);
 
     // *** 監聽選單動作 ***
     listenCountyChanged.call(this);
@@ -259,66 +253,66 @@ function setElements() {
 }
 
 function setCountyOptions() {
-    let select = this.elCounty;
+    const select = this.elCounty;
+    const isEnglish = this.options.lang === 'en-us';
 
-    if(this.options.lang && this.options.lang==='en-us') {
-        select.options.add(new Option('Select County/City', ''));
-    }else {
-        select.options.add(new Option('選擇縣市', ''));
-    }
+    select.options.add(new Option(
+        isEnglish ? 'Select County/City' : '選擇縣市',
+        ''
+    ));
 
-    let onlyItems = getCountyOnlyItems.call(this);
-    let exceptItems = getCountyExceptItems.call(this);
+    const onlyItems = getCountyOnlyItems.call(this);
+    const exceptItems = getCountyExceptItems.call(this);
 
-    for (let i = 0, j = this.data.counties.length; i < j; i++) {
+    this.data.counties.forEach((county, index) => {
         // 若有設定「限制顯示」的縣市，且該項目不在自訂縣市中，則不顯示
-        if (onlyItems && onlyItems.indexOf(this.data.counties[i]) === -1)
-            continue;
-            
+        if (onlyItems && !onlyItems.includes(county)) return;
+
         // 若有設定「排除顯示」的縣市，且該項目在自訂縣市中，則不顯示
-        if (exceptItems && exceptItems.indexOf(this.data.counties[i]) !== -1)
-            continue;
+        if (exceptItems && exceptItems.includes(county)) return;
 
         // format: <option value="臺北市" data-index="0">臺北市</option>
-        let _option = new Option(this.data.counties[i], this.data.counties[i]);
-        _option.dataset.index = i;
-        select.options.add(_option);
-    }
+        const option = new Option(county, county);
+        option.dataset.index = index;
+        select.options.add(option);
+    });
 
     return true;
 }
 
 function setDistrictOptions(index = null) {
-    let select = this.elDistrict;
+    const select = this.elDistrict;
+    const isEnglish = this.options.lang === 'en-us';
 
     // 清空原有選項
-    while (select.firstChild) select.removeChild(select.firstChild);
-
-    if(this.options.lang && this.options.lang==='en-us') {
-        select.options.add(new Option('Select District', ''));
-    }else {
-        select.options.add(new Option('選擇區域', ''));
+    while (select.firstChild) {
+        select.removeChild(select.firstChild);
     }
 
-    if ( ! index) return true;
+    select.options.add(new Option(
+        isEnglish ? 'Select District' : '選擇區域',
+        ''
+    ));
 
-    let onlyItems = getDistrictOnlyItems.call(this, this.elCounty.value);
-    let exceptItems = getDistrictExceptItems.call(this, this.elCounty.value);
+    if (!index) return true;
 
-    for (let i = 0, j = this.data.districts[index][0].length - 1; i <= j; i++) {
+    const onlyItems = getDistrictOnlyItems.call(this, this.elCounty.value);
+    const exceptItems = getDistrictExceptItems.call(this, this.elCounty.value);
+    const districts = this.data.districts[index][0];
+    const zipcodes = this.data.districts[index][1];
+
+    districts.forEach((district, i) => {
         // 若有設定「限制顯示」的區域，且該項目不在自訂區域中，則不顯示
-        if (onlyItems && onlyItems.indexOf(this.data.districts[index][0][i]) === -1)
-            continue;
+        if (onlyItems && !onlyItems.includes(district)) return;
 
         // 若有設定「排除顯示」的區域，且該項目在自訂區域中，則不顯示
-        if (exceptItems && exceptItems.indexOf(this.data.districts[index][0][i]) !== -1)
-            continue;
+        if (exceptItems && exceptItems.includes(district)) return;
 
         // format: <option value="中正區" data-zipcode="100">中正區</option>
-        let _option = new Option(this.data.districts[index][0][i], this.data.districts[index][0][i]);
-        _option.dataset.zipcode = this.data.districts[index][1][i];
-        select.options.add(_option);
-    }
+        const option = new Option(district, district);
+        option.dataset.zipcode = zipcodes[i];
+        select.options.add(option);
+    });
 
     return true;
 }
@@ -400,32 +394,33 @@ function getDistrictExceptItems(countyValue) {
 }
 
 function listenCountyChanged() {
-    let handler = function() {
-        let _el = this.elCounty.querySelector('option:checked');
+    const handler = () => {
+        const selectedOption = this.elCounty.querySelector('option:checked');
         // index 不使用 xx.selectedIndex 是因若有設限縣市選單時順序會錯
-        let index = _el.getAttribute('data-index');
+        const index = selectedOption.getAttribute('data-index');
         setDistrictOptions.call(this, index);
         if (this.options.hasZipcode) this.elZipcode.value = '';
-    }.bind(this);
+    };
 
-    // this.elCounty.addEventListener('change', handler); // jquery trigger change 會失敗，改用此段
+    // 使用 onchange 而非 addEventListener 以支援 jQuery trigger
     this.elCounty.onchange = handler;
-};
+}
 
 function listenDistrictChanged() {
-    let handler = function () {
-        let _el = this.elDistrict.querySelector('option:checked');
-        let zipcode = _el.dataset.zipcode || '';
-        if (this.options.hasZipcode || this.elZipcode) this.elZipcode.value = zipcode; // 有設定 hasZipcode 或有指定 elZipcode
-    }.bind(this);
+    const handler = () => {
+        const selectedOption = this.elDistrict.querySelector('option:checked');
+        const zipcode = selectedOption.dataset.zipcode || '';
+        if (this.options.hasZipcode || this.elZipcode) {
+            this.elZipcode.value = zipcode; // 有設定 hasZipcode 或有指定 elZipcode
+        }
+    };
 
-    // this.elDistrict.addEventListener('change', handler); // jquery trigger change 會失敗，改用此段
+    // 使用 onchange 而非 addEventListener 以支援 jQuery trigger
     this.elDistrict.onchange = handler;
 }
 
 function setValue(county = null, district = null) {
-    let event = document.createEvent('Event');
-    event.initEvent('change', true, true);
+    const event = createEvent('change');
 
     if (county) {
         this.elCounty.value = county;
@@ -467,34 +462,6 @@ function setStandardWords(standard = false) {
     });
 }
 
-function setBootstrapStyle() {
-    let fieldClassName = 'form-control';
-    let wrapperClassName = 'form-group';
-    let fragment = document.createDocumentFragment();
-
-    this.elCounty.setAttribute('class', fieldClassName);
-    this.elDistrict.setAttribute('class', fieldClassName);
-    if (this.options.hasZipcode) this.elZipcode.setAttribute('class', fieldClassName);
-
-    let wrapper = document.createElement('div');
-    wrapper.setAttribute('class', wrapperClassName);
-
-    let elCounty = wrapper.cloneNode();
-    elCounty.appendChild(this.elCounty);
-    fragment.appendChild(elCounty);
-
-    let elDistrict = wrapper.cloneNode();
-    elDistrict.appendChild(this.elDistrict);
-    fragment.appendChild(elDistrict);
-
-    if (this.options.hasZipcode) {
-        let elZipcode = wrapper.cloneNode();
-        elZipcode.appendChild(this.elZipcode);
-        fragment.appendChild(elZipcode);
-    }
-
-    this.el.appendChild(fragment);
-}
 
 function createEvent(eventName) {
     if (typeof (Event) === 'function')
