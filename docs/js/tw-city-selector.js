@@ -1362,6 +1362,9 @@
   const LANG_EN = "en-us";
   const SEPARATOR_COUNTY_DISTRICT = "@";
   const SEPARATOR_DISTRICTS = "|";
+  const EVENT_CHANGE_COUNTY = "change:county";
+  const EVENT_CHANGE_DISTRICT = "change:district";
+  const EVENT_CHANGE_ZIPCODE = "change:zipcode";
   class TwCitySelector {
     // ------------------------------
     // Constructor
@@ -1421,8 +1424,12 @@
     // Public Methods
     // ------------------------------
     /**
-     * 取得版本號
-     * @returns {TwCitySelector}
+     * 取得版本號並輸出到控制台
+     * @public
+     * @returns {TwCitySelector} 返回實例以支援鏈式調用
+     * @example
+     * const selector = new TwCitySelector({ el: '#city-selector' });
+     * selector.getVersion(); // 輸出: "Your tw-city-selector.js is v2.1.2"
      */
     getVersion() {
       console.log(`Your tw-city-selector.js is v${this.VERSION}`);
@@ -1430,21 +1437,130 @@
     }
     /**
      * 設定縣市和區域的值
-     * @param {string|null} county - 縣市名稱
-     * @param {string|null} district - 區域名稱
-     * @returns {TwCitySelector}
+     * @public
+     * @param {string|null} county - 縣市名稱（例如：'台北市'）
+     * @param {string|null} district - 區域名稱（例如：'中正區'）
+     * @returns {TwCitySelector} 返回實例以支援鏈式調用
+     * @example
+     * selector.setValue('台北市', '中正區');
      */
     setValue(county = null, district = null) {
       this._setValue(county, district);
       return this;
     }
     /**
-     * 重置選單
-     * @returns {TwCitySelector}
+     * 取得當前選擇的縣市和區域
+     * @public
+     * @returns {{county: string, district: string, zipcode: string}} 包含縣市、區域和郵遞區號的物件
+     * @example
+     * const values = selector.getValue();
+     * console.log(values); // { county: '台北市', district: '中正區', zipcode: '100' }
+     */
+    getValue() {
+      if (!this.elCounty || !this.elDistrict) {
+        return { county: "", district: "", zipcode: "" };
+      }
+      return {
+        county: this.elCounty.value || "",
+        district: this.elDistrict.value || "",
+        zipcode: this.elZipcode ? this.elZipcode.value || "" : ""
+      };
+    }
+    /**
+     * 取得當前的郵遞區號
+     * @public
+     * @returns {string} 郵遞區號（例如：'100'）
+     * @example
+     * const zipcode = selector.getZipcode();
+     * console.log(zipcode); // '100'
+     */
+    getZipcode() {
+      if (!this.elZipcode) return "";
+      return this.elZipcode.value || "";
+    }
+    /**
+     * 重置選單到初始狀態
+     * @public
+     * @returns {TwCitySelector} 返回實例以支援鏈式調用
+     * @example
+     * selector.reset();
      */
     reset() {
       this._reset();
       return this;
+    }
+    /**
+     * 停用選單（設為 disabled）
+     * @public
+     * @returns {TwCitySelector} 返回實例以支援鏈式調用
+     * @example
+     * selector.disable();
+     */
+    disable() {
+      if (this.elCounty) this.elCounty.disabled = true;
+      if (this.elDistrict) this.elDistrict.disabled = true;
+      if (this.elZipcode) this.elZipcode.disabled = true;
+      return this;
+    }
+    /**
+     * 啟用選單（移除 disabled）
+     * @public
+     * @returns {TwCitySelector} 返回實例以支援鏈式調用
+     * @example
+     * selector.enable();
+     */
+    enable() {
+      if (this.elCounty) this.elCounty.disabled = false;
+      if (this.elDistrict) this.elDistrict.disabled = false;
+      if (this.elZipcode) this.elZipcode.disabled = false;
+      return this;
+    }
+    /**
+     * 驗證當前選擇是否有效
+     * @public
+     * @returns {{valid: boolean, errors: string[]}} 驗證結果物件
+     * @example
+     * const result = selector.validate();
+     * if (!result.valid) {
+     *   console.error('驗證失敗:', result.errors);
+     * }
+     */
+    validate() {
+      const errors = [];
+      const values = this.getValue();
+      if (!values.county) {
+        errors.push("請選擇縣市");
+      }
+      if (!values.district) {
+        errors.push("請選擇區域");
+      }
+      if (this.options.hasZipcode && !values.zipcode) {
+        errors.push("郵遞區號為空");
+      }
+      return {
+        valid: errors.length === 0,
+        errors
+      };
+    }
+    /**
+     * 清理事件監聽器並移除元素（用於元件銷毀）
+     * @public
+     * @returns {void}
+     * @example
+     * selector.destroy();
+     */
+    destroy() {
+      if (this.elCounty) {
+        this.elCounty.onchange = null;
+      }
+      if (this.elDistrict) {
+        this.elDistrict.onchange = null;
+      }
+      this.el = null;
+      this.elCounty = null;
+      this.elDistrict = null;
+      this.elZipcode = null;
+      this.data = null;
     }
     // ------------------------------
     // Private Methods - Initialization
@@ -1804,7 +1920,11 @@
         this._setDistrictOptions(index);
         if (this.options.hasZipcode && this.elZipcode) {
           this.elZipcode.value = "";
+          this._dispatchCustomEvent(EVENT_CHANGE_ZIPCODE, { zipcode: "" });
         }
+        this._dispatchCustomEvent(EVENT_CHANGE_COUNTY, {
+          county: this.elCounty.value
+        });
       };
       this.elCounty.onchange = handler;
     }
@@ -1820,7 +1940,13 @@
         const zipcode = selectedOption.dataset.zipcode || "";
         if ((this.options.hasZipcode || this.elZipcode) && this.elZipcode) {
           this.elZipcode.value = zipcode;
+          this._dispatchCustomEvent(EVENT_CHANGE_ZIPCODE, { zipcode });
         }
+        this._dispatchCustomEvent(EVENT_CHANGE_DISTRICT, {
+          county: this.elCounty.value,
+          district: this.elDistrict.value,
+          zipcode
+        });
       };
       this.elDistrict.onchange = handler;
     }
@@ -1891,6 +2017,27 @@
       const event = document.createEvent("Event");
       event.initEvent(eventName, true, false);
       return event;
+    }
+    /**
+     * 觸發自訂事件
+     * @private
+     * @param {string} eventName - 事件名稱
+     * @param {Object} detail - 事件詳細資料
+     */
+    _dispatchCustomEvent(eventName, detail = {}) {
+      if (!this.el) return;
+      let event;
+      if (typeof CustomEvent === "function") {
+        event = new CustomEvent(eventName, {
+          detail,
+          bubbles: true,
+          cancelable: false
+        });
+      } else {
+        event = document.createEvent("CustomEvent");
+        event.initCustomEvent(eventName, true, false, detail);
+      }
+      this.el.dispatchEvent(event);
     }
   }
   if (!String.prototype.includes) {
