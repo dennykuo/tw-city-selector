@@ -1534,16 +1534,25 @@
      */
     _getDataAttrOptions(el) {
       const options = { ...this.options };
-      const onlyAttr = el.getAttribute("data-only");
-      options.only = onlyAttr ? onlyAttr.replace(/\s/g, "").split(",") : null;
-      const exceptAttr = el.getAttribute("data-except");
-      options.except = exceptAttr ? exceptAttr.replace(/\s/g, "").split(",") : null;
-      options.countyValue = el.getAttribute("data-county-value");
-      options.districtValue = el.getAttribute("data-district-value");
-      options.hasZipcode = el.getAttribute("data-has-zipcode") !== null;
-      options.hiddenZipcode = el.getAttribute("data-hidden-zipcode") !== null;
-      options.disabled = el.getAttribute("data-disabled") !== null;
-      options.standardWords = el.getAttribute("data-standard-words") !== null;
+      const { dataset } = el;
+      const attrs = {
+        only: el.getAttribute("data-only"),
+        except: el.getAttribute("data-except"),
+        countyValue: el.getAttribute("data-county-value"),
+        districtValue: el.getAttribute("data-district-value"),
+        hasZipcode: el.hasAttribute("data-has-zipcode"),
+        hiddenZipcode: el.hasAttribute("data-hidden-zipcode"),
+        disabled: el.hasAttribute("data-disabled"),
+        standardWords: el.hasAttribute("data-standard-words")
+      };
+      options.only = attrs.only ? attrs.only.replace(/\s/g, "").split(",") : null;
+      options.except = attrs.except ? attrs.except.replace(/\s/g, "").split(",") : null;
+      options.countyValue = attrs.countyValue;
+      options.districtValue = attrs.districtValue;
+      options.hasZipcode = attrs.hasZipcode;
+      options.hiddenZipcode = attrs.hiddenZipcode;
+      options.disabled = attrs.disabled;
+      options.standardWords = attrs.standardWords;
       return options;
     }
     /**
@@ -1693,18 +1702,50 @@
     // Private Methods - Filters
     // ------------------------------
     /**
+     * 標準化過濾項目為陣列
+     * @private
+     * @param {string|Array|null} items - 過濾項目
+     * @returns {Array|null}
+     */
+    _normalizeFilterItems(items) {
+      if (!items) return null;
+      if (typeof items === "string") return [items];
+      if (Array.isArray(items)) return items;
+      return null;
+    }
+    /**
+     * 從項目中提取縣市名稱
+     * @private
+     * @param {string} item - 項目字串（可能包含 @ 分隔符）
+     * @returns {string}
+     */
+    _extractCountyFromItem(item) {
+      const index = item.indexOf(SEPARATOR_COUNTY_DISTRICT);
+      return index === -1 ? item : item.substring(0, index);
+    }
+    /**
+     * 從項目中提取區域清單
+     * @private
+     * @param {string} item - 項目字串
+     * @param {string} countyValue - 縣市名稱
+     * @returns {Array|null}
+     */
+    _extractDistrictsFromItem(item, countyValue) {
+      if (!item.includes(countyValue)) return null;
+      const index = item.lastIndexOf(SEPARATOR_COUNTY_DISTRICT);
+      if (index === -1) return null;
+      return item.substring(index + 1).split(SEPARATOR_DISTRICTS);
+    }
+    /**
      * 取得限制顯示的縣市清單
      * @private
      * @returns {Array|null}
      */
     _getCountyOnlyItems() {
-      const onlyItems = this.options.only;
-      if (typeof onlyItems === "string") return onlyItems;
-      if (!Array.isArray(onlyItems)) return null;
-      return onlyItems.map((item) => {
-        const index = item.indexOf(SEPARATOR_COUNTY_DISTRICT);
-        return index === -1 ? item : item.substring(0, index);
-      });
+      const items = this._normalizeFilterItems(this.options.only);
+      if (!items) return null;
+      if (typeof this.options.only === "string") return this.options.only;
+      return items.map((item) => this._extractCountyFromItem(item));
     }
     /**
      * 取得排除顯示的縣市清單
@@ -1712,13 +1753,10 @@
      * @returns {Array|null}
      */
     _getCountyExceptItems() {
-      const exceptItems = this.options.except;
-      if (typeof exceptItems === "string") return exceptItems;
-      if (!Array.isArray(exceptItems)) return null;
-      return exceptItems.filter((item) => {
-        const index = item.indexOf(SEPARATOR_COUNTY_DISTRICT);
-        return index === -1;
-      });
+      const items = this._normalizeFilterItems(this.options.except);
+      if (!items) return null;
+      if (typeof this.options.except === "string") return this.options.except;
+      return items.filter((item) => !item.includes(SEPARATOR_COUNTY_DISTRICT));
     }
     /**
      * 取得限制顯示的區域清單
@@ -1727,18 +1765,13 @@
      * @returns {Array|null}
      */
     _getDistrictOnlyItems(countyValue) {
-      let onlyItems = this.options.only;
-      if (typeof onlyItems !== "string" && !Array.isArray(onlyItems)) return null;
-      if (typeof onlyItems === "string") onlyItems = [onlyItems];
-      let items = null;
-      onlyItems.forEach((item) => {
-        if (!item.includes(countyValue)) return;
-        const index = item.lastIndexOf(SEPARATOR_COUNTY_DISTRICT);
-        if (index !== -1) {
-          items = item.substring(index + 1).split(SEPARATOR_DISTRICTS);
-        }
-      });
-      return items;
+      const items = this._normalizeFilterItems(this.options.only);
+      if (!items) return null;
+      for (const item of items) {
+        const districts = this._extractDistrictsFromItem(item, countyValue);
+        if (districts) return districts;
+      }
+      return null;
     }
     /**
      * 取得排除顯示的區域清單
@@ -1747,18 +1780,13 @@
      * @returns {Array|null}
      */
     _getDistrictExceptItems(countyValue) {
-      let exceptItems = this.options.except;
-      if (typeof exceptItems !== "string" && !Array.isArray(exceptItems)) return null;
-      if (typeof exceptItems === "string") exceptItems = [exceptItems];
-      let items = null;
-      exceptItems.forEach((item) => {
-        if (!item.includes(countyValue)) return;
-        const index = item.lastIndexOf(SEPARATOR_COUNTY_DISTRICT);
-        if (index !== -1) {
-          items = item.substring(index + 1).split(SEPARATOR_DISTRICTS);
-        }
-      });
-      return items;
+      const items = this._normalizeFilterItems(this.options.except);
+      if (!items) return null;
+      for (const item of items) {
+        const districts = this._extractDistrictsFromItem(item, countyValue);
+        if (districts) return districts;
+      }
+      return null;
     }
     // ------------------------------
     // Private Methods - Event Listeners
