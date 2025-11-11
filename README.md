@@ -25,5 +25,5 @@ npm run watch
 Local server
 
 ```
-npm run start
+npm run dev
 ```

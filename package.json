@@ -16,7 +16,6 @@
     "build:dist": "vite build",
     "build:docs": "vite build --config vite.config.docs.js",
     "build:data": "vite build --config vite.config.data.js && vite build --config vite.config.data-en.js",
-    "start": "vite",
     "dev": "vite",
     "preview": "vite preview"
   },
