@@ -1,6 +1,6 @@
 {
   "name": "tw-city-selector",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "main": "dist/tw-city-selector.js",
   "files": [
     "dist/",

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in src/*.js)",
+      "Bash(do sed -i '' -e ':a' -e 's/^\\(  \\)*    /\\1  /;ta' \"$file\")",
+      "Bash(done)",
+      "Bash(expand:*)",
+      "Bash(\"/Users/denny/Dropbox/12-套件及腳手架/Frontend/tw-city-selector/src/data-zh.js.tmp\")",
+      "Bash(\"/Users/denny/Dropbox/12-套件及腳手架/Frontend/tw-city-selector/src/data-en.js.tmp\")",
+      "Bash(\"/Users/denny/Dropbox/12-套件及腳手架/Frontend/tw-city-selector/src/tw-city-selector.js.tmp\")",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
